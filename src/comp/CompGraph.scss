@@ -1,0 +1,19 @@
+.comp-fps {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding-top: 0.2em;
+  padding-left: 0.3em;
+
+  font-weight: bold;
+  color: #00c000;
+
+  .red {
+    color: red;
+  }
+}
+
+.comp-graph {
+  position: relative;
+  cursor: pointer;
+}

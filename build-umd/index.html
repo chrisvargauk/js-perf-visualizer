@@ -1,0 +1,10 @@
+<html><body><script type=text/javascript src=JsPerfDoctor.js></script></body><script>window.jsPerfDoctor = new JsPerfDoctor.default();
+
+    setInterval(() => {
+      const noOfIter = 15000;
+      for (let i=0; i<noOfIter; i++) {
+        for (let j = 0; j < noOfIter; j++) {
+          Math.sqrt(999999999999999999);
+        }
+      }
+    }, 1000);</script></html>

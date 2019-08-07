@@ -1,0 +1,13 @@
+.comp-log {
+  background: antiquewhite;
+  max-height: 300px;
+  overflow-y: scroll;
+
+  .color-font-error {
+    color: red;
+  }
+
+  .color-font-warn {
+    color: #cf8600;
+  }
+}
