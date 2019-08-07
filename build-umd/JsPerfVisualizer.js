@@ -4,9 +4,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define([], factory);
 	else if(typeof exports === 'object')
-		exports["JsPerfDoctor"] = factory();
+		exports["JsPerfVisualizer"] = factory();
 	else
-		root["JsPerfDoctor"] = factory();
+		root["JsPerfVisualizer"] = factory();
 })(window, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -1122,7 +1122,7 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(1)(false);
 // Module
-exports.push([module.i, "#js-perf-doctor-root {\n  position: absolute;\n  left: 0;\n  top: 0; }\n\n#graph-root {\n  background: gray;\n  width: 300px;\n  height: 100px; }\n", ""]);
+exports.push([module.i, "#js-perf-visualizer-root {\n  position: absolute;\n  left: 0;\n  top: 0; }\n\n#graph-root {\n  background: gray;\n  width: 300px;\n  height: 100px; }\n", ""]);
 
 
 /***/ }),
@@ -1415,7 +1415,7 @@ class CompGraph_CompGraph extends GameGUI["Component"] {
     this.dom.addEventListener('mousemove', this.handlerMouseMove.bind( this ));
     this.dom.addEventListener('mouseup', this.handlerMouseUp.bind( this ));
 
-    this.graph = new lib_Graph('#graph-root', this.option.jsPerfDoctor.config.fpsWarningLevel);
+    this.graph = new lib_Graph('#graph-root', this.option.jsPerfVisualizer.config.fpsWarningLevel);
   }
 
   handlerMouseDown( evt ) {
@@ -1436,12 +1436,12 @@ class CompGraph_CompGraph extends GameGUI["Component"] {
     const pageYdiff = evt.pageY - this.pageYLast;
     this.pageYLast = evt.pageY;
 
-    const dJsPerfDoctorRoot = document.getElementById('js-perf-doctor-root');
+    const dJsPerfVisualizerRoot = document.getElementById('js-perf-visualizer-root');
 
-    let topOrigin = dJsPerfDoctorRoot.style.top.replace('px', '');
+    let topOrigin = dJsPerfVisualizerRoot.style.top.replace('px', '');
     topOrigin = topOrigin || 0;
 
-    let leftOrigin = dJsPerfDoctorRoot.style.left.replace('px', '');
+    let leftOrigin = dJsPerfVisualizerRoot.style.left.replace('px', '');
     leftOrigin = leftOrigin || 0;
 
     this.positionX = parseInt(leftOrigin) + pageXdiff;
@@ -1451,9 +1451,9 @@ class CompGraph_CompGraph extends GameGUI["Component"] {
   }
 
   position(top, left) {
-    const dJsPerfDoctorRoot = document.getElementById('js-perf-doctor-root');
-    dJsPerfDoctorRoot.style.top = top + 'px';
-    dJsPerfDoctorRoot.style.left = left +'px';
+    const dJsPerfVisualizerRoot = document.getElementById('js-perf-visualizer-root');
+    dJsPerfVisualizerRoot.style.top = top + 'px';
+    dJsPerfVisualizerRoot.style.left = left +'px';
   }
 
   handlerMouseUp() {
@@ -1492,9 +1492,9 @@ class CompGraph_CompFps extends GameGUI["Component"] {
     const fpsCurrent = this.getState().fpsCurrent;
     return `
       <span class="${(
-        fpsCurrent < this.option.jsPerfDoctor.config.fpsWarningLevel ? 'red' : ''
+        fpsCurrent < this.option.jsPerfVisualizer.config.fpsWarningLevel ? 'red' : ''
       )}">
-        ${this.option.jsPerfDoctor.config.fpsTarget}/${fpsCurrent}
+        ${this.option.jsPerfVisualizer.config.fpsTarget}/${fpsCurrent}
       </span>
     `;
   }
@@ -1558,7 +1558,7 @@ class CompRoot_CompRoot extends GameGUI["Component"] {
 
 
 
-class src_JsPerfDoctor {
+class src_JsPerfVisualizer {
   constructor ( configOverwrite ) {
     this.config = {
         fpsTarget: 60,
@@ -1583,9 +1583,9 @@ class src_JsPerfDoctor {
 
   initGraph () {
     console.log('Graph is getting initialized..');
-    document.body.insertAdjacentHTML('afterBegin', '<div id="js-perf-doctor-root"></div>');
-    this.gui = new GameGUI_default.a(src_comp_CompRoot, '#js-perf-doctor-root', {
-      jsPerfDoctor: this,
+    document.body.insertAdjacentHTML('afterBegin', '<div id="js-perf-visualizer-root"></div>');
+    this.gui = new GameGUI_default.a(src_comp_CompRoot, '#js-perf-visualizer-root', {
+      jsPerfVisualizer: this,
     });
   }
 
@@ -1635,7 +1635,7 @@ class src_JsPerfDoctor {
   }
 }
 
-/* harmony default export */ var src = __webpack_exports__["default"] = (src_JsPerfDoctor);
+/* harmony default export */ var src = __webpack_exports__["default"] = (src_JsPerfVisualizer);
 
 /***/ })
 /******/ ]);

@@ -8,7 +8,7 @@ module.exports = merge(common, {
   devtool: 'source-map',
 
   entry: {
-    JsPerfDoctor: "./src/index.js"
+    JsPerfVisualizer: "./src/index.js"
   },
   output: {
     library: '[name]',

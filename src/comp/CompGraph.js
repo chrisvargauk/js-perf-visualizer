@@ -34,7 +34,7 @@ class CompGraph extends Component {
     this.dom.addEventListener('mousemove', this.handlerMouseMove.bind( this ));
     this.dom.addEventListener('mouseup', this.handlerMouseUp.bind( this ));
 
-    this.graph = new Graph('#graph-root', this.option.jsPerfDoctor.config.fpsWarningLevel);
+    this.graph = new Graph('#graph-root', this.option.jsPerfVisualizer.config.fpsWarningLevel);
   }
 
   handlerMouseDown( evt ) {
@@ -55,12 +55,12 @@ class CompGraph extends Component {
     const pageYdiff = evt.pageY - this.pageYLast;
     this.pageYLast = evt.pageY;
 
-    const dJsPerfDoctorRoot = document.getElementById('js-perf-doctor-root');
+    const dJsPerfVisualizerRoot = document.getElementById('js-perf-visualizer-root');
 
-    let topOrigin = dJsPerfDoctorRoot.style.top.replace('px', '');
+    let topOrigin = dJsPerfVisualizerRoot.style.top.replace('px', '');
     topOrigin = topOrigin || 0;
 
-    let leftOrigin = dJsPerfDoctorRoot.style.left.replace('px', '');
+    let leftOrigin = dJsPerfVisualizerRoot.style.left.replace('px', '');
     leftOrigin = leftOrigin || 0;
 
     this.positionX = parseInt(leftOrigin) + pageXdiff;
@@ -70,9 +70,9 @@ class CompGraph extends Component {
   }
 
   position(top, left) {
-    const dJsPerfDoctorRoot = document.getElementById('js-perf-doctor-root');
-    dJsPerfDoctorRoot.style.top = top + 'px';
-    dJsPerfDoctorRoot.style.left = left +'px';
+    const dJsPerfVisualizerRoot = document.getElementById('js-perf-visualizer-root');
+    dJsPerfVisualizerRoot.style.top = top + 'px';
+    dJsPerfVisualizerRoot.style.left = left +'px';
   }
 
   handlerMouseUp() {
@@ -111,9 +111,9 @@ class CompFps extends Component {
     const fpsCurrent = this.getState().fpsCurrent;
     return `
       <span class="${(
-        fpsCurrent < this.option.jsPerfDoctor.config.fpsWarningLevel ? 'red' : ''
+        fpsCurrent < this.option.jsPerfVisualizer.config.fpsWarningLevel ? 'red' : ''
       )}">
-        ${this.option.jsPerfDoctor.config.fpsTarget}/${fpsCurrent}
+        ${this.option.jsPerfVisualizer.config.fpsTarget}/${fpsCurrent}
       </span>
     `;
   }

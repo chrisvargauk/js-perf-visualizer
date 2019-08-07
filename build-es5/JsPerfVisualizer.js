@@ -25,7 +25,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 (function webpackUniversalModuleDefinition(root, factory) {
-  if ((typeof exports === "undefined" ? "undefined" : _typeof(exports)) === 'object' && (typeof module === "undefined" ? "undefined" : _typeof(module)) === 'object') module.exports = factory();else if (typeof define === 'function' && define.amd) define([], factory);else if ((typeof exports === "undefined" ? "undefined" : _typeof(exports)) === 'object') exports["JsPerfDoctor"] = factory();else root["JsPerfDoctor"] = factory();
+  if ((typeof exports === "undefined" ? "undefined" : _typeof(exports)) === 'object' && (typeof module === "undefined" ? "undefined" : _typeof(module)) === 'object') module.exports = factory();else if (typeof define === 'function' && define.amd) define([], factory);else if ((typeof exports === "undefined" ? "undefined" : _typeof(exports)) === 'object') exports["JsPerfVisualizer"] = factory();else root["JsPerfVisualizer"] = factory();
 })(window, function () {
   return (
     /******/
@@ -1483,7 +1483,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     function (module, exports, __webpack_require__) {
       exports = module.exports = __webpack_require__(1)(false); // Module
 
-      exports.push([module.i, "#js-perf-doctor-root {\n  position: absolute;\n  left: 0;\n  top: 0; }\n\n#graph-root {\n  background: gray;\n  width: 300px;\n  height: 100px; }\n", ""]);
+      exports.push([module.i, "#js-perf-visualizer-root {\n  position: absolute;\n  left: 0;\n  top: 0; }\n\n#graph-root {\n  background: gray;\n  width: 300px;\n  height: 100px; }\n", ""]);
       /***/
     },
     /* 6 */
@@ -1766,7 +1766,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             this.dom.addEventListener('mousedown', this.handlerMouseDown.bind(this));
             this.dom.addEventListener('mousemove', this.handlerMouseMove.bind(this));
             this.dom.addEventListener('mouseup', this.handlerMouseUp.bind(this));
-            this.graph = new lib_Graph('#graph-root', this.option.jsPerfDoctor.config.fpsWarningLevel);
+            this.graph = new lib_Graph('#graph-root', this.option.jsPerfVisualizer.config.fpsWarningLevel);
           }
         }, {
           key: "handlerMouseDown",
@@ -1787,10 +1787,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             this.pageYLast = this.pageYLast || evt.pageY;
             var pageYdiff = evt.pageY - this.pageYLast;
             this.pageYLast = evt.pageY;
-            var dJsPerfDoctorRoot = document.getElementById('js-perf-doctor-root');
-            var topOrigin = dJsPerfDoctorRoot.style.top.replace('px', '');
+            var dJsPerfVisualizerRoot = document.getElementById('js-perf-visualizer-root');
+            var topOrigin = dJsPerfVisualizerRoot.style.top.replace('px', '');
             topOrigin = topOrigin || 0;
-            var leftOrigin = dJsPerfDoctorRoot.style.left.replace('px', '');
+            var leftOrigin = dJsPerfVisualizerRoot.style.left.replace('px', '');
             leftOrigin = leftOrigin || 0;
             this.positionX = parseInt(leftOrigin) + pageXdiff;
             this.positionY = parseInt(topOrigin) + pageYdiff;
@@ -1799,9 +1799,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         }, {
           key: "position",
           value: function position(top, left) {
-            var dJsPerfDoctorRoot = document.getElementById('js-perf-doctor-root');
-            dJsPerfDoctorRoot.style.top = top + 'px';
-            dJsPerfDoctorRoot.style.left = left + 'px';
+            var dJsPerfVisualizerRoot = document.getElementById('js-perf-visualizer-root');
+            dJsPerfVisualizerRoot.style.top = top + 'px';
+            dJsPerfVisualizerRoot.style.left = left + 'px';
           }
         }, {
           key: "handlerMouseUp",
@@ -1856,7 +1856,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           key: "render",
           value: function render() {
             var fpsCurrent = this.getState().fpsCurrent;
-            return "\n      <span class=\"".concat(fpsCurrent < this.option.jsPerfDoctor.config.fpsWarningLevel ? 'red' : '', "\">\n        ").concat(this.option.jsPerfDoctor.config.fpsTarget, "/").concat(fpsCurrent, "\n      </span>\n    ");
+            return "\n      <span class=\"".concat(fpsCurrent < this.option.jsPerfVisualizer.config.fpsWarningLevel ? 'red' : '', "\">\n        ").concat(this.option.jsPerfVisualizer.config.fpsTarget, "/").concat(fpsCurrent, "\n      </span>\n    ");
           }
         }]);
 
@@ -1937,11 +1937,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       var src_comp_CompRoot = CompRoot_CompRoot; // CONCATENATED MODULE: ./src/index.js
 
-      var src_JsPerfDoctor =
+      var src_JsPerfVisualizer =
       /*#__PURE__*/
       function () {
-        function src_JsPerfDoctor(configOverwrite) {
-          _classCallCheck(this, src_JsPerfDoctor);
+        function src_JsPerfVisualizer(configOverwrite) {
+          _classCallCheck(this, src_JsPerfVisualizer);
 
           this.config = _objectSpread({
             fpsTarget: 60,
@@ -1961,13 +1961,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           }
         }
 
-        _createClass(src_JsPerfDoctor, [{
+        _createClass(src_JsPerfVisualizer, [{
           key: "initGraph",
           value: function initGraph() {
             console.log('Graph is getting initialized..');
-            document.body.insertAdjacentHTML('afterBegin', '<div id="js-perf-doctor-root"></div>');
-            this.gui = new GameGUI_default.a(src_comp_CompRoot, '#js-perf-doctor-root', {
-              jsPerfDoctor: this
+            document.body.insertAdjacentHTML('afterBegin', '<div id="js-perf-visualizer-root"></div>');
+            this.gui = new GameGUI_default.a(src_comp_CompRoot, '#js-perf-visualizer-root', {
+              jsPerfVisualizer: this
             });
           }
         }, {
@@ -2020,12 +2020,12 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           }
         }]);
 
-        return src_JsPerfDoctor;
+        return src_JsPerfVisualizer;
       }();
       /* harmony default export */
 
 
-      var src = __webpack_exports__["default"] = src_JsPerfDoctor;
+      var src = __webpack_exports__["default"] = src_JsPerfVisualizer;
       /***/
     }])
   );

@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = merge(common, {
   mode: "production",
   entry: {
-    JsPerfDoctor: "./src/index.js"
+    JsPerfVisualizer: "./src/index.js"
   },
   output: {
     library: '[name]',

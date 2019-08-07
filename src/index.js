@@ -2,7 +2,7 @@ import './polyfill/functionName';
 import GameGUI from 'game-gui';
 import CompRoot from './comp/CompRoot';
 
-class JsPerfDoctor {
+class JsPerfVisualizer {
   constructor ( configOverwrite ) {
     this.config = {
         fpsTarget: 60,
@@ -27,9 +27,9 @@ class JsPerfDoctor {
 
   initGraph () {
     console.log('Graph is getting initialized..');
-    document.body.insertAdjacentHTML('afterBegin', '<div id="js-perf-doctor-root"></div>');
-    this.gui = new GameGUI(CompRoot, '#js-perf-doctor-root', {
-      jsPerfDoctor: this,
+    document.body.insertAdjacentHTML('afterBegin', '<div id="js-perf-visualizer-root"></div>');
+    this.gui = new GameGUI(CompRoot, '#js-perf-visualizer-root', {
+      jsPerfVisualizer: this,
     });
   }
 
@@ -79,4 +79,4 @@ class JsPerfDoctor {
   }
 }
 
-export default JsPerfDoctor;
+export default JsPerfVisualizer;
