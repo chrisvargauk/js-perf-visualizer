@@ -28,20 +28,22 @@
       color: white;
     }
 
-    &.color-bg-a {
-      background: antiquewhite;
+    &.bg-log-a {
+      background: aliceblue;
+      color: darkblue;
+
+      .dot {
+        background: darkblue;
+      }
     }
 
-    &.color-bg-a {
-      background: #ebdcc8;
-    }
+    &.bg-log-b {
+      background: #dee6ed;
+      color: darkblue;
 
-    &.color-font-error {
-      color: red;
-    }
-
-    &.color-font-warn {
-      color: #cf8600;
+      .dot {
+        background: darkblue;
+      }
     }
 
     .dot {

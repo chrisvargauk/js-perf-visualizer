@@ -1638,7 +1638,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     function (module, exports, __webpack_require__) {
       exports = module.exports = __webpack_require__(1)(false); // Module
 
-      exports.push([module.i, ".comp-log {\n  background: antiquewhite;\n  max-height: 300px;\n  overflow-y: scroll; }\n  .comp-log .log, .comp-log .mark {\n    font-family: Consolas, Verdana;\n    font-size: 14px;\n    padding: 2px 5px; }\n    .comp-log .log.bg-error-a, .comp-log .mark.bg-error-a {\n      background: #d20000;\n      color: white; }\n    .comp-log .log.bg-error-b, .comp-log .mark.bg-error-b {\n      background: #ee0000;\n      color: white; }\n    .comp-log .log.bg-warn-a, .comp-log .mark.bg-warn-a {\n      background: orange;\n      color: white; }\n    .comp-log .log.bg-warn-b, .comp-log .mark.bg-warn-b {\n      background: darkorange;\n      color: white; }\n    .comp-log .log.color-bg-a, .comp-log .mark.color-bg-a {\n      background: antiquewhite; }\n    .comp-log .log.color-bg-a, .comp-log .mark.color-bg-a {\n      background: #ebdcc8; }\n    .comp-log .log.color-font-error, .comp-log .mark.color-font-error {\n      color: red; }\n    .comp-log .log.color-font-warn, .comp-log .mark.color-font-warn {\n      color: #cf8600; }\n    .comp-log .log .dot, .comp-log .mark .dot {\n      display: inline-block;\n      background: white;\n      width: 8px;\n      height: 8px;\n      border-radius: 4px; }\n  .comp-log .indentation {\n    display: inline-block;\n    width: 25px;\n    text-align: right;\n    padding-right: 6px; }\n", ""]);
+      exports.push([module.i, ".comp-log {\n  background: antiquewhite;\n  max-height: 300px;\n  overflow-y: scroll; }\n  .comp-log .log, .comp-log .mark {\n    font-family: Consolas, Verdana;\n    font-size: 14px;\n    padding: 2px 5px; }\n    .comp-log .log.bg-error-a, .comp-log .mark.bg-error-a {\n      background: #d20000;\n      color: white; }\n    .comp-log .log.bg-error-b, .comp-log .mark.bg-error-b {\n      background: #ee0000;\n      color: white; }\n    .comp-log .log.bg-warn-a, .comp-log .mark.bg-warn-a {\n      background: orange;\n      color: white; }\n    .comp-log .log.bg-warn-b, .comp-log .mark.bg-warn-b {\n      background: darkorange;\n      color: white; }\n    .comp-log .log.bg-log-a, .comp-log .mark.bg-log-a {\n      background: aliceblue;\n      color: darkblue; }\n      .comp-log .log.bg-log-a .dot, .comp-log .mark.bg-log-a .dot {\n        background: darkblue; }\n    .comp-log .log.bg-log-b, .comp-log .mark.bg-log-b {\n      background: #dee6ed;\n      color: darkblue; }\n      .comp-log .log.bg-log-b .dot, .comp-log .mark.bg-log-b .dot {\n        background: darkblue; }\n    .comp-log .log .dot, .comp-log .mark .dot {\n      display: inline-block;\n      background: white;\n      width: 8px;\n      height: 8px;\n      border-radius: 4px; }\n  .comp-log .indentation {\n    display: inline-block;\n    width: 25px;\n    text-align: right;\n    padding-right: 6px; }\n", ""]);
       /***/
     },
     /* 11 */
@@ -1939,7 +1939,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
           _classCallCheck(this, CompLog_CompLog);
 
-          _this4 = _possibleConstructorReturn(this, _getPrototypeOf(CompLog_CompLog).call(this, option, config));
+          _this4 = _possibleConstructorReturn(this, _getPrototypeOf(CompLog_CompLog).call(this, option, config)); // this.option = option;
 
           _this4.setState({
             listLog: []
@@ -1951,6 +1951,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         _createClass(CompLog_CompLog, [{
           key: "render",
           value: function render() {
+            var _this5 = this;
+
             var idEvtLoopPrev = -1;
             var ctrIdEvtLoopDifference = 0;
             var fpsLast;
@@ -1963,7 +1965,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
               idEvtLoopPrev = idEvtLoop;
               fpsLast = typeof item.fpsCurrent !== 'undefined' ? item.fpsCurrent : fpsLast;
-              var classBg = CompLog_CompLog.calcBgClass(fpsLast, ctrIdEvtLoopDifference % 2);
+
+              var classBg = _this5.calcBgClass(fpsLast, ctrIdEvtLoopDifference % 2);
 
               switch (item.type) {
                 case 'fpsWarnLevel':
@@ -1974,20 +1977,17 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
               }
             }).join(''), " \n    ");
           }
-        }], [{
-          key: "formatTime",
-          value: function formatTime(time) {
-            return time < 1000 ? time + 'ms' : Math.round(time / 1000 * 100) / 100 + 's';
-          }
         }, {
           key: "calcBgClass",
-          value: function calcBgClass(fpsCurrent, isIdEvtLoopDifferent) {
+          value: function calcBgClass(fps, isIdEvtLoopDifferent) {
             var classBg = 'bg';
 
-            if (fpsCurrent <= 0) {
+            if (fps < 0) {
               classBg += '-error';
-            } else {
+            } else if (fps < this.option.jsPerfVisualizer.config.fpsWarningLevel) {
               classBg += '-warn';
+            } else {
+              classBg += '-log';
             }
 
             if (isIdEvtLoopDifferent) {
@@ -1997,6 +1997,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             }
 
             return classBg;
+          }
+        }], [{
+          key: "formatTime",
+          value: function formatTime(time) {
+            return time < 1000 ? time + 'ms' : Math.round(time / 1000 * 100) / 100 + 's';
           }
         }]);
 
@@ -2045,7 +2050,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
           console.log('Mark ins initializing..');
           this.jsPerfVisualizer = jsPerfVisualizer;
-          this.listLog = this.jsPerfVisualizer.listLog;
           this.timestampInit = this.jsPerfVisualizer.timestampInit;
           this.listObjMarkStart = {};
           this.markLatest = undefined;
@@ -2089,7 +2093,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             mark.duration = mark.timestampStop - mark.timestampStart;
             mark.idEvtLoopStop = this.jsPerfVisualizer.idEvtLoop;
             mark.indentLevel = Object.keys(this.listObjMarkStart).length - 1;
-            this.listLog.unshift(mark);
+            this.jsPerfVisualizer.log(mark);
             delete this.listObjMarkStart[markText];
             delete this.markLatest;
           }
@@ -2155,14 +2159,20 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
               var diff = timestampNow - this.timestampLast;
               var fpsCurrent = 2 * this.config.fpsTarget - diff;
               var duration = diff - this.config.fpsTarget;
-              this.listDiff.push(fpsCurrent); // Update UI
+              this.listDiff.push(fpsCurrent);
 
-              this.uiUpdate(fpsCurrent, timestampNow, duration);
+              if (fpsCurrent < this.config.fpsWarningLevel) {
+                this.log({
+                  type: 'fpsWarnLevel',
+                  idEvtLoop: this.idEvtLoop,
+                  timeFromInit: timestampNow - this.timestampInit,
+                  fpsCurrent: fpsCurrent,
+                  duration: duration
+                });
+              } // Update UI
 
-              if (1000 / this.config.fpsTarget * 9 < this.listDiff.length) {
-                this.listDiff.shift();
-              }
 
+              this.uiUpdateGraphAndFps(fpsCurrent);
               this.timestampLast = timestampNow;
               this.idEvtLoop++;
             }
@@ -2170,31 +2180,32 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             setTimeout(this.initTracking.bind(this), this.config.fpsTarget);
           }
         }, {
-          key: "uiUpdate",
-          value: function uiUpdate(fpsCurrent, timestampNow, duration) {
+          key: "log",
+          value: function log(item) {
+            this.listLog.unshift(item);
+
+            if (1000 / this.config.fpsTarget * 9 < this.listDiff.length) {
+              this.listDiff.shift();
+            } // UI update
+
+
             if (!this.gui) return;
+            var compLog = this.gui.getCompByType('CompLog')[0];
+            compLog.setState({
+              listLog: this.listLog
+            });
+          }
+        }, {
+          key: "uiUpdateGraphAndFps",
+          value: function uiUpdateGraphAndFps(fpsCurrent) {
+            if (!this.gui) return; // Update Graph
+
+            var compGraph = this.gui.getCompByType('CompGraph')[0];
+            compGraph.graph.update(this.listDiff);
             var compFps = this.gui.getCompByType('CompFps')[0];
             compFps.setState({
               fpsCurrent: fpsCurrent
             });
-
-            if (fpsCurrent < this.config.fpsWarningLevel) {
-              this.listLog.unshift({
-                type: 'fpsWarnLevel',
-                idEvtLoop: this.idEvtLoop,
-                timeFromInit: timestampNow - this.timestampInit,
-                fpsCurrent: fpsCurrent,
-                duration: duration
-              });
-              var compLog = this.gui.getCompByType('CompLog')[0];
-              compLog.setState({
-                listLog: this.listLog
-              });
-            } // Update Graph
-
-
-            var compGraph = this.gui.getCompByType('CompGraph')[0];
-            compGraph.graph.update(this.listDiff);
           }
         }]);
 

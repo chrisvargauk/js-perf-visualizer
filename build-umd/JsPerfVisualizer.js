@@ -1285,7 +1285,7 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(1)(false);
 // Module
-exports.push([module.i, ".comp-log {\n  background: antiquewhite;\n  max-height: 300px;\n  overflow-y: scroll; }\n  .comp-log .log, .comp-log .mark {\n    font-family: Consolas, Verdana;\n    font-size: 14px;\n    padding: 2px 5px; }\n    .comp-log .log.bg-error-a, .comp-log .mark.bg-error-a {\n      background: #d20000;\n      color: white; }\n    .comp-log .log.bg-error-b, .comp-log .mark.bg-error-b {\n      background: #ee0000;\n      color: white; }\n    .comp-log .log.bg-warn-a, .comp-log .mark.bg-warn-a {\n      background: orange;\n      color: white; }\n    .comp-log .log.bg-warn-b, .comp-log .mark.bg-warn-b {\n      background: darkorange;\n      color: white; }\n    .comp-log .log.color-bg-a, .comp-log .mark.color-bg-a {\n      background: antiquewhite; }\n    .comp-log .log.color-bg-a, .comp-log .mark.color-bg-a {\n      background: #ebdcc8; }\n    .comp-log .log.color-font-error, .comp-log .mark.color-font-error {\n      color: red; }\n    .comp-log .log.color-font-warn, .comp-log .mark.color-font-warn {\n      color: #cf8600; }\n    .comp-log .log .dot, .comp-log .mark .dot {\n      display: inline-block;\n      background: white;\n      width: 8px;\n      height: 8px;\n      border-radius: 4px; }\n  .comp-log .indentation {\n    display: inline-block;\n    width: 25px;\n    text-align: right;\n    padding-right: 6px; }\n", ""]);
+exports.push([module.i, ".comp-log {\n  background: antiquewhite;\n  max-height: 300px;\n  overflow-y: scroll; }\n  .comp-log .log, .comp-log .mark {\n    font-family: Consolas, Verdana;\n    font-size: 14px;\n    padding: 2px 5px; }\n    .comp-log .log.bg-error-a, .comp-log .mark.bg-error-a {\n      background: #d20000;\n      color: white; }\n    .comp-log .log.bg-error-b, .comp-log .mark.bg-error-b {\n      background: #ee0000;\n      color: white; }\n    .comp-log .log.bg-warn-a, .comp-log .mark.bg-warn-a {\n      background: orange;\n      color: white; }\n    .comp-log .log.bg-warn-b, .comp-log .mark.bg-warn-b {\n      background: darkorange;\n      color: white; }\n    .comp-log .log.bg-log-a, .comp-log .mark.bg-log-a {\n      background: aliceblue;\n      color: darkblue; }\n      .comp-log .log.bg-log-a .dot, .comp-log .mark.bg-log-a .dot {\n        background: darkblue; }\n    .comp-log .log.bg-log-b, .comp-log .mark.bg-log-b {\n      background: #dee6ed;\n      color: darkblue; }\n      .comp-log .log.bg-log-b .dot, .comp-log .mark.bg-log-b .dot {\n        background: darkblue; }\n    .comp-log .log .dot, .comp-log .mark .dot {\n      display: inline-block;\n      background: white;\n      width: 8px;\n      height: 8px;\n      border-radius: 4px; }\n  .comp-log .indentation {\n    display: inline-block;\n    width: 25px;\n    text-align: right;\n    padding-right: 6px; }\n", ""]);
 
 
 /***/ }),
@@ -1575,7 +1575,7 @@ const dumbCompMark = (mark, classBg) => (`
 class CompLog_CompLog extends GameGUI["Component"] {
   constructor(option, config) {
     super(option, config);
-
+    // this.option = option;
     this.setState({
       listLog: [],
     });
@@ -1597,7 +1597,7 @@ class CompLog_CompLog extends GameGUI["Component"] {
         idEvtLoopPrev = idEvtLoop;
 
         fpsLast = typeof item.fpsCurrent !== 'undefined' ? item.fpsCurrent : fpsLast; 
-        const classBg = CompLog_CompLog.calcBgClass(fpsLast, ctrIdEvtLoopDifference % 2);
+        const classBg = this.calcBgClass(fpsLast, ctrIdEvtLoopDifference % 2);
         switch (item.type) {
           case 'fpsWarnLevel': return dumbCompFpsWarnLevel(item, classBg);
           case 'mark':         return dumbCompMark(item, classBg);
@@ -1610,13 +1610,15 @@ class CompLog_CompLog extends GameGUI["Component"] {
     return time < 1000 ? time+'ms' : Math.round(time/1000*100)/100+'s';
   }
 
-  static calcBgClass(fpsCurrent, isIdEvtLoopDifferent) {
+  calcBgClass(fps, isIdEvtLoopDifferent) {
     let classBg = 'bg';
 
-    if (fpsCurrent <= 0) {
+    if (fps < 0) {
       classBg += '-error';
-    } else {
+    } else if(fps < this.option.jsPerfVisualizer.config.fpsWarningLevel) {
       classBg += '-warn';
+    } else {
+      classBg += '-log';
     }
 
     if (isIdEvtLoopDifferent) {
@@ -1656,7 +1658,6 @@ class Mark {
   constructor( jsPerfVisualizer ) {
     console.log('Mark ins initializing..');
     this.jsPerfVisualizer       = jsPerfVisualizer;
-    this.listLog  = this.jsPerfVisualizer.listLog;
     this.timestampInit          = this.jsPerfVisualizer.timestampInit;
     this.listObjMarkStart       = {};
     this.markLatest             = undefined;
@@ -1699,7 +1700,7 @@ class Mark {
     mark.idEvtLoopStop  = this.jsPerfVisualizer.idEvtLoop;
     mark.indentLevel    = Object.keys(this.listObjMarkStart).length - 1;
 
-    this.listLog.unshift( mark );
+    this.jsPerfVisualizer.log( mark );
 
     delete this.listObjMarkStart[ markText ];
     delete this.markLatest;
@@ -1762,14 +1763,21 @@ class src_JsPerfVisualizer {
       const diff = timestampNow - this.timestampLast;
       const fpsCurrent = 2 * this.config.fpsTarget - diff;
       const duration = diff - this.config.fpsTarget;
-      this.listDiff.push(fpsCurrent);
+      this.listDiff.push( fpsCurrent );
+
+      if (fpsCurrent < this.config.fpsWarningLevel ) {
+        this.log({
+          type: 'fpsWarnLevel',
+          idEvtLoop: this.idEvtLoop,
+          timeFromInit: timestampNow - this.timestampInit,
+          fpsCurrent,
+          duration,
+        });
+      }
 
       // Update UI
-      this.uiUpdate(fpsCurrent, timestampNow, duration);
+      this.uiUpdateGraphAndFps(fpsCurrent);
 
-      if (1000 / this.config.fpsTarget * 9 < this.listDiff.length) {
-        this.listDiff.shift();
-      }
       this.timestampLast = timestampNow;
 
       this.idEvtLoop++;
@@ -1778,33 +1786,32 @@ class src_JsPerfVisualizer {
     setTimeout(this.initTracking.bind( this ), this.config.fpsTarget);
   }
 
-  uiUpdate(fpsCurrent, timestampNow, duration) {
-    if (!this.gui) return;
+  log ( item ) {
+    this.listLog.unshift(item);
 
-    const compFps = this.gui.getCompByType('CompFps')[0];
-    compFps.setState({
-      fpsCurrent
-    });
-
-    if (fpsCurrent < this.config.fpsWarningLevel ) {
-      this.listLog.unshift({
-        type: 'fpsWarnLevel',
-        idEvtLoop: this.idEvtLoop,
-        timeFromInit: timestampNow - this.timestampInit,
-        fpsCurrent,
-        duration,
-      });
-
-      const compLog = this.gui.getCompByType('CompLog')[0];
-      compLog.setState({
-        listLog: this.listLog,
-      });
-
+    if (1000 / this.config.fpsTarget * 9 < this.listDiff.length) {
+      this.listDiff.shift();
     }
+
+    // UI update
+    if (!this.gui) return;
+    const compLog = this.gui.getCompByType('CompLog')[0];
+    compLog.setState({
+      listLog: this.listLog,
+    });
+  }
+
+  uiUpdateGraphAndFps( fpsCurrent ) {
+    if (!this.gui) return;
 
     // Update Graph
     const compGraph = this.gui.getCompByType('CompGraph')[0];
     compGraph.graph.update(this.listDiff);
+
+    const compFps = this.gui.getCompByType('CompFps')[0];
+    compFps.setState({
+      fpsCurrent,
+    });
   }
 }
 

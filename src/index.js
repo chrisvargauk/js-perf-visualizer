@@ -44,14 +44,21 @@ class JsPerfVisualizer {
       const diff = timestampNow - this.timestampLast;
       const fpsCurrent = 2 * this.config.fpsTarget - diff;
       const duration = diff - this.config.fpsTarget;
-      this.listDiff.push(fpsCurrent);
+      this.listDiff.push( fpsCurrent );
+
+      if (fpsCurrent < this.config.fpsWarningLevel ) {
+        this.log({
+          type: 'fpsWarnLevel',
+          idEvtLoop: this.idEvtLoop,
+          timeFromInit: timestampNow - this.timestampInit,
+          fpsCurrent,
+          duration,
+        });
+      }
 
       // Update UI
-      this.uiUpdate(fpsCurrent, timestampNow, duration);
+      this.uiUpdateGraphAndFps(fpsCurrent);
 
-      if (1000 / this.config.fpsTarget * 9 < this.listDiff.length) {
-        this.listDiff.shift();
-      }
       this.timestampLast = timestampNow;
 
       this.idEvtLoop++;
@@ -60,33 +67,32 @@ class JsPerfVisualizer {
     setTimeout(this.initTracking.bind( this ), this.config.fpsTarget);
   }
 
-  uiUpdate(fpsCurrent, timestampNow, duration) {
-    if (!this.gui) return;
+  log ( item ) {
+    this.listLog.unshift(item);
 
-    const compFps = this.gui.getCompByType('CompFps')[0];
-    compFps.setState({
-      fpsCurrent
-    });
-
-    if (fpsCurrent < this.config.fpsWarningLevel ) {
-      this.listLog.unshift({
-        type: 'fpsWarnLevel',
-        idEvtLoop: this.idEvtLoop,
-        timeFromInit: timestampNow - this.timestampInit,
-        fpsCurrent,
-        duration,
-      });
-
-      const compLog = this.gui.getCompByType('CompLog')[0];
-      compLog.setState({
-        listLog: this.listLog,
-      });
-
+    if (1000 / this.config.fpsTarget * 9 < this.listDiff.length) {
+      this.listDiff.shift();
     }
+
+    // UI update
+    if (!this.gui) return;
+    const compLog = this.gui.getCompByType('CompLog')[0];
+    compLog.setState({
+      listLog: this.listLog,
+    });
+  }
+
+  uiUpdateGraphAndFps( fpsCurrent ) {
+    if (!this.gui) return;
 
     // Update Graph
     const compGraph = this.gui.getCompByType('CompGraph')[0];
     compGraph.graph.update(this.listDiff);
+
+    const compFps = this.gui.getCompByType('CompFps')[0];
+    compFps.setState({
+      fpsCurrent,
+    });
   }
 }
 

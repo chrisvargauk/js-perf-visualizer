@@ -60,7 +60,7 @@ class CompLog extends Component {
         idEvtLoopPrev = idEvtLoop;
 
         fpsLast = typeof item.fpsCurrent !== 'undefined' ? item.fpsCurrent : fpsLast; 
-        const classBg = CompLog.calcBgClass(fpsLast, ctrIdEvtLoopDifference % 2);
+        const classBg = this.calcBgClass(fpsLast, ctrIdEvtLoopDifference % 2);
         switch (item.type) {
           case 'fpsWarnLevel': return dumbCompFpsWarnLevel(item, classBg);
           case 'mark':         return dumbCompMark(item, classBg);
@@ -73,13 +73,15 @@ class CompLog extends Component {
     return time < 1000 ? time+'ms' : Math.round(time/1000*100)/100+'s';
   }
 
-  static calcBgClass(fpsCurrent, isIdEvtLoopDifferent) {
+  calcBgClass(fps, isIdEvtLoopDifferent) {
     let classBg = 'bg';
 
-    if (fpsCurrent <= 0) {
+    if (fps < 0) {
       classBg += '-error';
-    } else {
+    } else if(fps < this.option.jsPerfVisualizer.config.fpsWarningLevel) {
       classBg += '-warn';
+    } else {
+      classBg += '-log';
     }
 
     if (isIdEvtLoopDifferent) {
