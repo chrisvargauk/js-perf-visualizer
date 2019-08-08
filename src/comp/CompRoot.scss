@@ -2,10 +2,11 @@
   position: absolute;
   left: 0;
   top: 0;
+  box-sizing: border-box;
 }
 
 #graph-root {
   background: gray;
-  width: 300px;
+  width: 500px;
   height: 100px;
 }

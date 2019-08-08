@@ -3,11 +3,60 @@
   max-height: 300px;
   overflow-y: scroll;
 
-  .color-font-error {
-    color: red;
+  .log, .mark{
+    font-family: Consolas, Verdana;
+    font-size: 14px;
+    padding: 2px 5px;
+
+    &.bg-error-a {
+      background: #d20000;
+      color: white;
+    }
+
+    &.bg-error-b {
+      background: #ee0000;
+      color: white;
+    }
+
+    &.bg-warn-a {
+      background: orange;
+      color: white;
+    }
+
+    &.bg-warn-b {
+      background: darkorange;
+      color: white;
+    }
+
+    &.color-bg-a {
+      background: antiquewhite;
+    }
+
+    &.color-bg-a {
+      background: #ebdcc8;
+    }
+
+    &.color-font-error {
+      color: red;
+    }
+
+    &.color-font-warn {
+      color: #cf8600;
+    }
+
+    .dot {
+      display: inline-block;
+      background: white;
+      width: 8px;
+      height: 8px;
+      border-radius: 4px;
+    }
   }
 
-  .color-font-warn {
-    color: #cf8600;
+  .indentation {
+    display: inline-block;
+    width: 25px;
+    text-align: right;
+    padding-right: 6px;
   }
 }

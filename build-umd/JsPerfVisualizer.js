@@ -1122,7 +1122,7 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(1)(false);
 // Module
-exports.push([module.i, "#js-perf-visualizer-root {\n  position: absolute;\n  left: 0;\n  top: 0; }\n\n#graph-root {\n  background: gray;\n  width: 300px;\n  height: 100px; }\n", ""]);
+exports.push([module.i, "#js-perf-visualizer-root {\n  position: absolute;\n  left: 0;\n  top: 0;\n  box-sizing: border-box; }\n\n#graph-root {\n  background: gray;\n  width: 500px;\n  height: 100px; }\n", ""]);
 
 
 /***/ }),
@@ -1251,7 +1251,7 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(1)(false);
 // Module
-exports.push([module.i, ".comp-fps {\n  position: absolute;\n  top: 0;\n  left: 0;\n  padding-top: 0.2em;\n  padding-left: 0.3em;\n  font-weight: bold;\n  color: #00c000; }\n  .comp-fps .red {\n    color: red; }\n\n.comp-graph {\n  position: relative;\n  cursor: pointer; }\n", ""]);
+exports.push([module.i, ".comp-fps {\n  font-family: consolas, Verdana;\n  position: absolute;\n  bottom: 0;\n  right: 0;\n  padding-bottom: 1px;\n  padding-right: 6px;\n  color: white; }\n  .comp-fps .red {\n    color: red; }\n\n.comp-btn-pause-play {\n  position: absolute;\n  top: 0px;\n  right: 0px;\n  margin: 6px;\n  background: white;\n  color: gray;\n  width: 24px;\n  height: 24px;\n  border-radius: 12px;\n  text-align: center;\n  vertical-align: middle; }\n\n.comp-graph {\n  position: relative;\n  cursor: pointer; }\n", ""]);
 
 
 /***/ }),
@@ -1285,7 +1285,7 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(1)(false);
 // Module
-exports.push([module.i, ".comp-log {\n  background: antiquewhite;\n  max-height: 300px;\n  overflow-y: scroll; }\n  .comp-log .color-font-error {\n    color: red; }\n  .comp-log .color-font-warn {\n    color: #cf8600; }\n", ""]);
+exports.push([module.i, ".comp-log {\n  background: antiquewhite;\n  max-height: 300px;\n  overflow-y: scroll; }\n  .comp-log .log, .comp-log .mark {\n    font-family: Consolas, Verdana;\n    font-size: 14px;\n    padding: 2px 5px; }\n    .comp-log .log.bg-error-a, .comp-log .mark.bg-error-a {\n      background: #d20000;\n      color: white; }\n    .comp-log .log.bg-error-b, .comp-log .mark.bg-error-b {\n      background: #ee0000;\n      color: white; }\n    .comp-log .log.bg-warn-a, .comp-log .mark.bg-warn-a {\n      background: orange;\n      color: white; }\n    .comp-log .log.bg-warn-b, .comp-log .mark.bg-warn-b {\n      background: darkorange;\n      color: white; }\n    .comp-log .log.color-bg-a, .comp-log .mark.color-bg-a {\n      background: antiquewhite; }\n    .comp-log .log.color-bg-a, .comp-log .mark.color-bg-a {\n      background: #ebdcc8; }\n    .comp-log .log.color-font-error, .comp-log .mark.color-font-error {\n      color: red; }\n    .comp-log .log.color-font-warn, .comp-log .mark.color-font-warn {\n      color: #cf8600; }\n    .comp-log .log .dot, .comp-log .mark .dot {\n      display: inline-block;\n      background: white;\n      width: 8px;\n      height: 8px;\n      border-radius: 4px; }\n  .comp-log .indentation {\n    display: inline-block;\n    width: 25px;\n    text-align: right;\n    padding-right: 6px; }\n", ""]);
 
 
 /***/ }),
@@ -1407,6 +1407,7 @@ class CompGraph_CompGraph extends GameGUI["Component"] {
     return `
       <canvas id="graph-root"></canvas>
       ${this.include(CompGraph_CompFps)}
+      ${this.include(CompGraph_CompBtnPausePlay)}
     `;
   }
 
@@ -1500,6 +1501,35 @@ class CompGraph_CompFps extends GameGUI["Component"] {
   }
 }
 
+class CompGraph_CompBtnPausePlay extends GameGUI["Component"] {
+  constructor (option, config) {
+    super(option, config);
+
+    this.setState({
+      isPaused: this.option.jsPerfVisualizer.isPaused
+    });
+  }
+
+  render () {
+    const btnPlay = '&#x23f5;';
+    const btnPause = '&#x23f8;';
+
+    return `
+      <div ui-click="handlerClick">
+        ${this.getState().isPaused ? btnPlay : btnPause}
+      </div>
+    `;
+  }
+
+  handlerClick () {
+    this.option.jsPerfVisualizer.isPaused = !this.option.jsPerfVisualizer.isPaused;
+
+    this.setState({
+      isPaused: this.option.jsPerfVisualizer.isPaused
+    });
+  }
+}
+
 /* harmony default export */ var src_comp_CompGraph = (CompGraph_CompGraph);
 // EXTERNAL MODULE: ./src/comp/CompLog.scss
 var comp_CompLog = __webpack_require__(9);
@@ -1508,33 +1538,101 @@ var comp_CompLog = __webpack_require__(9);
 
 
 
+const dumbCompFpsWarnLevel = (item, classBg) => {
+  return `
+    <div class="log ${classBg}">
+      Lagg 
+       Time: ${CompLog_CompLog.formatTime( item.timeFromInit )}
+       Duration: ${CompLog_CompLog.formatTime(item.duration)}
+       FPS: ${item.fpsCurrent}
+       LID: ${item.idEvtLoop} 
+    </div>
+  `;
+};
+
+const dumbCompIndentation = indentLevel => {
+  if(indentLevel === 0) return '';
+
+  let html = '<span style="display: inline-block;">';
+  for (let i=0; i<indentLevel; i++) {
+    html+='<span  class="indentation">|</span>';
+  }
+  html += '</span>';
+
+  return html;
+};
+
+const dumbCompMark = (mark, classBg) => (`
+  <div class="mark ${classBg}">
+    ${dumbCompIndentation(mark.indentLevel)}<span class="dot"></span> 
+    ${!isUndef(mark.timeFromInit) ? 'Time: '    +CompLog_CompLog.formatTime(mark.timeFromInit)  : ''} 
+    ${!isUndef(mark.duration)     ? 'Duration: '+CompLog_CompLog.formatTime(mark.duration)      : ''}
+    LID: ${mark.idEvtLoopStart}/${mark.idEvtLoopStop}
+    | "${mark.text}"
+  </div>
+`);
+
 class CompLog_CompLog extends GameGUI["Component"] {
   constructor(option, config) {
     super(option, config);
 
     this.setState({
-      listFpsBelowWarnLevel: [],
+      listLog: [],
     });
   }
 
   render () {
+    let idEvtLoopPrev = -1;
+    let ctrIdEvtLoopDifference = 0;
+    let fpsLast;
+
     return `
-      ${this.getState().listFpsBelowWarnLevel.map(item => {
-        return `
-          <div class="${(
-            item.fpsCurrent <= 0 ? 'color-font-error' : 'color-font-warn'
-            )}"
-          >Lagging | FPS: ${item.fpsCurrent} | Time: ${this.formatTime( item.timeFromInit )}</div>
-        `;  
+      ${this.getState().listLog.map(item => {
+        const idEvtLoop = item.idEvtLoop || item.idEvtLoopStop;
+        
+        if (idEvtLoopPrev !== idEvtLoop ) {
+          ctrIdEvtLoopDifference++; 
+        }
+        
+        idEvtLoopPrev = idEvtLoop;
+
+        fpsLast = typeof item.fpsCurrent !== 'undefined' ? item.fpsCurrent : fpsLast; 
+        const classBg = CompLog_CompLog.calcBgClass(fpsLast, ctrIdEvtLoopDifference % 2);
+        switch (item.type) {
+          case 'fpsWarnLevel': return dumbCompFpsWarnLevel(item, classBg);
+          case 'mark':         return dumbCompMark(item, classBg);
+        }
       }).join('')} 
     `;
   }
 
-  formatTime (time) {
+  static formatTime (time) {
     return time < 1000 ? time+'ms' : Math.round(time/1000*100)/100+'s';
+  }
+
+  static calcBgClass(fpsCurrent, isIdEvtLoopDifferent) {
+    let classBg = 'bg';
+
+    if (fpsCurrent <= 0) {
+      classBg += '-error';
+    } else {
+      classBg += '-warn';
+    }
+
+    if (isIdEvtLoopDifferent) {
+      classBg += '-a';
+    } else {
+      classBg += '-b';
+    }
+
+    return classBg;
   }
 }
 
+// Utility
+function isUndef( item ) {
+  return typeof item === 'undefined';
+}
 /* harmony default export */ var src_comp_CompLog = (CompLog_CompLog);
 // CONCATENATED MODULE: ./src/comp/CompRoot.js
 
@@ -1553,7 +1651,72 @@ class CompRoot_CompRoot extends GameGUI["Component"] {
 }
 
 /* harmony default export */ var src_comp_CompRoot = (CompRoot_CompRoot);
+// CONCATENATED MODULE: ./src/Mark.js
+class Mark {
+  constructor( jsPerfVisualizer ) {
+    console.log('Mark ins initializing..');
+    this.jsPerfVisualizer       = jsPerfVisualizer;
+    this.listLog  = this.jsPerfVisualizer.listLog;
+    this.timestampInit          = this.jsPerfVisualizer.timestampInit;
+    this.listObjMarkStart       = {};
+    this.markLatest             = undefined;
+    this.ctr                    = -1;
+  }
+
+  start( markText ) {
+    if ( this.listObjMarkStart[ markText ] ) {
+      console.error(`Error: JS Perf Visualizer / Mark: mark already exists: ${markText}`);
+      return;
+    }
+
+    const timestampNow = Date.now();
+    this.listObjMarkStart[ markText ] = {
+      type: 'mark',
+      ctr: ++this.ctr,
+      idEvtLoopStart: this.jsPerfVisualizer.idEvtLoop,
+      idEvtLoopStop:  undefined,
+      timestampStart: timestampNow,
+      timeFromInit:   timestampNow - this.timestampInit,
+      timestampStop:  undefined,
+      duration:       undefined,
+      text:           markText,
+      indentLevel:    0,
+    };
+
+    this.markLatest = this.listObjMarkStart[ markText ];
+  }
+
+  stop( markText ) {
+    if ( !this.listObjMarkStart[ markText ] ) {
+      console.error(`Error: JS Perf Visualizer / Mark: Cant stop mark ("${markText}") because there is not start mark ("${markText}") registered yet.`);
+      return;
+    }
+
+    const mark = this.listObjMarkStart[ markText ];
+    mark.timestampStop  = Date.now();
+    mark.timeFromInit   = mark.timestampStop - this.timestampInit;
+    mark.duration       = mark.timestampStop - mark.timestampStart;
+    mark.idEvtLoopStop  = this.jsPerfVisualizer.idEvtLoop;
+    mark.indentLevel    = Object.keys(this.listObjMarkStart).length - 1;
+
+    this.listLog.unshift( mark );
+
+    delete this.listObjMarkStart[ markText ];
+    delete this.markLatest;
+  }
+
+  getLatest() {
+    if (!this.markLatest) {
+      return;
+    }
+
+    return JSON.parse(JSON.stringify(this.markLatest));
+  }
+}
+
+/* harmony default export */ var src_Mark = (Mark);
 // CONCATENATED MODULE: ./src/index.js
+
 
 
 
@@ -1566,10 +1729,14 @@ class src_JsPerfVisualizer {
         ...configOverwrite
     };
 
+    this.idEvtLoop = 0;
+    this.isPaused = false;
     this.timestampInit = Date.now();
-    this.timestampLast = this.timestampInit
+    this.timestampLast = this.timestampInit;
     this.listDiff = [];
-    this.listFpsBelowWarnLevel = [];
+    this.listLog = [];
+
+    this.mark = new src_Mark(this);
 
     // Kick of tracking ASAP
     this.initTracking();
@@ -1590,25 +1757,28 @@ class src_JsPerfVisualizer {
   }
 
   initTracking() {
-    setTimeout(() => {
+    if (!this.isPaused) {
       const timestampNow = Date.now();
       const diff = timestampNow - this.timestampLast;
       const fpsCurrent = 2 * this.config.fpsTarget - diff;
+      const duration = diff - this.config.fpsTarget;
       this.listDiff.push(fpsCurrent);
 
       // Update UI
-      this.uiUpdate(fpsCurrent, timestampNow);
+      this.uiUpdate(fpsCurrent, timestampNow, duration);
 
       if (1000 / this.config.fpsTarget * 9 < this.listDiff.length) {
         this.listDiff.shift();
       }
       this.timestampLast = timestampNow;
 
-      this.initTracking();
-    }, this.config.fpsTarget);
+      this.idEvtLoop++;
+    }
+
+    setTimeout(this.initTracking.bind( this ), this.config.fpsTarget);
   }
 
-  uiUpdate(fpsCurrent, timestampNow) {
+  uiUpdate(fpsCurrent, timestampNow, duration) {
     if (!this.gui) return;
 
     const compFps = this.gui.getCompByType('CompFps')[0];
@@ -1617,14 +1787,17 @@ class src_JsPerfVisualizer {
     });
 
     if (fpsCurrent < this.config.fpsWarningLevel ) {
-      this.listFpsBelowWarnLevel.unshift({
+      this.listLog.unshift({
+        type: 'fpsWarnLevel',
+        idEvtLoop: this.idEvtLoop,
         timeFromInit: timestampNow - this.timestampInit,
         fpsCurrent,
+        duration,
       });
 
       const compLog = this.gui.getCompByType('CompLog')[0];
       compLog.setState({
-        listFpsBelowWarnLevel: this.listFpsBelowWarnLevel,
+        listLog: this.listLog,
       });
 
     }

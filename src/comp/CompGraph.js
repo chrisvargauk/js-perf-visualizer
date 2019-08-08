@@ -26,6 +26,7 @@ class CompGraph extends Component {
     return `
       <canvas id="graph-root"></canvas>
       ${this.include(CompFps)}
+      ${this.include(CompBtnPausePlay)}
     `;
   }
 
@@ -116,6 +117,35 @@ class CompFps extends Component {
         ${this.option.jsPerfVisualizer.config.fpsTarget}/${fpsCurrent}
       </span>
     `;
+  }
+}
+
+class CompBtnPausePlay extends Component {
+  constructor (option, config) {
+    super(option, config);
+
+    this.setState({
+      isPaused: this.option.jsPerfVisualizer.isPaused
+    });
+  }
+
+  render () {
+    const btnPlay = '&#x23f5;';
+    const btnPause = '&#x23f8;';
+
+    return `
+      <div ui-click="handlerClick">
+        ${this.getState().isPaused ? btnPlay : btnPause}
+      </div>
+    `;
+  }
+
+  handlerClick () {
+    this.option.jsPerfVisualizer.isPaused = !this.option.jsPerfVisualizer.isPaused;
+
+    this.setState({
+      isPaused: this.option.jsPerfVisualizer.isPaused
+    });
   }
 }
 

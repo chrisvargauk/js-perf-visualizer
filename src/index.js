@@ -1,6 +1,7 @@
 import './polyfill/functionName';
 import GameGUI from 'game-gui';
 import CompRoot from './comp/CompRoot';
+import Mark from './Mark';
 
 class JsPerfVisualizer {
   constructor ( configOverwrite ) {
@@ -10,10 +11,14 @@ class JsPerfVisualizer {
         ...configOverwrite
     };
 
+    this.idEvtLoop = 0;
+    this.isPaused = false;
     this.timestampInit = Date.now();
-    this.timestampLast = this.timestampInit
+    this.timestampLast = this.timestampInit;
     this.listDiff = [];
-    this.listFpsBelowWarnLevel = [];
+    this.listLog = [];
+
+    this.mark = new Mark(this);
 
     // Kick of tracking ASAP
     this.initTracking();
@@ -34,25 +39,28 @@ class JsPerfVisualizer {
   }
 
   initTracking() {
-    setTimeout(() => {
+    if (!this.isPaused) {
       const timestampNow = Date.now();
       const diff = timestampNow - this.timestampLast;
       const fpsCurrent = 2 * this.config.fpsTarget - diff;
+      const duration = diff - this.config.fpsTarget;
       this.listDiff.push(fpsCurrent);
 
       // Update UI
-      this.uiUpdate(fpsCurrent, timestampNow);
+      this.uiUpdate(fpsCurrent, timestampNow, duration);
 
       if (1000 / this.config.fpsTarget * 9 < this.listDiff.length) {
         this.listDiff.shift();
       }
       this.timestampLast = timestampNow;
 
-      this.initTracking();
-    }, this.config.fpsTarget);
+      this.idEvtLoop++;
+    }
+
+    setTimeout(this.initTracking.bind( this ), this.config.fpsTarget);
   }
 
-  uiUpdate(fpsCurrent, timestampNow) {
+  uiUpdate(fpsCurrent, timestampNow, duration) {
     if (!this.gui) return;
 
     const compFps = this.gui.getCompByType('CompFps')[0];
@@ -61,14 +69,17 @@ class JsPerfVisualizer {
     });
 
     if (fpsCurrent < this.config.fpsWarningLevel ) {
-      this.listFpsBelowWarnLevel.unshift({
+      this.listLog.unshift({
+        type: 'fpsWarnLevel',
+        idEvtLoop: this.idEvtLoop,
         timeFromInit: timestampNow - this.timestampInit,
         fpsCurrent,
+        duration,
       });
 
       const compLog = this.gui.getCompByType('CompLog')[0];
       compLog.setState({
-        listFpsBelowWarnLevel: this.listFpsBelowWarnLevel,
+        listLog: this.listLog,
       });
 
     }

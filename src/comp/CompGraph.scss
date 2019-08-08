@@ -1,16 +1,29 @@
 .comp-fps {
+  font-family: consolas, Verdana;
   position: absolute;
-  top: 0;
-  left: 0;
-  padding-top: 0.2em;
-  padding-left: 0.3em;
-
-  font-weight: bold;
-  color: #00c000;
+  bottom: 0;
+  right: 0;
+  padding-bottom: 1px;
+  padding-right: 6px;
+  color: white;
 
   .red {
     color: red;
   }
+}
+
+.comp-btn-pause-play {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  margin: 6px;
+  background: white;
+  color: gray;
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  text-align: center;
+  vertical-align: middle;
 }
 
 .comp-graph {

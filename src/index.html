@@ -4,13 +4,33 @@
   <script>
     window.jsPerfVisualizer = new JsPerfVisualizer.default();
 
-    setInterval(() => {
+    jsPerfVisualizer.mark.start('mark 1');
+    jsPerfVisualizer.mark.stop('mark 1');
+
+    jsPerfVisualizer.mark.start('mark 2');
+    setTimeout(() => {
+      jsPerfVisualizer.mark.start('mark 3');
+      jsPerfVisualizer.mark.start('mark 4');
       const noOfIter = 15000;
       for (let i=0; i<noOfIter; i++) {
         for (let j = 0; j < noOfIter; j++) {
           Math.sqrt(999999999999999999);
         }
       }
-    }, 1000);
+      jsPerfVisualizer.mark.stop('mark 4');
+      jsPerfVisualizer.mark.start('mark A');
+      jsPerfVisualizer.mark.stop('mark A');
+      jsPerfVisualizer.mark.stop('mark 3');
+      jsPerfVisualizer.mark.stop('mark 2');
+
+      setInterval(() => {
+        const noOfIter = 15000;
+        for (let i=0; i<noOfIter; i++) {
+          for (let j = 0; j < noOfIter; j++) {
+            Math.sqrt(999999999999999999);
+          }
+        }
+      }, 1000);
+    }, 3000);
   </script>
 </html>
