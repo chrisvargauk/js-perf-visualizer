@@ -2,11 +2,23 @@
   position: absolute;
   left: 0;
   top: 0;
-  box-sizing: border-box;
+
+  * {
+    box-sizing: border-box;
+  }
 }
 
 #graph-root {
-  background: gray;
+  background: #ececec;
   width: 500px;
   height: 100px;
+}
+
+.comp-root {
+  max-width: 500px;
+
+  & > div {
+    float: left;
+  }
+  overflow: auto;
 }

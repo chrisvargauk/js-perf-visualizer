@@ -24,6 +24,7 @@ class CompGraph extends Component {
 
   render () {
     return `
+      <div class="head">JS PERF VISUALIZER</div>
       <canvas id="graph-root"></canvas>
       ${this.include(CompFps)}
       ${this.include(CompBtnPausePlay)}
@@ -131,7 +132,7 @@ class CompBtnPausePlay extends Component {
 
   render () {
     const btnPlay = '&#x23f5;';
-    const btnPause = '&#x23f8;';
+    const btnPause = '&#10073;&#10073;';
 
     return `
       <div ui-click="handlerClick">

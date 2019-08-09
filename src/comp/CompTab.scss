@@ -1,0 +1,33 @@
+.comp-tab {
+  width: 100%;
+
+  &>div {
+    float: left;
+  }
+  overflow: auto;
+
+  & > .btn {
+    width: 50%;
+    background: lightgray;
+    cursor: pointer;
+    padding: 5px;
+
+    font-family: monospace;
+    font-size: 14px;
+    font-weight: bold;
+    color: #6d6d6d;
+
+    &.active {
+      background: #bfbfbffc;
+    }
+  }
+
+  .tab {
+    width: 100%;
+
+    display: none;
+    &.active {
+      display: block;
+    }
+  }
+}

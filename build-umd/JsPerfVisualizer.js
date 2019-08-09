@@ -91,7 +91,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 11);
+/******/ 	return __webpack_require__(__webpack_require__.s = 15);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1122,7 +1122,7 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(1)(false);
 // Module
-exports.push([module.i, "#js-perf-visualizer-root {\n  position: absolute;\n  left: 0;\n  top: 0;\n  box-sizing: border-box; }\n\n#graph-root {\n  background: gray;\n  width: 500px;\n  height: 100px; }\n", ""]);
+exports.push([module.i, "#js-perf-visualizer-root {\n  position: absolute;\n  left: 0;\n  top: 0; }\n  #js-perf-visualizer-root * {\n    box-sizing: border-box; }\n\n#graph-root {\n  background: #ececec;\n  width: 500px;\n  height: 100px; }\n\n.comp-root {\n  max-width: 500px;\n  overflow: auto; }\n  .comp-root > div {\n    float: left; }\n", ""]);
 
 
 /***/ }),
@@ -1251,7 +1251,7 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(1)(false);
 // Module
-exports.push([module.i, ".comp-fps {\n  font-family: consolas, Verdana;\n  position: absolute;\n  bottom: 0;\n  right: 0;\n  padding-bottom: 1px;\n  padding-right: 6px;\n  color: white; }\n  .comp-fps .red {\n    color: red; }\n\n.comp-btn-pause-play {\n  position: absolute;\n  top: 0px;\n  right: 0px;\n  margin: 6px;\n  background: white;\n  color: gray;\n  width: 24px;\n  height: 24px;\n  border-radius: 12px;\n  text-align: center;\n  vertical-align: middle; }\n\n.comp-graph {\n  position: relative;\n  cursor: pointer; }\n", ""]);
+exports.push([module.i, ".comp-fps {\n  font-family: consolas, Verdana;\n  position: absolute;\n  bottom: 0;\n  right: 0;\n  padding-bottom: 1px;\n  padding-right: 6px;\n  color: #818181; }\n  .comp-fps .red {\n    color: red; }\n\n.comp-btn-pause-play {\n  font-size: 16px;\n  position: absolute;\n  top: 29px;\n  right: 0px;\n  margin: 6px;\n  background: white;\n  color: gray;\n  width: 24px;\n  height: 24px;\n  border-radius: 12px;\n  text-align: center;\n  vertical-align: middle; }\n\n.comp-graph {\n  position: relative;\n  cursor: pointer; }\n  .comp-graph > .head {\n    background: lightgray;\n    cursor: pointer;\n    padding: 5px;\n    font-family: monospace;\n    font-size: 16px;\n    font-weight: bold;\n    color: #6d6d6d;\n    width: 100%;\n    text-align: center; }\n", ""]);
 
 
 /***/ }),
@@ -1285,11 +1285,79 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(1)(false);
 // Module
-exports.push([module.i, ".comp-log {\n  background: antiquewhite;\n  max-height: 300px;\n  overflow-y: scroll; }\n  .comp-log .log, .comp-log .mark {\n    font-family: Consolas, Verdana;\n    font-size: 14px;\n    padding: 2px 5px; }\n    .comp-log .log.bg-error-a, .comp-log .mark.bg-error-a {\n      background: #d20000;\n      color: white; }\n    .comp-log .log.bg-error-b, .comp-log .mark.bg-error-b {\n      background: #ee0000;\n      color: white; }\n    .comp-log .log.bg-warn-a, .comp-log .mark.bg-warn-a {\n      background: orange;\n      color: white; }\n    .comp-log .log.bg-warn-b, .comp-log .mark.bg-warn-b {\n      background: darkorange;\n      color: white; }\n    .comp-log .log.bg-log-a, .comp-log .mark.bg-log-a {\n      background: aliceblue;\n      color: darkblue; }\n      .comp-log .log.bg-log-a .dot, .comp-log .mark.bg-log-a .dot {\n        background: darkblue; }\n    .comp-log .log.bg-log-b, .comp-log .mark.bg-log-b {\n      background: #dee6ed;\n      color: darkblue; }\n      .comp-log .log.bg-log-b .dot, .comp-log .mark.bg-log-b .dot {\n        background: darkblue; }\n    .comp-log .log .dot, .comp-log .mark .dot {\n      display: inline-block;\n      background: white;\n      width: 8px;\n      height: 8px;\n      border-radius: 4px; }\n  .comp-log .indentation {\n    display: inline-block;\n    width: 25px;\n    text-align: right;\n    padding-right: 6px; }\n", ""]);
+exports.push([module.i, ".comp-tab {\n  width: 100%;\n  overflow: auto; }\n  .comp-tab > div {\n    float: left; }\n  .comp-tab > .btn {\n    width: 50%;\n    background: lightgray;\n    cursor: pointer;\n    padding: 5px;\n    font-family: monospace;\n    font-size: 14px;\n    font-weight: bold;\n    color: #6d6d6d; }\n    .comp-tab > .btn.active {\n      background: #bfbfbffc; }\n  .comp-tab .tab {\n    width: 100%;\n    display: none; }\n    .comp-tab .tab.active {\n      display: block; }\n", ""]);
 
 
 /***/ }),
 /* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(12);
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(2)(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// Module
+exports.push([module.i, ".comp-log {\n  background: #efefef;\n  width: 100%;\n  height: 300px;\n  overflow-y: auto; }\n  .comp-log .log, .comp-log .mark {\n    font-family: Consolas, Verdana;\n    font-size: 14px;\n    padding: 2px 5px; }\n    .comp-log .log.bg-error-a, .comp-log .mark.bg-error-a {\n      background: #d20000;\n      color: white; }\n    .comp-log .log.bg-error-b, .comp-log .mark.bg-error-b {\n      background: #ee0000;\n      color: white; }\n    .comp-log .log.bg-warn-a, .comp-log .mark.bg-warn-a {\n      background: orange;\n      color: white; }\n    .comp-log .log.bg-warn-b, .comp-log .mark.bg-warn-b {\n      background: darkorange;\n      color: white; }\n    .comp-log .log.bg-log-a, .comp-log .mark.bg-log-a {\n      background: aliceblue;\n      color: darkblue; }\n      .comp-log .log.bg-log-a .dot, .comp-log .mark.bg-log-a .dot {\n        background: darkblue; }\n    .comp-log .log.bg-log-b, .comp-log .mark.bg-log-b {\n      background: #dee6ed;\n      color: darkblue; }\n      .comp-log .log.bg-log-b .dot, .comp-log .mark.bg-log-b .dot {\n        background: darkblue; }\n    .comp-log .log .dot, .comp-log .mark .dot {\n      display: inline-block;\n      background: white;\n      width: 8px;\n      height: 8px;\n      border-radius: 4px; }\n  .comp-log .indentation {\n    display: inline-block;\n    width: 25px;\n    text-align: right;\n    padding-right: 6px; }\n  .comp-log > span.warn {\n    color: #e09100;\n    margin: 5px;\n    display: inline-block; }\n", ""]);
+
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(14);
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(2)(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// Module
+exports.push([module.i, ".comp-setting {\n  padding: 5px;\n  background: #efefef;\n  min-height: 300px; }\n  .comp-setting .btn {\n    background: gray;\n    color: white;\n    text-align: center;\n    padding: 5px;\n    border-radius: 5px;\n    font-family: monospace;\n    font-size: 14px;\n    cursor: pointer; }\n    .comp-setting .btn.active {\n      background: #26c300; }\n", ""]);
+
+
+/***/ }),
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1405,6 +1473,7 @@ class CompGraph_CompGraph extends GameGUI["Component"] {
 
   render () {
     return `
+      <div class="head">JS PERF VISUALIZER</div>
       <canvas id="graph-root"></canvas>
       ${this.include(CompGraph_CompFps)}
       ${this.include(CompGraph_CompBtnPausePlay)}
@@ -1512,7 +1581,7 @@ class CompGraph_CompBtnPausePlay extends GameGUI["Component"] {
 
   render () {
     const btnPlay = '&#x23f5;';
-    const btnPause = '&#x23f8;';
+    const btnPause = '&#10073;&#10073;';
 
     return `
       <div ui-click="handlerClick">
@@ -1531,8 +1600,11 @@ class CompGraph_CompBtnPausePlay extends GameGUI["Component"] {
 }
 
 /* harmony default export */ var src_comp_CompGraph = (CompGraph_CompGraph);
+// EXTERNAL MODULE: ./src/comp/CompTab.scss
+var comp_CompTab = __webpack_require__(9);
+
 // EXTERNAL MODULE: ./src/comp/CompLog.scss
-var comp_CompLog = __webpack_require__(9);
+var comp_CompLog = __webpack_require__(11);
 
 // CONCATENATED MODULE: ./src/comp/CompLog.js
 
@@ -1541,11 +1613,11 @@ var comp_CompLog = __webpack_require__(9);
 const dumbCompFpsWarnLevel = (item, classBg) => {
   return `
     <div class="log ${classBg}">
-      Lagg 
-       Time: ${CompLog_CompLog.formatTime( item.timeFromInit )}
-       Duration: ${CompLog_CompLog.formatTime(item.duration)}
-       FPS: ${item.fpsCurrent}
-       LID: ${item.idEvtLoop} 
+      Time: ${CompLog_CompLog.formatTime( item.timeFromInit )}
+      Duration: ${CompLog_CompLog.formatTime(item.duration)}
+      FPS: ${item.fpsCurrent}
+      LID: ${item.idEvtLoop}
+      - Lagging 
     </div>
   `;
 };
@@ -1568,14 +1640,14 @@ const dumbCompMark = (mark, classBg) => (`
     ${!isUndef(mark.timeFromInit) ? 'Time: '    +CompLog_CompLog.formatTime(mark.timeFromInit)  : ''} 
     ${!isUndef(mark.duration)     ? 'Duration: '+CompLog_CompLog.formatTime(mark.duration)      : ''}
     LID: ${mark.idEvtLoopStart}/${mark.idEvtLoopStop}
-    | "${mark.text}"
+    - "${mark.text}"
   </div>
 `);
 
 class CompLog_CompLog extends GameGUI["Component"] {
   constructor(option, config) {
     super(option, config);
-    // this.option = option;
+
     this.setState({
       listLog: [],
     });
@@ -1587,6 +1659,9 @@ class CompLog_CompLog extends GameGUI["Component"] {
     let fpsLast;
 
     return `
+      ${!this.option.jsPerfVisualizer.isActiveLogUi ? `<span class="warn">
+        WARNING: UI For Logging is Inactive, go to settings ot activate it.</span>` : ''}
+      
       ${this.getState().listLog.map(item => {
         const idEvtLoop = item.idEvtLoop || item.idEvtLoopStop;
         
@@ -1602,7 +1677,7 @@ class CompLog_CompLog extends GameGUI["Component"] {
           case 'fpsWarnLevel': return dumbCompFpsWarnLevel(item, classBg);
           case 'mark':         return dumbCompMark(item, classBg);
         }
-      }).join('')} 
+      }).join('')}
     `;
   }
 
@@ -1636,6 +1711,93 @@ function isUndef( item ) {
   return typeof item === 'undefined';
 }
 /* harmony default export */ var src_comp_CompLog = (CompLog_CompLog);
+// EXTERNAL MODULE: ./src/comp/CompSetting.scss
+var comp_CompSetting = __webpack_require__(13);
+
+// CONCATENATED MODULE: ./src/comp/CompSetting.js
+
+
+
+class CompSetting_CompSetting extends GameGUI["Component"]{
+  constructor (option, config) {
+    super(option, config);
+
+    this.setState({
+      isActiveLogUi: this.option.jsPerfVisualizer.isActiveLogUi,
+    });
+  }
+
+  render () {
+    return `
+      <div class="btn ${this.getState().isActiveLogUi ? 'active' : ''}" 
+           ui-click="handlerClickConsoleOnOff">Logs</div>
+    `
+  }
+
+  handlerClickConsoleOnOff( evt ) {
+    console.log('handlerClickConsoleOnOff');
+
+    this.setState({
+      isActiveLogUi: !this.getState().isActiveLogUi,
+    });
+
+    this.option.jsPerfVisualizer.logUiOnOff( this.getState().isActiveLogUi );
+  }
+}
+
+/* harmony default export */ var src_comp_CompSetting = (CompSetting_CompSetting);
+// CONCATENATED MODULE: ./src/comp/CompTab.js
+
+
+
+
+
+class CompTab_CompTab extends GameGUI["Component"] {
+  constructor (option, config) {
+    super(option, config);
+
+    this.config = {
+      listTab: [
+        {
+          id: 'log',
+          label: 'LOGS'
+        },
+        {
+          id: 'setting',
+          label: 'SETTINGS'
+        }
+      ]
+    };
+
+    this.setState({
+      idTabActive: 'log'
+    });
+  }
+
+  render () {
+    return `
+      ${this.config.listTab.map(tab => (`
+        <div class="btn btn-tab ${this.getState().idTabActive === tab.id ? 'active' : ''}" 
+             ui-click="handlerClickTab" data-id="${tab.id}">${tab.label}</div>
+      `)).join('')}
+     
+      <div class="tab tab-log ${this.getState().idTabActive === 'log' ? 'active' : ''}">
+        ${this.include(src_comp_CompLog)}
+      </div>
+      <div class="tab tab-setting ${this.getState().idTabActive === 'setting' ? 'active' : ''}">
+        ${this.include(src_comp_CompSetting)}
+      </div>
+    `;
+  }
+
+  handlerClickTab ( evt ) {
+    this.setState({
+      idTabActive: evt.target.dataset.id
+    })
+  }
+}
+
+/* harmony default export */ var src_comp_CompTab = (CompTab_CompTab);
 // CONCATENATED MODULE: ./src/comp/CompRoot.js
 
 
@@ -1647,7 +1809,7 @@ class CompRoot_CompRoot extends GameGUI["Component"] {
   render () {
     return `
       ${this.include(src_comp_CompGraph)}
-      ${this.include(src_comp_CompLog)}
+      ${this.include(src_comp_CompTab)}
     `;
   }
 }
@@ -1730,12 +1892,18 @@ class src_JsPerfVisualizer {
         ...configOverwrite
     };
 
-    this.idEvtLoop = 0;
-    this.isPaused = false;
-    this.timestampInit = Date.now();
-    this.timestampLast = this.timestampInit;
-    this.listDiff = [];
-    this.listLog = [];
+    this.idEvtLoop        = 0;
+    this.isPaused         = false;
+    this.timestampInit    = Date.now();
+    this.timestampLast    = this.timestampInit;
+    this.listDiff         = [];
+    this.listLog          = [];
+
+    this.dataDefault = {
+      isActiveLogUi: true,
+    };
+    const dataLoaded = this.loadData();
+    this.isActiveLogUi  = dataLoaded.isActiveLogUi;
 
     this.mark = new src_Mark(this);
 
@@ -1747,6 +1915,22 @@ class src_JsPerfVisualizer {
     } else {
       document.addEventListener('DOMContentLoaded', this.initGraph.bind( this ));
     }
+  }
+
+  saveData() {
+    localStorage.jsPerfVisualizer = JSON.stringify({
+      isActiveLogUi: this.isActiveLogUi,
+    });
+  }
+
+  loadData() {
+    // Return Default Data if nothing saved;
+    if (!localStorage.jsPerfVisualizer) {
+      // Return a copy of default data
+      return JSON.parse(JSON.stringify(this.dataDefault));
+    }
+
+    return JSON.parse(localStorage.jsPerfVisualizer);
   }
 
   initGraph () {
@@ -1764,6 +1948,10 @@ class src_JsPerfVisualizer {
       const fpsCurrent = 2 * this.config.fpsTarget - diff;
       const duration = diff - this.config.fpsTarget;
       this.listDiff.push( fpsCurrent );
+
+      if (1000 / this.config.fpsTarget * 9 < this.listDiff.length) {
+        this.listDiff.shift();
+      }
 
       if (fpsCurrent < this.config.fpsWarningLevel ) {
         this.log({
@@ -1789,11 +1977,8 @@ class src_JsPerfVisualizer {
   log ( item ) {
     this.listLog.unshift(item);
 
-    if (1000 / this.config.fpsTarget * 9 < this.listDiff.length) {
-      this.listDiff.shift();
-    }
-
     // UI update
+    if (!this.isActiveLogUi) return;
     if (!this.gui) return;
     const compLog = this.gui.getCompByType('CompLog')[0];
     compLog.setState({
@@ -1811,6 +1996,22 @@ class src_JsPerfVisualizer {
     const compFps = this.gui.getCompByType('CompFps')[0];
     compFps.setState({
       fpsCurrent,
+    });
+  }
+
+  logUiOnOff( onOrOff ) {
+    this.isActiveLogUi = onOrOff;
+
+    this.saveData();
+
+    if (!this.gui) {
+      console.warn('UI for logging was turned on but you might not see anything because it wasn\'t instantiated yet..');
+      return;
+    }
+
+    const compLog = this.gui.getCompByType('CompLog')[0];
+    compLog.setState({
+      listLog: this.listLog,
     });
   }
 }

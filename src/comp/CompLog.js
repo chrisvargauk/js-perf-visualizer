@@ -4,11 +4,11 @@ import './CompLog.scss';
 const dumbCompFpsWarnLevel = (item, classBg) => {
   return `
     <div class="log ${classBg}">
-      Lagg 
-       Time: ${CompLog.formatTime( item.timeFromInit )}
-       Duration: ${CompLog.formatTime(item.duration)}
-       FPS: ${item.fpsCurrent}
-       LID: ${item.idEvtLoop} 
+      Time: ${CompLog.formatTime( item.timeFromInit )}
+      Duration: ${CompLog.formatTime(item.duration)}
+      FPS: ${item.fpsCurrent}
+      LID: ${item.idEvtLoop}
+      - Lagging 
     </div>
   `;
 };
@@ -31,7 +31,7 @@ const dumbCompMark = (mark, classBg) => (`
     ${!isUndef(mark.timeFromInit) ? 'Time: '    +CompLog.formatTime(mark.timeFromInit)  : ''} 
     ${!isUndef(mark.duration)     ? 'Duration: '+CompLog.formatTime(mark.duration)      : ''}
     LID: ${mark.idEvtLoopStart}/${mark.idEvtLoopStop}
-    | "${mark.text}"
+    - "${mark.text}"
   </div>
 `);
 
@@ -50,6 +50,9 @@ class CompLog extends Component {
     let fpsLast;
 
     return `
+      ${!this.option.jsPerfVisualizer.isActiveLogUi ? `<span class="warn">
+        WARNING: UI For Logging is Inactive, go to settings ot activate it.</span>` : ''}
+      
       ${this.getState().listLog.map(item => {
         const idEvtLoop = item.idEvtLoop || item.idEvtLoopStop;
         
@@ -65,7 +68,7 @@ class CompLog extends Component {
           case 'fpsWarnLevel': return dumbCompFpsWarnLevel(item, classBg);
           case 'mark':         return dumbCompMark(item, classBg);
         }
-      }).join('')} 
+      }).join('')}
     `;
   }
 

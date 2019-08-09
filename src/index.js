@@ -11,12 +11,18 @@ class JsPerfVisualizer {
         ...configOverwrite
     };
 
-    this.idEvtLoop = 0;
-    this.isPaused = false;
-    this.timestampInit = Date.now();
-    this.timestampLast = this.timestampInit;
-    this.listDiff = [];
-    this.listLog = [];
+    this.idEvtLoop        = 0;
+    this.isPaused         = false;
+    this.timestampInit    = Date.now();
+    this.timestampLast    = this.timestampInit;
+    this.listDiff         = [];
+    this.listLog          = [];
+
+    this.dataDefault = {
+      isActiveLogUi: true,
+    };
+    const dataLoaded = this.loadData();
+    this.isActiveLogUi  = dataLoaded.isActiveLogUi;
 
     this.mark = new Mark(this);
 
@@ -28,6 +34,22 @@ class JsPerfVisualizer {
     } else {
       document.addEventListener('DOMContentLoaded', this.initGraph.bind( this ));
     }
+  }
+
+  saveData() {
+    localStorage.jsPerfVisualizer = JSON.stringify({
+      isActiveLogUi: this.isActiveLogUi,
+    });
+  }
+
+  loadData() {
+    // Return Default Data if nothing saved;
+    if (!localStorage.jsPerfVisualizer) {
+      // Return a copy of default data
+      return JSON.parse(JSON.stringify(this.dataDefault));
+    }
+
+    return JSON.parse(localStorage.jsPerfVisualizer);
   }
 
   initGraph () {
@@ -45,6 +67,10 @@ class JsPerfVisualizer {
       const fpsCurrent = 2 * this.config.fpsTarget - diff;
       const duration = diff - this.config.fpsTarget;
       this.listDiff.push( fpsCurrent );
+
+      if (1000 / this.config.fpsTarget * 9 < this.listDiff.length) {
+        this.listDiff.shift();
+      }
 
       if (fpsCurrent < this.config.fpsWarningLevel ) {
         this.log({
@@ -70,11 +96,8 @@ class JsPerfVisualizer {
   log ( item ) {
     this.listLog.unshift(item);
 
-    if (1000 / this.config.fpsTarget * 9 < this.listDiff.length) {
-      this.listDiff.shift();
-    }
-
     // UI update
+    if (!this.isActiveLogUi) return;
     if (!this.gui) return;
     const compLog = this.gui.getCompByType('CompLog')[0];
     compLog.setState({
@@ -92,6 +115,22 @@ class JsPerfVisualizer {
     const compFps = this.gui.getCompByType('CompFps')[0];
     compFps.setState({
       fpsCurrent,
+    });
+  }
+
+  logUiOnOff( onOrOff ) {
+    this.isActiveLogUi = onOrOff;
+
+    this.saveData();
+
+    if (!this.gui) {
+      console.warn('UI for logging was turned on but you might not see anything because it wasn\'t instantiated yet..');
+      return;
+    }
+
+    const compLog = this.gui.getCompByType('CompLog')[0];
+    compLog.setState({
+      listLog: this.listLog,
     });
   }
 }

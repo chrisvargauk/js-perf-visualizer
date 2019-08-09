@@ -5,7 +5,7 @@
   right: 0;
   padding-bottom: 1px;
   padding-right: 6px;
-  color: white;
+  color: #818181;
 
   .red {
     color: red;
@@ -13,8 +13,9 @@
 }
 
 .comp-btn-pause-play {
+  font-size: 16px;
   position: absolute;
-  top: 0px;
+  top: 29px;
   right: 0px;
   margin: 6px;
   background: white;
@@ -29,4 +30,16 @@
 .comp-graph {
   position: relative;
   cursor: pointer;
+
+  & > .head {
+    background: lightgray;
+    cursor: pointer;
+    padding: 5px;
+    font-family: monospace;
+    font-size: 16px;
+    font-weight: bold;
+    color: #6d6d6d;
+    width: 100%;
+    text-align: center;
+  }
 }

@@ -275,7 +275,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       /******/
 
-      return __webpack_require__(__webpack_require__.s = 11);
+      return __webpack_require__(__webpack_require__.s = 15);
       /******/
     }(
     /************************************************************************/
@@ -1483,7 +1483,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     function (module, exports, __webpack_require__) {
       exports = module.exports = __webpack_require__(1)(false); // Module
 
-      exports.push([module.i, "#js-perf-visualizer-root {\n  position: absolute;\n  left: 0;\n  top: 0;\n  box-sizing: border-box; }\n\n#graph-root {\n  background: gray;\n  width: 500px;\n  height: 100px; }\n", ""]);
+      exports.push([module.i, "#js-perf-visualizer-root {\n  position: absolute;\n  left: 0;\n  top: 0; }\n  #js-perf-visualizer-root * {\n    box-sizing: border-box; }\n\n#graph-root {\n  background: #ececec;\n  width: 500px;\n  height: 100px; }\n\n.comp-root {\n  max-width: 500px;\n  overflow: auto; }\n  .comp-root > div {\n    float: left; }\n", ""]);
       /***/
     },
     /* 6 */
@@ -1606,7 +1606,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     function (module, exports, __webpack_require__) {
       exports = module.exports = __webpack_require__(1)(false); // Module
 
-      exports.push([module.i, ".comp-fps {\n  font-family: consolas, Verdana;\n  position: absolute;\n  bottom: 0;\n  right: 0;\n  padding-bottom: 1px;\n  padding-right: 6px;\n  color: white; }\n  .comp-fps .red {\n    color: red; }\n\n.comp-btn-pause-play {\n  position: absolute;\n  top: 0px;\n  right: 0px;\n  margin: 6px;\n  background: white;\n  color: gray;\n  width: 24px;\n  height: 24px;\n  border-radius: 12px;\n  text-align: center;\n  vertical-align: middle; }\n\n.comp-graph {\n  position: relative;\n  cursor: pointer; }\n", ""]);
+      exports.push([module.i, ".comp-fps {\n  font-family: consolas, Verdana;\n  position: absolute;\n  bottom: 0;\n  right: 0;\n  padding-bottom: 1px;\n  padding-right: 6px;\n  color: #818181; }\n  .comp-fps .red {\n    color: red; }\n\n.comp-btn-pause-play {\n  font-size: 16px;\n  position: absolute;\n  top: 29px;\n  right: 0px;\n  margin: 6px;\n  background: white;\n  color: gray;\n  width: 24px;\n  height: 24px;\n  border-radius: 12px;\n  text-align: center;\n  vertical-align: middle; }\n\n.comp-graph {\n  position: relative;\n  cursor: pointer; }\n  .comp-graph > .head {\n    background: lightgray;\n    cursor: pointer;\n    padding: 5px;\n    font-family: monospace;\n    font-size: 16px;\n    font-weight: bold;\n    color: #6d6d6d;\n    width: 100%;\n    text-align: center; }\n", ""]);
       /***/
     },
     /* 9 */
@@ -1638,10 +1638,74 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     function (module, exports, __webpack_require__) {
       exports = module.exports = __webpack_require__(1)(false); // Module
 
-      exports.push([module.i, ".comp-log {\n  background: antiquewhite;\n  max-height: 300px;\n  overflow-y: scroll; }\n  .comp-log .log, .comp-log .mark {\n    font-family: Consolas, Verdana;\n    font-size: 14px;\n    padding: 2px 5px; }\n    .comp-log .log.bg-error-a, .comp-log .mark.bg-error-a {\n      background: #d20000;\n      color: white; }\n    .comp-log .log.bg-error-b, .comp-log .mark.bg-error-b {\n      background: #ee0000;\n      color: white; }\n    .comp-log .log.bg-warn-a, .comp-log .mark.bg-warn-a {\n      background: orange;\n      color: white; }\n    .comp-log .log.bg-warn-b, .comp-log .mark.bg-warn-b {\n      background: darkorange;\n      color: white; }\n    .comp-log .log.bg-log-a, .comp-log .mark.bg-log-a {\n      background: aliceblue;\n      color: darkblue; }\n      .comp-log .log.bg-log-a .dot, .comp-log .mark.bg-log-a .dot {\n        background: darkblue; }\n    .comp-log .log.bg-log-b, .comp-log .mark.bg-log-b {\n      background: #dee6ed;\n      color: darkblue; }\n      .comp-log .log.bg-log-b .dot, .comp-log .mark.bg-log-b .dot {\n        background: darkblue; }\n    .comp-log .log .dot, .comp-log .mark .dot {\n      display: inline-block;\n      background: white;\n      width: 8px;\n      height: 8px;\n      border-radius: 4px; }\n  .comp-log .indentation {\n    display: inline-block;\n    width: 25px;\n    text-align: right;\n    padding-right: 6px; }\n", ""]);
+      exports.push([module.i, ".comp-tab {\n  width: 100%;\n  overflow: auto; }\n  .comp-tab > div {\n    float: left; }\n  .comp-tab > .btn {\n    width: 50%;\n    background: lightgray;\n    cursor: pointer;\n    padding: 5px;\n    font-family: monospace;\n    font-size: 14px;\n    font-weight: bold;\n    color: #6d6d6d; }\n    .comp-tab > .btn.active {\n      background: #bfbfbffc; }\n  .comp-tab .tab {\n    width: 100%;\n    display: none; }\n    .comp-tab .tab.active {\n      display: block; }\n", ""]);
       /***/
     },
     /* 11 */
+
+    /***/
+    function (module, exports, __webpack_require__) {
+      var content = __webpack_require__(12);
+
+      if (typeof content === 'string') content = [[module.i, content, '']];
+      var transform;
+      var insertInto;
+      var options = {
+        "hmr": true
+      };
+      options.transform = transform;
+      options.insertInto = undefined;
+
+      var update = __webpack_require__(2)(content, options);
+
+      if (content.locals) module.exports = content.locals;
+
+      if (false) {}
+      /***/
+
+    },
+    /* 12 */
+
+    /***/
+    function (module, exports, __webpack_require__) {
+      exports = module.exports = __webpack_require__(1)(false); // Module
+
+      exports.push([module.i, ".comp-log {\n  background: #efefef;\n  width: 100%;\n  height: 300px;\n  overflow-y: auto; }\n  .comp-log .log, .comp-log .mark {\n    font-family: Consolas, Verdana;\n    font-size: 14px;\n    padding: 2px 5px; }\n    .comp-log .log.bg-error-a, .comp-log .mark.bg-error-a {\n      background: #d20000;\n      color: white; }\n    .comp-log .log.bg-error-b, .comp-log .mark.bg-error-b {\n      background: #ee0000;\n      color: white; }\n    .comp-log .log.bg-warn-a, .comp-log .mark.bg-warn-a {\n      background: orange;\n      color: white; }\n    .comp-log .log.bg-warn-b, .comp-log .mark.bg-warn-b {\n      background: darkorange;\n      color: white; }\n    .comp-log .log.bg-log-a, .comp-log .mark.bg-log-a {\n      background: aliceblue;\n      color: darkblue; }\n      .comp-log .log.bg-log-a .dot, .comp-log .mark.bg-log-a .dot {\n        background: darkblue; }\n    .comp-log .log.bg-log-b, .comp-log .mark.bg-log-b {\n      background: #dee6ed;\n      color: darkblue; }\n      .comp-log .log.bg-log-b .dot, .comp-log .mark.bg-log-b .dot {\n        background: darkblue; }\n    .comp-log .log .dot, .comp-log .mark .dot {\n      display: inline-block;\n      background: white;\n      width: 8px;\n      height: 8px;\n      border-radius: 4px; }\n  .comp-log .indentation {\n    display: inline-block;\n    width: 25px;\n    text-align: right;\n    padding-right: 6px; }\n  .comp-log > span.warn {\n    color: #e09100;\n    margin: 5px;\n    display: inline-block; }\n", ""]);
+      /***/
+    },
+    /* 13 */
+
+    /***/
+    function (module, exports, __webpack_require__) {
+      var content = __webpack_require__(14);
+
+      if (typeof content === 'string') content = [[module.i, content, '']];
+      var transform;
+      var insertInto;
+      var options = {
+        "hmr": true
+      };
+      options.transform = transform;
+      options.insertInto = undefined;
+
+      var update = __webpack_require__(2)(content, options);
+
+      if (content.locals) module.exports = content.locals;
+
+      if (false) {}
+      /***/
+
+    },
+    /* 14 */
+
+    /***/
+    function (module, exports, __webpack_require__) {
+      exports = module.exports = __webpack_require__(1)(false); // Module
+
+      exports.push([module.i, ".comp-setting {\n  padding: 5px;\n  background: #efefef;\n  min-height: 300px; }\n  .comp-setting .btn {\n    background: gray;\n    color: white;\n    text-align: center;\n    padding: 5px;\n    border-radius: 5px;\n    font-family: monospace;\n    font-size: 14px;\n    cursor: pointer; }\n    .comp-setting .btn.active {\n      background: #26c300; }\n", ""]);
+      /***/
+    },
+    /* 15 */
 
     /***/
     function (module, __webpack_exports__, __webpack_require__) {
@@ -1758,7 +1822,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         _createClass(CompGraph_CompGraph, [{
           key: "render",
           value: function render() {
-            return "\n      <canvas id=\"graph-root\"></canvas>\n      ".concat(this.include(CompGraph_CompFps), "\n      ").concat(this.include(CompGraph_CompBtnPausePlay), "\n    ");
+            return "\n      <div class=\"head\">JS PERF VISUALIZER</div>\n      <canvas id=\"graph-root\"></canvas>\n      ".concat(this.include(CompGraph_CompFps), "\n      ").concat(this.include(CompGraph_CompBtnPausePlay), "\n    ");
           }
         }, {
           key: "afterRender",
@@ -1886,7 +1950,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           key: "render",
           value: function render() {
             var btnPlay = '&#x23f5;';
-            var btnPause = '&#x23f8;';
+            var btnPause = '&#10073;&#10073;';
             return "\n      <div ui-click=\"handlerClick\">\n        ".concat(this.getState().isPaused ? btnPlay : btnPause, "\n      </div>\n    ");
           }
         }, {
@@ -1904,13 +1968,16 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       /* harmony default export */
 
 
-      var src_comp_CompGraph = CompGraph_CompGraph; // EXTERNAL MODULE: ./src/comp/CompLog.scss
+      var src_comp_CompGraph = CompGraph_CompGraph; // EXTERNAL MODULE: ./src/comp/CompTab.scss
 
-      var comp_CompLog = __webpack_require__(9); // CONCATENATED MODULE: ./src/comp/CompLog.js
+      var comp_CompTab = __webpack_require__(9); // EXTERNAL MODULE: ./src/comp/CompLog.scss
+
+
+      var comp_CompLog = __webpack_require__(11); // CONCATENATED MODULE: ./src/comp/CompLog.js
 
 
       var dumbCompFpsWarnLevel = function dumbCompFpsWarnLevel(item, classBg) {
-        return "\n    <div class=\"log ".concat(classBg, "\">\n      Lagg \n       Time: ").concat(CompLog_CompLog.formatTime(item.timeFromInit), "\n       Duration: ").concat(CompLog_CompLog.formatTime(item.duration), "\n       FPS: ").concat(item.fpsCurrent, "\n       LID: ").concat(item.idEvtLoop, " \n    </div>\n  ");
+        return "\n    <div class=\"log ".concat(classBg, "\">\n      Time: ").concat(CompLog_CompLog.formatTime(item.timeFromInit), "\n      Duration: ").concat(CompLog_CompLog.formatTime(item.duration), "\n      FPS: ").concat(item.fpsCurrent, "\n      LID: ").concat(item.idEvtLoop, "\n      - Lagging \n    </div>\n  ");
       };
 
       var dumbCompIndentation = function dumbCompIndentation(indentLevel) {
@@ -1926,7 +1993,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       };
 
       var dumbCompMark = function dumbCompMark(mark, classBg) {
-        return "\n  <div class=\"mark ".concat(classBg, "\">\n    ").concat(dumbCompIndentation(mark.indentLevel), "<span class=\"dot\"></span> \n    ").concat(!isUndef(mark.timeFromInit) ? 'Time: ' + CompLog_CompLog.formatTime(mark.timeFromInit) : '', " \n    ").concat(!isUndef(mark.duration) ? 'Duration: ' + CompLog_CompLog.formatTime(mark.duration) : '', "\n    LID: ").concat(mark.idEvtLoopStart, "/").concat(mark.idEvtLoopStop, "\n    | \"").concat(mark.text, "\"\n  </div>\n");
+        return "\n  <div class=\"mark ".concat(classBg, "\">\n    ").concat(dumbCompIndentation(mark.indentLevel), "<span class=\"dot\"></span> \n    ").concat(!isUndef(mark.timeFromInit) ? 'Time: ' + CompLog_CompLog.formatTime(mark.timeFromInit) : '', " \n    ").concat(!isUndef(mark.duration) ? 'Duration: ' + CompLog_CompLog.formatTime(mark.duration) : '', "\n    LID: ").concat(mark.idEvtLoopStart, "/").concat(mark.idEvtLoopStop, "\n    - \"").concat(mark.text, "\"\n  </div>\n");
       };
 
       var CompLog_CompLog =
@@ -1939,7 +2006,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
           _classCallCheck(this, CompLog_CompLog);
 
-          _this4 = _possibleConstructorReturn(this, _getPrototypeOf(CompLog_CompLog).call(this, option, config)); // this.option = option;
+          _this4 = _possibleConstructorReturn(this, _getPrototypeOf(CompLog_CompLog).call(this, option, config));
 
           _this4.setState({
             listLog: []
@@ -1956,7 +2023,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             var idEvtLoopPrev = -1;
             var ctrIdEvtLoopDifference = 0;
             var fpsLast;
-            return "\n      ".concat(this.getState().listLog.map(function (item) {
+            return "\n      ".concat(!this.option.jsPerfVisualizer.isActiveLogUi ? "<span class=\"warn\">\n        WARNING: UI For Logging is Inactive, go to settings ot activate it.</span>" : '', "\n      \n      ").concat(this.getState().listLog.map(function (item) {
               var idEvtLoop = item.idEvtLoop || item.idEvtLoopStop;
 
               if (idEvtLoopPrev !== idEvtLoop) {
@@ -1975,7 +2042,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
                 case 'mark':
                   return dumbCompMark(item, classBg);
               }
-            }).join(''), " \n    ");
+            }).join(''), "\n    ");
           }
         }, {
           key: "calcBgClass",
@@ -2015,12 +2082,110 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       /* harmony default export */
 
 
-      var src_comp_CompLog = CompLog_CompLog; // CONCATENATED MODULE: ./src/comp/CompRoot.js
+      var src_comp_CompLog = CompLog_CompLog; // EXTERNAL MODULE: ./src/comp/CompSetting.scss
+
+      var comp_CompSetting = __webpack_require__(13); // CONCATENATED MODULE: ./src/comp/CompSetting.js
+
+
+      var CompSetting_CompSetting =
+      /*#__PURE__*/
+      function (_GameGUI$Component5) {
+        _inherits(CompSetting_CompSetting, _GameGUI$Component5);
+
+        function CompSetting_CompSetting(option, config) {
+          var _this6;
+
+          _classCallCheck(this, CompSetting_CompSetting);
+
+          _this6 = _possibleConstructorReturn(this, _getPrototypeOf(CompSetting_CompSetting).call(this, option, config));
+
+          _this6.setState({
+            isActiveLogUi: _this6.option.jsPerfVisualizer.isActiveLogUi
+          });
+
+          return _this6;
+        }
+
+        _createClass(CompSetting_CompSetting, [{
+          key: "render",
+          value: function render() {
+            return "\n      <div class=\"btn ".concat(this.getState().isActiveLogUi ? 'active' : '', "\" \n           ui-click=\"handlerClickConsoleOnOff\">Logs</div>\n    ");
+          }
+        }, {
+          key: "handlerClickConsoleOnOff",
+          value: function handlerClickConsoleOnOff(evt) {
+            console.log('handlerClickConsoleOnOff');
+            this.setState({
+              isActiveLogUi: !this.getState().isActiveLogUi
+            });
+            this.option.jsPerfVisualizer.logUiOnOff(this.getState().isActiveLogUi);
+          }
+        }]);
+
+        return CompSetting_CompSetting;
+      }(GameGUI["Component"]);
+      /* harmony default export */
+
+
+      var src_comp_CompSetting = CompSetting_CompSetting; // CONCATENATED MODULE: ./src/comp/CompTab.js
+
+      var CompTab_CompTab =
+      /*#__PURE__*/
+      function (_GameGUI$Component6) {
+        _inherits(CompTab_CompTab, _GameGUI$Component6);
+
+        function CompTab_CompTab(option, config) {
+          var _this7;
+
+          _classCallCheck(this, CompTab_CompTab);
+
+          _this7 = _possibleConstructorReturn(this, _getPrototypeOf(CompTab_CompTab).call(this, option, config));
+          _this7.config = {
+            listTab: [{
+              id: 'log',
+              label: 'LOGS'
+            }, {
+              id: 'setting',
+              label: 'SETTINGS'
+            }]
+          };
+
+          _this7.setState({
+            idTabActive: 'log'
+          });
+
+          return _this7;
+        }
+
+        _createClass(CompTab_CompTab, [{
+          key: "render",
+          value: function render() {
+            var _this8 = this;
+
+            return "\n      ".concat(this.config.listTab.map(function (tab) {
+              return "\n        <div class=\"btn btn-tab ".concat(_this8.getState().idTabActive === tab.id ? 'active' : '', "\" \n             ui-click=\"handlerClickTab\" data-id=\"").concat(tab.id, "\">").concat(tab.label, "</div>\n      ");
+            }).join(''), "\n     \n      <div class=\"tab tab-log ").concat(this.getState().idTabActive === 'log' ? 'active' : '', "\">\n        ").concat(this.include(src_comp_CompLog), "\n      </div>\n      <div class=\"tab tab-setting ").concat(this.getState().idTabActive === 'setting' ? 'active' : '', "\">\n        ").concat(this.include(src_comp_CompSetting), "\n      </div>\n    ");
+          }
+        }, {
+          key: "handlerClickTab",
+          value: function handlerClickTab(evt) {
+            this.setState({
+              idTabActive: evt.target.dataset.id
+            });
+          }
+        }]);
+
+        return CompTab_CompTab;
+      }(GameGUI["Component"]);
+      /* harmony default export */
+
+
+      var src_comp_CompTab = CompTab_CompTab; // CONCATENATED MODULE: ./src/comp/CompRoot.js
 
       var CompRoot_CompRoot =
       /*#__PURE__*/
-      function (_GameGUI$Component5) {
-        _inherits(CompRoot_CompRoot, _GameGUI$Component5);
+      function (_GameGUI$Component7) {
+        _inherits(CompRoot_CompRoot, _GameGUI$Component7);
 
         function CompRoot_CompRoot() {
           _classCallCheck(this, CompRoot_CompRoot);
@@ -2031,7 +2196,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         _createClass(CompRoot_CompRoot, [{
           key: "render",
           value: function render() {
-            return "\n      ".concat(this.include(src_comp_CompGraph), "\n      ").concat(this.include(src_comp_CompLog), "\n    ");
+            return "\n      ".concat(this.include(src_comp_CompGraph), "\n      ").concat(this.include(src_comp_CompTab), "\n    ");
           }
         }]);
 
@@ -2131,6 +2296,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           this.timestampLast = this.timestampInit;
           this.listDiff = [];
           this.listLog = [];
+          this.dataDefault = {
+            isActiveLogUi: true
+          };
+          var dataLoaded = this.loadData();
+          this.isActiveLogUi = dataLoaded.isActiveLogUi;
           this.mark = new src_Mark(this); // Kick of tracking ASAP
 
           this.initTracking();
@@ -2143,6 +2313,24 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         }
 
         _createClass(src_JsPerfVisualizer, [{
+          key: "saveData",
+          value: function saveData() {
+            localStorage.jsPerfVisualizer = JSON.stringify({
+              isActiveLogUi: this.isActiveLogUi
+            });
+          }
+        }, {
+          key: "loadData",
+          value: function loadData() {
+            // Return Default Data if nothing saved;
+            if (!localStorage.jsPerfVisualizer) {
+              // Return a copy of default data
+              return JSON.parse(JSON.stringify(this.dataDefault));
+            }
+
+            return JSON.parse(localStorage.jsPerfVisualizer);
+          }
+        }, {
           key: "initGraph",
           value: function initGraph() {
             console.log('Graph is getting initialized..');
@@ -2160,6 +2348,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
               var fpsCurrent = 2 * this.config.fpsTarget - diff;
               var duration = diff - this.config.fpsTarget;
               this.listDiff.push(fpsCurrent);
+
+              if (1000 / this.config.fpsTarget * 9 < this.listDiff.length) {
+                this.listDiff.shift();
+              }
 
               if (fpsCurrent < this.config.fpsWarningLevel) {
                 this.log({
@@ -2182,13 +2374,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         }, {
           key: "log",
           value: function log(item) {
-            this.listLog.unshift(item);
+            this.listLog.unshift(item); // UI update
 
-            if (1000 / this.config.fpsTarget * 9 < this.listDiff.length) {
-              this.listDiff.shift();
-            } // UI update
-
-
+            if (!this.isActiveLogUi) return;
             if (!this.gui) return;
             var compLog = this.gui.getCompByType('CompLog')[0];
             compLog.setState({
@@ -2205,6 +2393,22 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             var compFps = this.gui.getCompByType('CompFps')[0];
             compFps.setState({
               fpsCurrent: fpsCurrent
+            });
+          }
+        }, {
+          key: "logUiOnOff",
+          value: function logUiOnOff(onOrOff) {
+            this.isActiveLogUi = onOrOff;
+            this.saveData();
+
+            if (!this.gui) {
+              console.warn('UI for logging was turned on but you might not see anything because it wasn\'t instantiated yet..');
+              return;
+            }
+
+            var compLog = this.gui.getCompByType('CompLog')[0];
+            compLog.setState({
+              listLog: this.listLog
             });
           }
         }]);
