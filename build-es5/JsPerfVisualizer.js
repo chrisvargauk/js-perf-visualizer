@@ -1638,7 +1638,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     function (module, exports, __webpack_require__) {
       exports = module.exports = __webpack_require__(1)(false); // Module
 
-      exports.push([module.i, ".comp-tab {\n  width: 100%;\n  overflow: auto; }\n  .comp-tab > div {\n    float: left; }\n  .comp-tab > .btn {\n    width: 50%;\n    background: lightgray;\n    cursor: pointer;\n    padding: 5px;\n    font-family: monospace;\n    font-size: 14px;\n    font-weight: bold;\n    color: #6d6d6d; }\n    .comp-tab > .btn.active {\n      background: #bfbfbffc; }\n  .comp-tab .tab {\n    width: 100%;\n    display: none; }\n    .comp-tab .tab.active {\n      display: block; }\n", ""]);
+      exports.push([module.i, ".comp-tab {\n  width: 100%;\n  overflow: auto; }\n  .comp-tab > div {\n    float: left; }\n  .comp-tab > .btn {\n    width: 50%;\n    background: lightgray;\n    cursor: pointer;\n    padding: 5px;\n    font-family: monospace;\n    font-size: 14px;\n    font-weight: bold;\n    color: #6d6d6d; }\n    .comp-tab > .btn.active {\n      background: #bfbfbf; }\n  .comp-tab .tab {\n    width: 100%;\n    display: none; }\n    .comp-tab .tab.active {\n      display: block; }\n", ""]);
       /***/
     },
     /* 11 */
@@ -1920,7 +1920,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           key: "render",
           value: function render() {
             var fpsCurrent = this.getState().fpsCurrent;
-            return "\n      <span class=\"".concat(fpsCurrent < this.option.jsPerfVisualizer.config.fpsWarningLevel ? 'red' : '', "\">\n        ").concat(this.option.jsPerfVisualizer.config.fpsTarget, "/").concat(fpsCurrent, "\n      </span>\n    ");
+            return "\n      <span class=\"".concat(fpsCurrent < this.option.jsPerfVisualizer.config.fpsWarningLevel ? 'red' : '', "\">\n        ").concat(this.option.jsPerfVisualizer.config.fpsTarget, "/").concat(Math.round(fpsCurrent), "\n      </span>\n    ");
           }
         }]);
 
@@ -1977,7 +1977,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
 
       var dumbCompFpsWarnLevel = function dumbCompFpsWarnLevel(item, classBg) {
-        return "\n    <div class=\"log ".concat(classBg, "\">\n      Time: ").concat(CompLog_CompLog.formatTime(item.timeFromInit), "\n      Duration: ").concat(CompLog_CompLog.formatTime(item.duration), "\n      FPS: ").concat(item.fpsCurrent, "\n      LID: ").concat(item.idEvtLoop, "\n      - Lagging \n    </div>\n  ");
+        return "\n    <div class=\"log ".concat(classBg, "\">\n      Time: ").concat(CompLog_CompLog.formatTime(item.timeFromInit), "\n      Duration: ").concat(CompLog_CompLog.formatTime(Math.round(item.duration)), "\n      FPS: ").concat(Math.round(item.fpsCurrent), "\n      LID: ").concat(item.idEvtLoop, "\n      - Lagging \n    </div>\n  ");
       };
 
       var dumbCompIndentation = function dumbCompIndentation(indentLevel) {
@@ -1993,7 +1993,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       };
 
       var dumbCompMark = function dumbCompMark(mark, classBg) {
-        return "\n  <div class=\"mark ".concat(classBg, "\">\n    ").concat(dumbCompIndentation(mark.indentLevel), "<span class=\"dot\"></span> \n    ").concat(!isUndef(mark.timeFromInit) ? 'Time: ' + CompLog_CompLog.formatTime(mark.timeFromInit) : '', " \n    ").concat(!isUndef(mark.duration) ? 'Duration: ' + CompLog_CompLog.formatTime(mark.duration) : '', "\n    LID: ").concat(mark.idEvtLoopStart, "/").concat(mark.idEvtLoopStop, "\n    - \"").concat(mark.text, "\"\n  </div>\n");
+        return "\n  <div class=\"mark ".concat(classBg, "\">\n    ").concat(dumbCompIndentation(mark.indentLevel), "<span class=\"dot\"></span> \n    ").concat(!isUndef(mark.timeFromInit) ? 'Time: ' + CompLog_CompLog.formatTime(mark.timeFromInit) : '', " \n    ").concat(!isUndef(mark.duration) ? 'Duration: ' + CompLog_CompLog.formatTime(Math.round(mark.duration)) : '', "\n    LID: ").concat(mark.idEvtLoopStart, "/").concat(mark.idEvtLoopStop, "\n    - \"").concat(mark.text, "\"\n  </div>\n");
       };
 
       var CompLog_CompLog =
@@ -2049,7 +2049,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           value: function calcBgClass(fps, isIdEvtLoopDifferent) {
             var classBg = 'bg';
 
-            if (fps < 0) {
+            if (fps < 1) {
               classBg += '-error';
             } else if (fps < this.option.jsPerfVisualizer.config.fpsWarningLevel) {
               classBg += '-warn';
@@ -2290,6 +2290,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             fpsTarget: 60,
             fpsWarningLevel: 30
           }, configOverwrite);
+          this.config.frameTimeTarget = 1000 / this.config.fpsTarget;
           this.idEvtLoop = 0;
           this.isPaused = false;
           this.timestampInit = Date.now();
@@ -2303,7 +2304,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           this.isActiveLogUi = dataLoaded.isActiveLogUi;
           this.mark = new src_Mark(this); // Kick of tracking ASAP
 
-          this.initTracking();
+          this.timeoutTracker();
 
           if (document.body) {
             this.initGraph();
@@ -2340,13 +2341,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             });
           }
         }, {
-          key: "initTracking",
-          value: function initTracking() {
+          key: "timeoutTracker",
+          value: function timeoutTracker() {
             if (!this.isPaused) {
               var timestampNow = Date.now();
-              var diff = timestampNow - this.timestampLast;
-              var fpsCurrent = 2 * this.config.fpsTarget - diff;
-              var duration = diff - this.config.fpsTarget;
+              var frameTimeCurrent = timestampNow - this.timestampLast;
+              var frameTimeDiff = frameTimeCurrent - this.config.frameTimeTarget;
+              var fpsCurrent = 1000 / frameTimeCurrent;
               this.listDiff.push(fpsCurrent);
 
               if (1000 / this.config.fpsTarget * 9 < this.listDiff.length) {
@@ -2359,7 +2360,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
                   idEvtLoop: this.idEvtLoop,
                   timeFromInit: timestampNow - this.timestampInit,
                   fpsCurrent: fpsCurrent,
-                  duration: duration
+                  duration: frameTimeDiff
                 });
               } // Update UI
 
@@ -2369,7 +2370,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
               this.idEvtLoop++;
             }
 
-            setTimeout(this.initTracking.bind(this), this.config.fpsTarget);
+            setTimeout(this.timeoutTracker.bind(this), this.config.frameTimeTarget);
           }
         }, {
           key: "log",

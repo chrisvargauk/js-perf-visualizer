@@ -5,8 +5,8 @@ const dumbCompFpsWarnLevel = (item, classBg) => {
   return `
     <div class="log ${classBg}">
       Time: ${CompLog.formatTime( item.timeFromInit )}
-      Duration: ${CompLog.formatTime(item.duration)}
-      FPS: ${item.fpsCurrent}
+      Duration: ${CompLog.formatTime(Math.round(item.duration))}
+      FPS: ${Math.round(item.fpsCurrent)}
       LID: ${item.idEvtLoop}
       - Lagging 
     </div>
@@ -28,8 +28,8 @@ const dumbCompIndentation = indentLevel => {
 const dumbCompMark = (mark, classBg) => (`
   <div class="mark ${classBg}">
     ${dumbCompIndentation(mark.indentLevel)}<span class="dot"></span> 
-    ${!isUndef(mark.timeFromInit) ? 'Time: '    +CompLog.formatTime(mark.timeFromInit)  : ''} 
-    ${!isUndef(mark.duration)     ? 'Duration: '+CompLog.formatTime(mark.duration)      : ''}
+    ${!isUndef(mark.timeFromInit) ? 'Time: '    +CompLog.formatTime(mark.timeFromInit)             : ''} 
+    ${!isUndef(mark.duration)     ? 'Duration: '+CompLog.formatTime(Math.round(mark.duration))  : ''}
     LID: ${mark.idEvtLoopStart}/${mark.idEvtLoopStop}
     - "${mark.text}"
   </div>
@@ -79,7 +79,7 @@ class CompLog extends Component {
   calcBgClass(fps, isIdEvtLoopDifferent) {
     let classBg = 'bg';
 
-    if (fps < 0) {
+    if (fps < 1) {
       classBg += '-error';
     } else if(fps < this.option.jsPerfVisualizer.config.fpsWarningLevel) {
       classBg += '-warn';

@@ -10,6 +10,7 @@ class JsPerfVisualizer {
         fpsWarningLevel: 30,
         ...configOverwrite
     };
+    this.config.frameTimeTarget = 1000 / this.config.fpsTarget;
 
     this.idEvtLoop        = 0;
     this.isPaused         = false;
@@ -27,7 +28,7 @@ class JsPerfVisualizer {
     this.mark = new Mark(this);
 
     // Kick of tracking ASAP
-    this.initTracking();
+    this.timeoutTracker();
 
     if (document.body) {
       this.initGraph();
@@ -60,12 +61,12 @@ class JsPerfVisualizer {
     });
   }
 
-  initTracking() {
+  timeoutTracker() {
     if (!this.isPaused) {
       const timestampNow = Date.now();
-      const diff = timestampNow - this.timestampLast;
-      const fpsCurrent = 2 * this.config.fpsTarget - diff;
-      const duration = diff - this.config.fpsTarget;
+      const frameTimeCurrent = timestampNow - this.timestampLast;
+      const frameTimeDiff = frameTimeCurrent - this.config.frameTimeTarget;
+      const fpsCurrent = 1000 / frameTimeCurrent;
       this.listDiff.push( fpsCurrent );
 
       if (1000 / this.config.fpsTarget * 9 < this.listDiff.length) {
@@ -78,7 +79,7 @@ class JsPerfVisualizer {
           idEvtLoop: this.idEvtLoop,
           timeFromInit: timestampNow - this.timestampInit,
           fpsCurrent,
-          duration,
+          duration: frameTimeDiff,
         });
       }
 
@@ -90,7 +91,7 @@ class JsPerfVisualizer {
       this.idEvtLoop++;
     }
 
-    setTimeout(this.initTracking.bind( this ), this.config.fpsTarget);
+    setTimeout(this.timeoutTracker.bind( this ), this.config.frameTimeTarget);
   }
 
   log ( item ) {

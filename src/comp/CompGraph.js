@@ -115,7 +115,7 @@ class CompFps extends Component {
       <span class="${(
         fpsCurrent < this.option.jsPerfVisualizer.config.fpsWarningLevel ? 'red' : ''
       )}">
-        ${this.option.jsPerfVisualizer.config.fpsTarget}/${fpsCurrent}
+        ${this.option.jsPerfVisualizer.config.fpsTarget}/${Math.round(fpsCurrent)}
       </span>
     `;
   }

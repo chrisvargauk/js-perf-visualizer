@@ -1285,7 +1285,7 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(1)(false);
 // Module
-exports.push([module.i, ".comp-tab {\n  width: 100%;\n  overflow: auto; }\n  .comp-tab > div {\n    float: left; }\n  .comp-tab > .btn {\n    width: 50%;\n    background: lightgray;\n    cursor: pointer;\n    padding: 5px;\n    font-family: monospace;\n    font-size: 14px;\n    font-weight: bold;\n    color: #6d6d6d; }\n    .comp-tab > .btn.active {\n      background: #bfbfbffc; }\n  .comp-tab .tab {\n    width: 100%;\n    display: none; }\n    .comp-tab .tab.active {\n      display: block; }\n", ""]);
+exports.push([module.i, ".comp-tab {\n  width: 100%;\n  overflow: auto; }\n  .comp-tab > div {\n    float: left; }\n  .comp-tab > .btn {\n    width: 50%;\n    background: lightgray;\n    cursor: pointer;\n    padding: 5px;\n    font-family: monospace;\n    font-size: 14px;\n    font-weight: bold;\n    color: #6d6d6d; }\n    .comp-tab > .btn.active {\n      background: #bfbfbf; }\n  .comp-tab .tab {\n    width: 100%;\n    display: none; }\n    .comp-tab .tab.active {\n      display: block; }\n", ""]);
 
 
 /***/ }),
@@ -1564,7 +1564,7 @@ class CompGraph_CompFps extends GameGUI["Component"] {
       <span class="${(
         fpsCurrent < this.option.jsPerfVisualizer.config.fpsWarningLevel ? 'red' : ''
       )}">
-        ${this.option.jsPerfVisualizer.config.fpsTarget}/${fpsCurrent}
+        ${this.option.jsPerfVisualizer.config.fpsTarget}/${Math.round(fpsCurrent)}
       </span>
     `;
   }
@@ -1614,8 +1614,8 @@ const dumbCompFpsWarnLevel = (item, classBg) => {
   return `
     <div class="log ${classBg}">
       Time: ${CompLog_CompLog.formatTime( item.timeFromInit )}
-      Duration: ${CompLog_CompLog.formatTime(item.duration)}
-      FPS: ${item.fpsCurrent}
+      Duration: ${CompLog_CompLog.formatTime(Math.round(item.duration))}
+      FPS: ${Math.round(item.fpsCurrent)}
       LID: ${item.idEvtLoop}
       - Lagging 
     </div>
@@ -1637,8 +1637,8 @@ const dumbCompIndentation = indentLevel => {
 const dumbCompMark = (mark, classBg) => (`
   <div class="mark ${classBg}">
     ${dumbCompIndentation(mark.indentLevel)}<span class="dot"></span> 
-    ${!isUndef(mark.timeFromInit) ? 'Time: '    +CompLog_CompLog.formatTime(mark.timeFromInit)  : ''} 
-    ${!isUndef(mark.duration)     ? 'Duration: '+CompLog_CompLog.formatTime(mark.duration)      : ''}
+    ${!isUndef(mark.timeFromInit) ? 'Time: '    +CompLog_CompLog.formatTime(mark.timeFromInit)             : ''} 
+    ${!isUndef(mark.duration)     ? 'Duration: '+CompLog_CompLog.formatTime(Math.round(mark.duration))  : ''}
     LID: ${mark.idEvtLoopStart}/${mark.idEvtLoopStop}
     - "${mark.text}"
   </div>
@@ -1688,7 +1688,7 @@ class CompLog_CompLog extends GameGUI["Component"] {
   calcBgClass(fps, isIdEvtLoopDifferent) {
     let classBg = 'bg';
 
-    if (fps < 0) {
+    if (fps < 1) {
       classBg += '-error';
     } else if(fps < this.option.jsPerfVisualizer.config.fpsWarningLevel) {
       classBg += '-warn';
@@ -1891,6 +1891,7 @@ class src_JsPerfVisualizer {
         fpsWarningLevel: 30,
         ...configOverwrite
     };
+    this.config.frameTimeTarget = 1000 / this.config.fpsTarget;
 
     this.idEvtLoop        = 0;
     this.isPaused         = false;
@@ -1908,7 +1909,7 @@ class src_JsPerfVisualizer {
     this.mark = new src_Mark(this);
 
     // Kick of tracking ASAP
-    this.initTracking();
+    this.timeoutTracker();
 
     if (document.body) {
       this.initGraph();
@@ -1941,12 +1942,12 @@ class src_JsPerfVisualizer {
     });
   }
 
-  initTracking() {
+  timeoutTracker() {
     if (!this.isPaused) {
       const timestampNow = Date.now();
-      const diff = timestampNow - this.timestampLast;
-      const fpsCurrent = 2 * this.config.fpsTarget - diff;
-      const duration = diff - this.config.fpsTarget;
+      const frameTimeCurrent = timestampNow - this.timestampLast;
+      const frameTimeDiff = frameTimeCurrent - this.config.frameTimeTarget;
+      const fpsCurrent = 1000 / frameTimeCurrent;
       this.listDiff.push( fpsCurrent );
 
       if (1000 / this.config.fpsTarget * 9 < this.listDiff.length) {
@@ -1959,7 +1960,7 @@ class src_JsPerfVisualizer {
           idEvtLoop: this.idEvtLoop,
           timeFromInit: timestampNow - this.timestampInit,
           fpsCurrent,
-          duration,
+          duration: frameTimeDiff,
         });
       }
 
@@ -1971,7 +1972,7 @@ class src_JsPerfVisualizer {
       this.idEvtLoop++;
     }
 
-    setTimeout(this.initTracking.bind( this ), this.config.fpsTarget);
+    setTimeout(this.timeoutTracker.bind( this ), this.config.frameTimeTarget);
   }
 
   log ( item ) {
