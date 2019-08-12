@@ -1,8 +1,8 @@
 {
   "name": "js-perf-visualizer",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "",
-  "main": "build-umd/JsPerfVisualizer.js",
+  "main": "build-es5/JsPerfVisualizer.js",
   "scripts": {
     "start:dev": "webpack-dev-server --config webpack.dev.js --open",
     "build": "webpack --config webpack.prod.js",

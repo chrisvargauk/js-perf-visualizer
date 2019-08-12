@@ -20,7 +20,7 @@ class JsPerfVisualizer {
     this.listLog          = [];
 
     this.dataDefault = {
-      isActiveLogUi: true,
+      isActiveLogUi: false,
     };
     const dataLoaded = this.loadData();
     this.isActiveLogUi  = dataLoaded.isActiveLogUi;
@@ -66,7 +66,11 @@ class JsPerfVisualizer {
       const timestampNow = Date.now();
       const frameTimeCurrent = timestampNow - this.timestampLast;
       const frameTimeDiff = frameTimeCurrent - this.config.frameTimeTarget;
-      const fpsCurrent = 1000 / frameTimeCurrent;
+      let fpsCurrent = 1000 / frameTimeCurrent;
+
+      // Filter off "unexpected" spikes - Looking at you IE
+      fpsCurrent = this.config.fpsTarget < fpsCurrent ? this.config.fpsTarget : fpsCurrent;
+
       this.listDiff.push( fpsCurrent );
 
       if (1000 / this.config.fpsTarget * 9 < this.listDiff.length) {
