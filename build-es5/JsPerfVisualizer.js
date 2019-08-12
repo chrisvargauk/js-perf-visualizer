@@ -1483,7 +1483,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     function (module, exports, __webpack_require__) {
       exports = module.exports = __webpack_require__(1)(false); // Module
 
-      exports.push([module.i, "#js-perf-visualizer-root {\n  position: absolute;\n  left: 0;\n  top: 0; }\n  #js-perf-visualizer-root * {\n    box-sizing: border-box; }\n\n#graph-root {\n  background: #ececec;\n  width: 500px;\n  height: 100px; }\n\n.comp-root {\n  max-width: 500px;\n  overflow: auto; }\n  .comp-root > div {\n    float: left; }\n", ""]);
+      exports.push([module.i, "#js-perf-visualizer-root {\n  position: absolute;\n  left: 0;\n  top: 0; }\n  #js-perf-visualizer-root * {\n    box-sizing: border-box; }\n\n.comp-root {\n  width: 900px;\n  overflow: auto; }\n  .comp-root > div {\n    float: left; }\n", ""]);
       /***/
     },
     /* 6 */
@@ -1606,7 +1606,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     function (module, exports, __webpack_require__) {
       exports = module.exports = __webpack_require__(1)(false); // Module
 
-      exports.push([module.i, ".comp-fps {\n  font-family: consolas, Verdana;\n  position: absolute;\n  bottom: 0;\n  right: 0;\n  padding-bottom: 1px;\n  padding-right: 6px;\n  color: #818181; }\n  .comp-fps .red {\n    color: red; }\n\n.comp-btn-pause-play {\n  font-size: 16px;\n  position: absolute;\n  top: 29px;\n  right: 0px;\n  margin: 6px;\n  background: white;\n  color: gray;\n  width: 24px;\n  height: 24px;\n  border-radius: 12px;\n  text-align: center;\n  vertical-align: middle; }\n\n.comp-graph {\n  position: relative;\n  cursor: pointer; }\n  .comp-graph > .head {\n    background: lightgray;\n    cursor: pointer;\n    padding: 5px;\n    font-family: monospace;\n    font-size: 16px;\n    font-weight: bold;\n    color: #6d6d6d;\n    width: 100%;\n    text-align: center; }\n", ""]);
+      exports.push([module.i, ".comp-fps {\n  font-family: consolas, Verdana;\n  position: absolute;\n  bottom: 0;\n  right: 0;\n  padding-bottom: 1px;\n  padding-right: 6px;\n  color: #818181; }\n  .comp-fps .red {\n    color: red; }\n\n.comp-btn-pause-play {\n  font-size: 16px;\n  position: absolute;\n  top: 29px;\n  right: 0px;\n  margin: 6px;\n  background: white;\n  color: gray;\n  width: 24px;\n  height: 24px;\n  border-radius: 12px;\n  text-align: center;\n  vertical-align: middle; }\n\n.comp-graph {\n  width: 100%;\n  position: relative;\n  cursor: pointer; }\n  .comp-graph > .head {\n    background: lightgray;\n    cursor: pointer;\n    padding: 5px;\n    font-family: monospace;\n    font-size: 16px;\n    font-weight: bold;\n    color: #6d6d6d;\n    width: 100%;\n    text-align: center; }\n\n#graph-root {\n  background: #ececec;\n  width: 100%;\n  height: 100px; }\n", ""]);
       /***/
     },
     /* 9 */
@@ -2298,7 +2298,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           this.listDiff = [];
           this.listLog = [];
           this.dataDefault = {
-            isActiveLogUi: true
+            isActiveLogUi: false
           };
           var dataLoaded = this.loadData();
           this.isActiveLogUi = dataLoaded.isActiveLogUi;
@@ -2347,7 +2347,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
               var timestampNow = Date.now();
               var frameTimeCurrent = timestampNow - this.timestampLast;
               var frameTimeDiff = frameTimeCurrent - this.config.frameTimeTarget;
-              var fpsCurrent = 1000 / frameTimeCurrent;
+              var fpsCurrent = 1000 / frameTimeCurrent; // Filter off "unexpected" spikes - Looking at you IE
+
+              fpsCurrent = this.config.fpsTarget < fpsCurrent ? this.config.fpsTarget : fpsCurrent;
               this.listDiff.push(fpsCurrent);
 
               if (1000 / this.config.fpsTarget * 9 < this.listDiff.length) {
