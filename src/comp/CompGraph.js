@@ -147,6 +147,8 @@ class CompBtnPausePlay extends Component {
     this.setState({
       isPaused: this.option.jsPerfVisualizer.isPaused
     });
+
+    this.option.jsPerfVisualizer.genReport();
   }
 }
 

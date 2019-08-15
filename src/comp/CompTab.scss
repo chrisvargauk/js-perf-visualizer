@@ -7,7 +7,6 @@
   overflow: auto;
 
   & > .btn {
-    width: 50%;
     background: lightgray;
     cursor: pointer;
     padding: 5px;
@@ -24,6 +23,7 @@
 
   .tab {
     width: 100%;
+    background: #efefef;
 
     display: none;
     &.active {

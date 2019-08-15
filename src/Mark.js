@@ -8,7 +8,7 @@ class Mark {
     this.ctr                    = -1;
   }
 
-  start( markText ) {
+  start( markText, isPartOfReport ) {
     if ( this.listObjMarkStart[ markText ] ) {
       console.error(`Error: JS Perf Visualizer / Mark: mark already exists: ${markText}`);
       return;
@@ -26,6 +26,7 @@ class Mark {
       duration:       undefined,
       text:           markText,
       indentLevel:    0,
+      isPartOfReport,
     };
 
     this.markLatest = this.listObjMarkStart[ markText ];
@@ -48,6 +49,11 @@ class Mark {
 
     delete this.listObjMarkStart[ markText ];
     delete this.markLatest;
+  }
+
+  here( markText ) {
+    this.start( markText );
+    this.stop( markText );
   }
 
   getLatest() {

@@ -1,0 +1,47 @@
+.comp-report {
+  background: #efefef;
+  color: #6d6d6d;
+  font-family: Consolas, Verdana, monospace;
+  width: 100%;
+  height: 300px;
+  overflow-y: auto;
+  padding: 20px;
+
+  .mark {
+    font-size: 14px;
+    padding: 2px 5px;
+  }
+
+  .dot {
+    display: inline-block;
+    background: #6d6d6d;
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+  }
+
+  fieldset {
+    margin-bottom: 10px;
+    border: 1px solid #c5c5db;
+
+    legend {
+      font-family: monospace;
+      font-size: 14px;
+      font-weight: bold;
+      color: #6d6d6d;
+    }
+
+    .column {
+      float: left;
+      width: 50%;
+
+      padding-right: 0;
+      &:nth-child(2) {
+        padding-right: 12px;
+      }
+
+
+    }
+
+  }
+}

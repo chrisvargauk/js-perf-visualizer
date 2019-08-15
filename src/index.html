@@ -4,12 +4,12 @@
   <script>
     window.jsPerfVisualizer = new JsPerfVisualizer.default();
 
-    jsPerfVisualizer.mark.start('mark 1');
+    jsPerfVisualizer.mark.start('mark 1', true);
     jsPerfVisualizer.mark.stop('mark 1');
 
-    jsPerfVisualizer.mark.start('mark 2');
+    jsPerfVisualizer.mark.start('mark 2', true);
     setTimeout(() => {
-      jsPerfVisualizer.mark.start('mark 3');
+      jsPerfVisualizer.mark.start('mark 3', true);
       jsPerfVisualizer.mark.start('mark 4');
       const noOfIter = 55000;
       for (let i=0; i<noOfIter; i++) {

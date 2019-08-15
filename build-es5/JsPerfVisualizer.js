@@ -275,7 +275,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       /******/
 
-      return __webpack_require__(__webpack_require__.s = 15);
+      return __webpack_require__(__webpack_require__.s = 19);
       /******/
     }(
     /************************************************************************/
@@ -1483,7 +1483,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     function (module, exports, __webpack_require__) {
       exports = module.exports = __webpack_require__(1)(false); // Module
 
-      exports.push([module.i, "#js-perf-visualizer-root {\n  position: absolute;\n  left: 0;\n  top: 0; }\n  #js-perf-visualizer-root * {\n    box-sizing: border-box; }\n\n.comp-root {\n  width: 900px;\n  overflow: auto; }\n  .comp-root > div {\n    float: left; }\n", ""]);
+      exports.push([module.i, "#js-perf-visualizer-root {\n  position: absolute;\n  left: 0;\n  top: 0; }\n  #js-perf-visualizer-root * {\n    box-sizing: border-box; }\n\n.comp-root {\n  width: 900px;\n  overflow: auto; }\n  .comp-root > * {\n    float: left; }\n", ""]);
       /***/
     },
     /* 6 */
@@ -1638,7 +1638,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     function (module, exports, __webpack_require__) {
       exports = module.exports = __webpack_require__(1)(false); // Module
 
-      exports.push([module.i, ".comp-tab {\n  width: 100%;\n  overflow: auto; }\n  .comp-tab > div {\n    float: left; }\n  .comp-tab > .btn {\n    width: 50%;\n    background: lightgray;\n    cursor: pointer;\n    padding: 5px;\n    font-family: monospace;\n    font-size: 14px;\n    font-weight: bold;\n    color: #6d6d6d; }\n    .comp-tab > .btn.active {\n      background: #bfbfbf; }\n  .comp-tab .tab {\n    width: 100%;\n    display: none; }\n    .comp-tab .tab.active {\n      display: block; }\n", ""]);
+      exports.push([module.i, ".comp-tab {\n  width: 100%;\n  overflow: auto; }\n  .comp-tab > div {\n    float: left; }\n  .comp-tab > .btn {\n    background: lightgray;\n    cursor: pointer;\n    padding: 5px;\n    font-family: monospace;\n    font-size: 14px;\n    font-weight: bold;\n    color: #6d6d6d; }\n    .comp-tab > .btn.active {\n      background: #bfbfbf; }\n  .comp-tab .tab {\n    width: 100%;\n    background: #efefef;\n    display: none; }\n    .comp-tab .tab.active {\n      display: block; }\n", ""]);
       /***/
     },
     /* 11 */
@@ -1670,7 +1670,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     function (module, exports, __webpack_require__) {
       exports = module.exports = __webpack_require__(1)(false); // Module
 
-      exports.push([module.i, ".comp-log {\n  background: #efefef;\n  width: 100%;\n  height: 300px;\n  overflow-y: auto; }\n  .comp-log .log, .comp-log .mark {\n    font-family: Consolas, Verdana;\n    font-size: 14px;\n    padding: 2px 5px; }\n    .comp-log .log.bg-error-a, .comp-log .mark.bg-error-a {\n      background: #d20000;\n      color: white; }\n    .comp-log .log.bg-error-b, .comp-log .mark.bg-error-b {\n      background: #ee0000;\n      color: white; }\n    .comp-log .log.bg-warn-a, .comp-log .mark.bg-warn-a {\n      background: orange;\n      color: white; }\n    .comp-log .log.bg-warn-b, .comp-log .mark.bg-warn-b {\n      background: darkorange;\n      color: white; }\n    .comp-log .log.bg-log-a, .comp-log .mark.bg-log-a {\n      background: aliceblue;\n      color: darkblue; }\n      .comp-log .log.bg-log-a .dot, .comp-log .mark.bg-log-a .dot {\n        background: darkblue; }\n    .comp-log .log.bg-log-b, .comp-log .mark.bg-log-b {\n      background: #dee6ed;\n      color: darkblue; }\n      .comp-log .log.bg-log-b .dot, .comp-log .mark.bg-log-b .dot {\n        background: darkblue; }\n    .comp-log .log .dot, .comp-log .mark .dot {\n      display: inline-block;\n      background: white;\n      width: 8px;\n      height: 8px;\n      border-radius: 4px; }\n  .comp-log .indentation {\n    display: inline-block;\n    width: 25px;\n    text-align: right;\n    padding-right: 6px; }\n  .comp-log > span.warn {\n    color: #e09100;\n    margin: 5px;\n    display: inline-block; }\n", ""]);
+      exports.push([module.i, ".comp-log {\n  background: #efefef;\n  width: 100%;\n  height: 300px;\n  overflow-y: auto; }\n  .comp-log .log, .comp-log .mark {\n    font-family: Consolas, Verdana;\n    font-size: 14px;\n    padding: 2px 5px; }\n    .comp-log .log.bg-error-a, .comp-log .mark.bg-error-a {\n      background: #d20000;\n      color: white; }\n    .comp-log .log.bg-error-b, .comp-log .mark.bg-error-b {\n      background: #ee0000;\n      color: white; }\n    .comp-log .log.bg-warn-a, .comp-log .mark.bg-warn-a {\n      background: orange;\n      color: white; }\n    .comp-log .log.bg-warn-b, .comp-log .mark.bg-warn-b {\n      background: darkorange;\n      color: white; }\n    .comp-log .log.bg-log-a, .comp-log .mark.bg-log-a {\n      background: aliceblue;\n      color: darkblue; }\n      .comp-log .log.bg-log-a .dot, .comp-log .mark.bg-log-a .dot {\n        background: darkblue; }\n    .comp-log .log.bg-log-b, .comp-log .mark.bg-log-b {\n      background: #dee6ed;\n      color: darkblue; }\n      .comp-log .log.bg-log-b .dot, .comp-log .mark.bg-log-b .dot {\n        background: darkblue; }\n    .comp-log .log .dot, .comp-log .mark .dot {\n      display: inline-block;\n      background: white;\n      width: 8px;\n      height: 8px;\n      border-radius: 4px; }\n  .comp-log > span.warn {\n    color: #e09100;\n    margin: 5px;\n    display: inline-block; }\n", ""]);
       /***/
     },
     /* 13 */
@@ -1702,10 +1702,74 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     function (module, exports, __webpack_require__) {
       exports = module.exports = __webpack_require__(1)(false); // Module
 
-      exports.push([module.i, ".comp-setting {\n  padding: 5px;\n  background: #efefef;\n  min-height: 300px; }\n  .comp-setting .btn {\n    background: gray;\n    color: white;\n    text-align: center;\n    padding: 5px;\n    border-radius: 5px;\n    font-family: monospace;\n    font-size: 14px;\n    cursor: pointer; }\n    .comp-setting .btn.active {\n      background: #26c300; }\n", ""]);
+      exports.push([module.i, ".indentation {\n  display: inline-block;\n  width: 29px;\n  text-align: right;\n  padding-right: 6px; }\n", ""]);
       /***/
     },
     /* 15 */
+
+    /***/
+    function (module, exports, __webpack_require__) {
+      var content = __webpack_require__(16);
+
+      if (typeof content === 'string') content = [[module.i, content, '']];
+      var transform;
+      var insertInto;
+      var options = {
+        "hmr": true
+      };
+      options.transform = transform;
+      options.insertInto = undefined;
+
+      var update = __webpack_require__(2)(content, options);
+
+      if (content.locals) module.exports = content.locals;
+
+      if (false) {}
+      /***/
+
+    },
+    /* 16 */
+
+    /***/
+    function (module, exports, __webpack_require__) {
+      exports = module.exports = __webpack_require__(1)(false); // Module
+
+      exports.push([module.i, ".comp-report {\n  background: #efefef;\n  color: #6d6d6d;\n  font-family: Consolas, Verdana, monospace;\n  width: 100%;\n  height: 300px;\n  overflow-y: auto;\n  padding: 20px; }\n  .comp-report .mark {\n    font-size: 14px;\n    padding: 2px 5px; }\n  .comp-report .dot {\n    display: inline-block;\n    background: #6d6d6d;\n    width: 8px;\n    height: 8px;\n    border-radius: 4px; }\n  .comp-report fieldset {\n    margin-bottom: 10px;\n    border: 1px solid #c5c5db; }\n    .comp-report fieldset legend {\n      font-family: monospace;\n      font-size: 14px;\n      font-weight: bold;\n      color: #6d6d6d; }\n    .comp-report fieldset .column {\n      float: left;\n      width: 50%;\n      padding-right: 0; }\n      .comp-report fieldset .column:nth-child(2) {\n        padding-right: 12px; }\n", ""]);
+      /***/
+    },
+    /* 17 */
+
+    /***/
+    function (module, exports, __webpack_require__) {
+      var content = __webpack_require__(18);
+
+      if (typeof content === 'string') content = [[module.i, content, '']];
+      var transform;
+      var insertInto;
+      var options = {
+        "hmr": true
+      };
+      options.transform = transform;
+      options.insertInto = undefined;
+
+      var update = __webpack_require__(2)(content, options);
+
+      if (content.locals) module.exports = content.locals;
+
+      if (false) {}
+      /***/
+
+    },
+    /* 18 */
+
+    /***/
+    function (module, exports, __webpack_require__) {
+      exports = module.exports = __webpack_require__(1)(false); // Module
+
+      exports.push([module.i, ".comp-setting {\n  padding: 5px;\n  background: #efefef;\n  min-height: 300px; }\n  .comp-setting .btn {\n    background: gray;\n    color: white;\n    text-align: center;\n    padding: 5px;\n    border-radius: 5px;\n    font-family: monospace;\n    font-size: 14px;\n    cursor: pointer; }\n    .comp-setting .btn.active {\n      background: #26c300; }\n", ""]);
+      /***/
+    },
+    /* 19 */
 
     /***/
     function (module, __webpack_exports__, __webpack_require__) {
@@ -1960,6 +2024,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             this.setState({
               isPaused: this.option.jsPerfVisualizer.isPaused
             });
+            this.option.jsPerfVisualizer.genReport();
           }
         }]);
 
@@ -1973,14 +2038,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       var comp_CompTab = __webpack_require__(9); // EXTERNAL MODULE: ./src/comp/CompLog.scss
 
 
-      var comp_CompLog = __webpack_require__(11); // CONCATENATED MODULE: ./src/comp/CompLog.js
+      var comp_CompLog = __webpack_require__(11); // EXTERNAL MODULE: ./src/comp/dumbCompIndentation.scss
 
 
-      var dumbCompFpsWarnLevel = function dumbCompFpsWarnLevel(item, classBg) {
-        return "\n    <div class=\"log ".concat(classBg, "\">\n      Time: ").concat(CompLog_CompLog.formatTime(item.timeFromInit), "\n      Duration: ").concat(CompLog_CompLog.formatTime(Math.round(item.duration)), "\n      FPS: ").concat(Math.round(item.fpsCurrent), "\n      LID: ").concat(item.idEvtLoop, "\n      - Lagging \n    </div>\n  ");
-      };
+      var dumbCompIndentation = __webpack_require__(13); // CONCATENATED MODULE: ./src/comp/dumbCompIndentation.js
 
-      var dumbCompIndentation = function dumbCompIndentation(indentLevel) {
+
+      var dumbCompIndentation_dumbCompIndentation = function dumbCompIndentation_dumbCompIndentation(indentLevel) {
         if (indentLevel === 0) return '';
         var html = '<span style="display: inline-block;">';
 
@@ -1991,9 +2055,17 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         html += '</span>';
         return html;
       };
+      /* harmony default export */
+
+
+      var comp_dumbCompIndentation = dumbCompIndentation_dumbCompIndentation; // CONCATENATED MODULE: ./src/comp/CompLog.js
+
+      var dumbCompFpsWarnLevel = function dumbCompFpsWarnLevel(item, classBg) {
+        return "\n    <div class=\"log ".concat(classBg, "\">\n      Time: ").concat(CompLog_CompLog.formatTime(item.timeFromInit), "\n      Duration: ").concat(CompLog_CompLog.formatTime(Math.round(item.duration)), "\n      FPS: ").concat(Math.round(item.fpsCurrent), "\n      LID: ").concat(item.idEvtLoop, "\n      - Lagging \n    </div>\n  ");
+      };
 
       var dumbCompMark = function dumbCompMark(mark, classBg) {
-        return "\n  <div class=\"mark ".concat(classBg, "\">\n    ").concat(dumbCompIndentation(mark.indentLevel), "<span class=\"dot\"></span> \n    ").concat(!isUndef(mark.timeFromInit) ? 'Time: ' + CompLog_CompLog.formatTime(mark.timeFromInit) : '', " \n    ").concat(!isUndef(mark.duration) ? 'Duration: ' + CompLog_CompLog.formatTime(Math.round(mark.duration)) : '', "\n    LID: ").concat(mark.idEvtLoopStart, "/").concat(mark.idEvtLoopStop, "\n    - \"").concat(mark.text, "\"\n  </div>\n");
+        return "\n  <div class=\"mark ".concat(classBg, "\">\n    ").concat(comp_dumbCompIndentation(mark.indentLevel), "<span class=\"dot\"></span> \n    ").concat(!isUndef(mark.timeFromInit) ? 'Time: ' + CompLog_CompLog.formatTime(mark.timeFromInit) : '', " \n    ").concat(!isUndef(mark.duration) ? 'Duration: ' + CompLog_CompLog.formatTime(Math.round(mark.duration)) : '', "\n    LID: ").concat(mark.idEvtLoopStart, "/").concat(mark.idEvtLoopStop, "\n    - \"").concat(mark.text, "\"\n  </div>\n");
       };
 
       var CompLog_CompLog =
@@ -2082,28 +2154,88 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       /* harmony default export */
 
 
-      var src_comp_CompLog = CompLog_CompLog; // EXTERNAL MODULE: ./src/comp/CompSetting.scss
+      var src_comp_CompLog = CompLog_CompLog; // EXTERNAL MODULE: ./src/comp/CompReport.scss
 
-      var comp_CompSetting = __webpack_require__(13); // CONCATENATED MODULE: ./src/comp/CompSetting.js
+      var comp_CompReport = __webpack_require__(15); // CONCATENATED MODULE: ./src/comp/CompReport.js
+
+
+      var CompReport_dumbCompMark = function CompReport_dumbCompMark(mark) {
+        return "\n  <div class=\"mark\">\n    <span class=\"dot\"></span>\n    ".concat(!CompReport_isUndef(mark.timeFromInit) ? 'Time: ' + src_comp_CompLog.formatTime(mark.timeFromInit) : '', " \n    ").concat(!CompReport_isUndef(mark.duration) ? 'Duration: ' + src_comp_CompLog.formatTime(Math.round(mark.duration)) : '', "\n    - \"").concat(mark.text, "\"\n  </div>\n");
+      };
+
+      var CompReport_CompReport =
+      /*#__PURE__*/
+      function (_GameGUI$Component5) {
+        _inherits(CompReport_CompReport, _GameGUI$Component5);
+
+        function CompReport_CompReport(option, config) {
+          var _this6;
+
+          _classCallCheck(this, CompReport_CompReport);
+
+          _this6 = _possibleConstructorReturn(this, _getPrototypeOf(CompReport_CompReport).call(this, option, config));
+
+          _this6.setState({
+            dataReport: {
+              listMark: []
+            }
+          });
+
+          return _this6;
+        }
+
+        _createClass(CompReport_CompReport, [{
+          key: "render",
+          value: function render() {
+            var dataReport = this.getState().dataReport; // Skipp if Report is not generated yet
+
+            if (!dataReport.listMark.length) {
+              return "<span class=\"warn\">\n        Stop Tracking to generate report</span>";
+            }
+
+            return "\n      <fieldset>\n        <legend>STATISTICS</legend>\n        <div class=\"column\">\n          <fieldset>\n            <legend>Low FPS</legend>\n            Lowest: ".concat(dataReport.lowFps.lowest, "<br>\n            No. Drops: ").concat(dataReport.lowFps.noDrop, "<br>\n            Average: ").concat(dataReport.lowFps.average, "<br>\n          </fieldset>\n        </div>\n        <div class=\"column\">\n          <fieldset>\n            <legend>General Info</legend>\n            Average FPS: ").concat(dataReport.averageFps, "<br>\n            Longest Lagg.: ").concat(dataReport.laggingLongest, "ms<br>\n            &nbsp;\n          </fieldset>\n        </div>\n      </fieldset>\n      \n      <fieldset>  \n       <legend>MARKS</legend>\n        ").concat(dataReport.listMark.map(function (item) {
+              return item.isPartOfReport ? CompReport_dumbCompMark(item) : '';
+            }).join(''), "\n      </fieldset>\n    ");
+          }
+        }], [{
+          key: "formatTime",
+          value: function formatTime(time) {
+            return time < 1000 ? time + 'ms' : Math.round(time / 1000 * 100) / 100 + 's';
+          }
+        }]);
+
+        return CompReport_CompReport;
+      }(GameGUI["Component"]); // Utility
+
+
+      function CompReport_isUndef(item) {
+        return typeof item === 'undefined';
+      }
+      /* harmony default export */
+
+
+      var src_comp_CompReport = CompReport_CompReport; // EXTERNAL MODULE: ./src/comp/CompSetting.scss
+
+      var comp_CompSetting = __webpack_require__(17); // CONCATENATED MODULE: ./src/comp/CompSetting.js
 
 
       var CompSetting_CompSetting =
       /*#__PURE__*/
-      function (_GameGUI$Component5) {
-        _inherits(CompSetting_CompSetting, _GameGUI$Component5);
+      function (_GameGUI$Component6) {
+        _inherits(CompSetting_CompSetting, _GameGUI$Component6);
 
         function CompSetting_CompSetting(option, config) {
-          var _this6;
+          var _this7;
 
           _classCallCheck(this, CompSetting_CompSetting);
 
-          _this6 = _possibleConstructorReturn(this, _getPrototypeOf(CompSetting_CompSetting).call(this, option, config));
+          _this7 = _possibleConstructorReturn(this, _getPrototypeOf(CompSetting_CompSetting).call(this, option, config));
 
-          _this6.setState({
-            isActiveLogUi: _this6.option.jsPerfVisualizer.isActiveLogUi
+          _this7.setState({
+            isActiveLogUi: _this7.option.jsPerfVisualizer.isActiveLogUi
           });
 
-          return _this6;
+          return _this7;
         }
 
         _createClass(CompSetting_CompSetting, [{
@@ -2131,40 +2263,44 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       var CompTab_CompTab =
       /*#__PURE__*/
-      function (_GameGUI$Component6) {
-        _inherits(CompTab_CompTab, _GameGUI$Component6);
+      function (_GameGUI$Component7) {
+        _inherits(CompTab_CompTab, _GameGUI$Component7);
 
         function CompTab_CompTab(option, config) {
-          var _this7;
+          var _this8;
 
           _classCallCheck(this, CompTab_CompTab);
 
-          _this7 = _possibleConstructorReturn(this, _getPrototypeOf(CompTab_CompTab).call(this, option, config));
-          _this7.config = {
+          _this8 = _possibleConstructorReturn(this, _getPrototypeOf(CompTab_CompTab).call(this, option, config));
+          _this8.config = {
             listTab: [{
               id: 'log',
               label: 'LOGS'
+            }, {
+              id: 'report',
+              label: 'REPORT'
             }, {
               id: 'setting',
               label: 'SETTINGS'
             }]
           };
+          _this8.noOfTab = Object.keys(_this8.config.listTab).length;
 
-          _this7.setState({
+          _this8.setState({
             idTabActive: 'log'
           });
 
-          return _this7;
+          return _this8;
         }
 
         _createClass(CompTab_CompTab, [{
           key: "render",
           value: function render() {
-            var _this8 = this;
+            var _this9 = this;
 
             return "\n      ".concat(this.config.listTab.map(function (tab) {
-              return "\n        <div class=\"btn btn-tab ".concat(_this8.getState().idTabActive === tab.id ? 'active' : '', "\" \n             ui-click=\"handlerClickTab\" data-id=\"").concat(tab.id, "\">").concat(tab.label, "</div>\n      ");
-            }).join(''), "\n     \n      <div class=\"tab tab-log ").concat(this.getState().idTabActive === 'log' ? 'active' : '', "\">\n        ").concat(this.include(src_comp_CompLog), "\n      </div>\n      <div class=\"tab tab-setting ").concat(this.getState().idTabActive === 'setting' ? 'active' : '', "\">\n        ").concat(this.include(src_comp_CompSetting), "\n      </div>\n    ");
+              return "\n        <div class=\"btn btn-tab ".concat(_this9.getState().idTabActive === tab.id ? 'active' : '', "\"\n             style=\"width: ").concat(100 / _this9.noOfTab, "%\" \n             ui-click=\"handlerClickTab\" data-id=\"").concat(tab.id, "\">").concat(tab.label, "</div>\n      ");
+            }).join(''), "\n     \n      <div class=\"tab tab-log ").concat(this.getState().idTabActive === 'log' ? 'active' : '', "\">\n        ").concat(this.include(src_comp_CompLog), "\n      </div>\n      <div class=\"tab tab-log ").concat(this.getState().idTabActive === 'report' ? 'active' : '', "\">\n        ").concat(this.include(src_comp_CompReport), "\n      </div>\n      <div class=\"tab tab-setting ").concat(this.getState().idTabActive === 'setting' ? 'active' : '', "\">\n        ").concat(this.include(src_comp_CompSetting), "\n      </div>\n    ");
           }
         }, {
           key: "handlerClickTab",
@@ -2184,8 +2320,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       var CompRoot_CompRoot =
       /*#__PURE__*/
-      function (_GameGUI$Component7) {
-        _inherits(CompRoot_CompRoot, _GameGUI$Component7);
+      function (_GameGUI$Component8) {
+        _inherits(CompRoot_CompRoot, _GameGUI$Component8);
 
         function CompRoot_CompRoot() {
           _classCallCheck(this, CompRoot_CompRoot);
@@ -2223,7 +2359,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
         _createClass(Mark, [{
           key: "start",
-          value: function start(markText) {
+          value: function start(markText, isPartOfReport) {
             if (this.listObjMarkStart[markText]) {
               console.error("Error: JS Perf Visualizer / Mark: mark already exists: ".concat(markText));
               return;
@@ -2240,7 +2376,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
               timestampStop: undefined,
               duration: undefined,
               text: markText,
-              indentLevel: 0
+              indentLevel: 0,
+              isPartOfReport: isPartOfReport
             };
             this.markLatest = this.listObjMarkStart[markText];
           }
@@ -2261,6 +2398,12 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             this.jsPerfVisualizer.log(mark);
             delete this.listObjMarkStart[markText];
             delete this.markLatest;
+          }
+        }, {
+          key: "here",
+          value: function here(markText) {
+            this.start(markText);
+            this.stop(markText);
           }
         }, {
           key: "getLatest",
@@ -2295,22 +2438,27 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           this.isPaused = false;
           this.timestampInit = Date.now();
           this.timestampLast = this.timestampInit;
-          this.listDiff = [];
+          this.listFps = [];
+          this.listFpsLow = [];
           this.listLog = [];
+          this.fpsLowest = this.config.fpsTarget;
+          this.laggingLongest = 0;
+          this.noLowFpsDrop = 0;
           this.dataDefault = {
             isActiveLogUi: false
           };
           var dataLoaded = this.loadData();
           this.isActiveLogUi = dataLoaded.isActiveLogUi;
-          this.mark = new src_Mark(this); // Kick of tracking ASAP
-
-          this.timeoutTracker();
+          this.mark = new src_Mark(this);
 
           if (document.body) {
             this.initGraph();
           } else {
             document.addEventListener('DOMContentLoaded', this.initGraph.bind(this));
-          }
+          } // Kick of tracking
+
+
+          this.timeoutTracker();
         }
 
         _createClass(src_JsPerfVisualizer, [{
@@ -2350,13 +2498,14 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
               var fpsCurrent = 1000 / frameTimeCurrent; // Filter off "unexpected" spikes - Looking at you IE
 
               fpsCurrent = this.config.fpsTarget < fpsCurrent ? this.config.fpsTarget : fpsCurrent;
-              this.listDiff.push(fpsCurrent);
+              this.listFps.push(fpsCurrent);
 
-              if (1000 / this.config.fpsTarget * 9 < this.listDiff.length) {
-                this.listDiff.shift();
+              if (1000 / this.config.fpsTarget * 9 < this.listFps.length) {
+                this.listFps.shift();
               }
 
               if (fpsCurrent < this.config.fpsWarningLevel) {
+                this.listFpsLow.push(fpsCurrent);
                 this.log({
                   type: 'fpsWarnLevel',
                   idEvtLoop: this.idEvtLoop,
@@ -2364,6 +2513,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
                   fpsCurrent: fpsCurrent,
                   duration: frameTimeDiff
                 });
+                this.noLowFpsDrop++;
+              }
+
+              if (fpsCurrent < this.fpsLowest) {
+                this.fpsLowest = fpsCurrent;
+              }
+
+              if (this.laggingLongest < frameTimeDiff) {
+                this.laggingLongest = frameTimeDiff;
               } // Update UI
 
 
@@ -2392,7 +2550,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             if (!this.gui) return; // Update Graph
 
             var compGraph = this.gui.getCompByType('CompGraph')[0];
-            compGraph.graph.update(this.listDiff);
+            compGraph.graph.update(this.listFps);
             var compFps = this.gui.getCompByType('CompFps')[0];
             compFps.setState({
               fpsCurrent: fpsCurrent
@@ -2413,6 +2571,32 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             compLog.setState({
               listLog: this.listLog
             });
+          }
+        }, {
+          key: "genReport",
+          value: function genReport() {
+            var listMark = this.listLog.filter(function (item) {
+              return item.isPartOfReport;
+            });
+            var dataReport = {
+              averageFps: Math.round(this.listFps.reduce(function (sum, fps) {
+                return sum + fps;
+              }, 0) / this.listFps.length),
+              laggingLongest: this.laggingLongest.toFixed(2),
+              lowFps: {
+                average: Math.round(this.listFpsLow.reduce(function (sum, fps) {
+                  return sum + fps;
+                }, 0) / this.listFpsLow.length),
+                lowest: Math.round(this.fpsLowest),
+                noDrop: Math.round(this.noLowFpsDrop)
+              },
+              listMark: listMark
+            };
+            var CompReport = this.gui.getCompByType('CompReport')[0];
+            CompReport.setState({
+              dataReport: dataReport
+            });
+            return dataReport;
           }
         }]);
 

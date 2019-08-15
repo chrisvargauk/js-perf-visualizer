@@ -91,7 +91,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 15);
+/******/ 	return __webpack_require__(__webpack_require__.s = 19);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1122,7 +1122,7 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(1)(false);
 // Module
-exports.push([module.i, "#js-perf-visualizer-root {\n  position: absolute;\n  left: 0;\n  top: 0; }\n  #js-perf-visualizer-root * {\n    box-sizing: border-box; }\n\n.comp-root {\n  width: 900px;\n  overflow: auto; }\n  .comp-root > div {\n    float: left; }\n", ""]);
+exports.push([module.i, "#js-perf-visualizer-root {\n  position: absolute;\n  left: 0;\n  top: 0; }\n  #js-perf-visualizer-root * {\n    box-sizing: border-box; }\n\n.comp-root {\n  width: 900px;\n  overflow: auto; }\n  .comp-root > * {\n    float: left; }\n", ""]);
 
 
 /***/ }),
@@ -1285,7 +1285,7 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(1)(false);
 // Module
-exports.push([module.i, ".comp-tab {\n  width: 100%;\n  overflow: auto; }\n  .comp-tab > div {\n    float: left; }\n  .comp-tab > .btn {\n    width: 50%;\n    background: lightgray;\n    cursor: pointer;\n    padding: 5px;\n    font-family: monospace;\n    font-size: 14px;\n    font-weight: bold;\n    color: #6d6d6d; }\n    .comp-tab > .btn.active {\n      background: #bfbfbf; }\n  .comp-tab .tab {\n    width: 100%;\n    display: none; }\n    .comp-tab .tab.active {\n      display: block; }\n", ""]);
+exports.push([module.i, ".comp-tab {\n  width: 100%;\n  overflow: auto; }\n  .comp-tab > div {\n    float: left; }\n  .comp-tab > .btn {\n    background: lightgray;\n    cursor: pointer;\n    padding: 5px;\n    font-family: monospace;\n    font-size: 14px;\n    font-weight: bold;\n    color: #6d6d6d; }\n    .comp-tab > .btn.active {\n      background: #bfbfbf; }\n  .comp-tab .tab {\n    width: 100%;\n    background: #efefef;\n    display: none; }\n    .comp-tab .tab.active {\n      display: block; }\n", ""]);
 
 
 /***/ }),
@@ -1319,7 +1319,7 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(1)(false);
 // Module
-exports.push([module.i, ".comp-log {\n  background: #efefef;\n  width: 100%;\n  height: 300px;\n  overflow-y: auto; }\n  .comp-log .log, .comp-log .mark {\n    font-family: Consolas, Verdana;\n    font-size: 14px;\n    padding: 2px 5px; }\n    .comp-log .log.bg-error-a, .comp-log .mark.bg-error-a {\n      background: #d20000;\n      color: white; }\n    .comp-log .log.bg-error-b, .comp-log .mark.bg-error-b {\n      background: #ee0000;\n      color: white; }\n    .comp-log .log.bg-warn-a, .comp-log .mark.bg-warn-a {\n      background: orange;\n      color: white; }\n    .comp-log .log.bg-warn-b, .comp-log .mark.bg-warn-b {\n      background: darkorange;\n      color: white; }\n    .comp-log .log.bg-log-a, .comp-log .mark.bg-log-a {\n      background: aliceblue;\n      color: darkblue; }\n      .comp-log .log.bg-log-a .dot, .comp-log .mark.bg-log-a .dot {\n        background: darkblue; }\n    .comp-log .log.bg-log-b, .comp-log .mark.bg-log-b {\n      background: #dee6ed;\n      color: darkblue; }\n      .comp-log .log.bg-log-b .dot, .comp-log .mark.bg-log-b .dot {\n        background: darkblue; }\n    .comp-log .log .dot, .comp-log .mark .dot {\n      display: inline-block;\n      background: white;\n      width: 8px;\n      height: 8px;\n      border-radius: 4px; }\n  .comp-log .indentation {\n    display: inline-block;\n    width: 25px;\n    text-align: right;\n    padding-right: 6px; }\n  .comp-log > span.warn {\n    color: #e09100;\n    margin: 5px;\n    display: inline-block; }\n", ""]);
+exports.push([module.i, ".comp-log {\n  background: #efefef;\n  width: 100%;\n  height: 300px;\n  overflow-y: auto; }\n  .comp-log .log, .comp-log .mark {\n    font-family: Consolas, Verdana;\n    font-size: 14px;\n    padding: 2px 5px; }\n    .comp-log .log.bg-error-a, .comp-log .mark.bg-error-a {\n      background: #d20000;\n      color: white; }\n    .comp-log .log.bg-error-b, .comp-log .mark.bg-error-b {\n      background: #ee0000;\n      color: white; }\n    .comp-log .log.bg-warn-a, .comp-log .mark.bg-warn-a {\n      background: orange;\n      color: white; }\n    .comp-log .log.bg-warn-b, .comp-log .mark.bg-warn-b {\n      background: darkorange;\n      color: white; }\n    .comp-log .log.bg-log-a, .comp-log .mark.bg-log-a {\n      background: aliceblue;\n      color: darkblue; }\n      .comp-log .log.bg-log-a .dot, .comp-log .mark.bg-log-a .dot {\n        background: darkblue; }\n    .comp-log .log.bg-log-b, .comp-log .mark.bg-log-b {\n      background: #dee6ed;\n      color: darkblue; }\n      .comp-log .log.bg-log-b .dot, .comp-log .mark.bg-log-b .dot {\n        background: darkblue; }\n    .comp-log .log .dot, .comp-log .mark .dot {\n      display: inline-block;\n      background: white;\n      width: 8px;\n      height: 8px;\n      border-radius: 4px; }\n  .comp-log > span.warn {\n    color: #e09100;\n    margin: 5px;\n    display: inline-block; }\n", ""]);
 
 
 /***/ }),
@@ -1353,11 +1353,79 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(1)(false);
 // Module
-exports.push([module.i, ".comp-setting {\n  padding: 5px;\n  background: #efefef;\n  min-height: 300px; }\n  .comp-setting .btn {\n    background: gray;\n    color: white;\n    text-align: center;\n    padding: 5px;\n    border-radius: 5px;\n    font-family: monospace;\n    font-size: 14px;\n    cursor: pointer; }\n    .comp-setting .btn.active {\n      background: #26c300; }\n", ""]);
+exports.push([module.i, ".indentation {\n  display: inline-block;\n  width: 29px;\n  text-align: right;\n  padding-right: 6px; }\n", ""]);
 
 
 /***/ }),
 /* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(16);
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(2)(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// Module
+exports.push([module.i, ".comp-report {\n  background: #efefef;\n  color: #6d6d6d;\n  font-family: Consolas, Verdana, monospace;\n  width: 100%;\n  height: 300px;\n  overflow-y: auto;\n  padding: 20px; }\n  .comp-report .mark {\n    font-size: 14px;\n    padding: 2px 5px; }\n  .comp-report .dot {\n    display: inline-block;\n    background: #6d6d6d;\n    width: 8px;\n    height: 8px;\n    border-radius: 4px; }\n  .comp-report fieldset {\n    margin-bottom: 10px;\n    border: 1px solid #c5c5db; }\n    .comp-report fieldset legend {\n      font-family: monospace;\n      font-size: 14px;\n      font-weight: bold;\n      color: #6d6d6d; }\n    .comp-report fieldset .column {\n      float: left;\n      width: 50%;\n      padding-right: 0; }\n      .comp-report fieldset .column:nth-child(2) {\n        padding-right: 12px; }\n", ""]);
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(18);
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(2)(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// Module
+exports.push([module.i, ".comp-setting {\n  padding: 5px;\n  background: #efefef;\n  min-height: 300px; }\n  .comp-setting .btn {\n    background: gray;\n    color: white;\n    text-align: center;\n    padding: 5px;\n    border-radius: 5px;\n    font-family: monospace;\n    font-size: 14px;\n    cursor: pointer; }\n    .comp-setting .btn.active {\n      background: #26c300; }\n", ""]);
+
+
+/***/ }),
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1596,6 +1664,8 @@ class CompGraph_CompBtnPausePlay extends GameGUI["Component"] {
     this.setState({
       isPaused: this.option.jsPerfVisualizer.isPaused
     });
+
+    this.option.jsPerfVisualizer.genReport();
   }
 }
 
@@ -1606,7 +1676,27 @@ var comp_CompTab = __webpack_require__(9);
 // EXTERNAL MODULE: ./src/comp/CompLog.scss
 var comp_CompLog = __webpack_require__(11);
 
+// EXTERNAL MODULE: ./src/comp/dumbCompIndentation.scss
+var dumbCompIndentation = __webpack_require__(13);
+
+// CONCATENATED MODULE: ./src/comp/dumbCompIndentation.js
+
+
+const dumbCompIndentation_dumbCompIndentation = indentLevel => {
+  if(indentLevel === 0) return '';
+
+  let html = '<span style="display: inline-block;">';
+  for (let i=0; i<indentLevel; i++) {
+    html+='<span  class="indentation">|</span>';
+  }
+  html += '</span>';
+
+  return html;
+};
+
+/* harmony default export */ var comp_dumbCompIndentation = (dumbCompIndentation_dumbCompIndentation);
 // CONCATENATED MODULE: ./src/comp/CompLog.js
+
 
 
 
@@ -1622,21 +1712,9 @@ const dumbCompFpsWarnLevel = (item, classBg) => {
   `;
 };
 
-const dumbCompIndentation = indentLevel => {
-  if(indentLevel === 0) return '';
-
-  let html = '<span style="display: inline-block;">';
-  for (let i=0; i<indentLevel; i++) {
-    html+='<span  class="indentation">|</span>';
-  }
-  html += '</span>';
-
-  return html;
-};
-
 const dumbCompMark = (mark, classBg) => (`
   <div class="mark ${classBg}">
-    ${dumbCompIndentation(mark.indentLevel)}<span class="dot"></span> 
+    ${comp_dumbCompIndentation(mark.indentLevel)}<span class="dot"></span> 
     ${!isUndef(mark.timeFromInit) ? 'Time: '    +CompLog_CompLog.formatTime(mark.timeFromInit)             : ''} 
     ${!isUndef(mark.duration)     ? 'Duration: '+CompLog_CompLog.formatTime(Math.round(mark.duration))  : ''}
     LID: ${mark.idEvtLoopStart}/${mark.idEvtLoopStop}
@@ -1711,8 +1789,86 @@ function isUndef( item ) {
   return typeof item === 'undefined';
 }
 /* harmony default export */ var src_comp_CompLog = (CompLog_CompLog);
+// EXTERNAL MODULE: ./src/comp/CompReport.scss
+var comp_CompReport = __webpack_require__(15);
+
+// CONCATENATED MODULE: ./src/comp/CompReport.js
+
+
+
+
+const CompReport_dumbCompMark = mark => (`
+  <div class="mark">
+    <span class="dot"></span>
+    ${!CompReport_isUndef(mark.timeFromInit) ? 'Time: '    +src_comp_CompLog.formatTime(mark.timeFromInit)             : ''} 
+    ${!CompReport_isUndef(mark.duration)     ? 'Duration: '+src_comp_CompLog.formatTime(Math.round(mark.duration))  : ''}
+    - "${mark.text}"
+  </div>
+`);
+
+class CompReport_CompReport extends GameGUI["Component"]{
+  constructor (option, config) {
+    super(option, config);
+
+    this.setState({
+      dataReport: {
+        listMark: []
+      }
+    });
+  }
+
+  render () {
+    const dataReport = this.getState().dataReport;
+
+    // Skipp if Report is not generated yet
+    if (!dataReport.listMark.length) {
+      return `<span class="warn">
+        Stop Tracking to generate report</span>`;
+    }
+
+    return `
+      <fieldset>
+        <legend>STATISTICS</legend>
+        <div class="column">
+          <fieldset>
+            <legend>Low FPS</legend>
+            Lowest: ${dataReport.lowFps.lowest}<br>
+            No. Drops: ${dataReport.lowFps.noDrop}<br>
+            Average: ${dataReport.lowFps.average}<br>
+          </fieldset>
+        </div>
+        <div class="column">
+          <fieldset>
+            <legend>General Info</legend>
+            Average FPS: ${dataReport.averageFps}<br>
+            Longest Lagg.: ${dataReport.laggingLongest}ms<br>
+            &nbsp;
+          </fieldset>
+        </div>
+      </fieldset>
+      
+      <fieldset>  
+       <legend>MARKS</legend>
+        ${dataReport.listMark.map(item => {
+          return item.isPartOfReport ? CompReport_dumbCompMark(item) : '';  
+        }).join('')}
+      </fieldset>
+    `;
+  }
+
+  static formatTime (time) {
+    return time < 1000 ? time+'ms' : Math.round(time/1000*100)/100+'s';
+  }
+}
+
+// Utility
+function CompReport_isUndef( item ) {
+  return typeof item === 'undefined';
+}
+
+/* harmony default export */ var src_comp_CompReport = (CompReport_CompReport);
 // EXTERNAL MODULE: ./src/comp/CompSetting.scss
-var comp_CompSetting = __webpack_require__(13);
+var comp_CompSetting = __webpack_require__(17);
 
 // CONCATENATED MODULE: ./src/comp/CompSetting.js
 
@@ -1752,6 +1908,7 @@ class CompSetting_CompSetting extends GameGUI["Component"]{
 
 
 
+
 class CompTab_CompTab extends GameGUI["Component"] {
   constructor (option, config) {
     super(option, config);
@@ -1763,11 +1920,17 @@ class CompTab_CompTab extends GameGUI["Component"] {
           label: 'LOGS'
         },
         {
+          id: 'report',
+          label: 'REPORT'
+        },
+        {
           id: 'setting',
           label: 'SETTINGS'
         }
       ]
     };
+
+    this.noOfTab = Object.keys(this.config.listTab).length;
 
     this.setState({
       idTabActive: 'log'
@@ -1777,12 +1940,16 @@ class CompTab_CompTab extends GameGUI["Component"] {
   render () {
     return `
       ${this.config.listTab.map(tab => (`
-        <div class="btn btn-tab ${this.getState().idTabActive === tab.id ? 'active' : ''}" 
+        <div class="btn btn-tab ${this.getState().idTabActive === tab.id ? 'active' : ''}"
+             style="width: ${100/this.noOfTab}%" 
              ui-click="handlerClickTab" data-id="${tab.id}">${tab.label}</div>
       `)).join('')}
      
       <div class="tab tab-log ${this.getState().idTabActive === 'log' ? 'active' : ''}">
         ${this.include(src_comp_CompLog)}
+      </div>
+      <div class="tab tab-log ${this.getState().idTabActive === 'report' ? 'active' : ''}">
+        ${this.include(src_comp_CompReport)}
       </div>
       <div class="tab tab-setting ${this.getState().idTabActive === 'setting' ? 'active' : ''}">
         ${this.include(src_comp_CompSetting)}
@@ -1826,7 +1993,7 @@ class Mark {
     this.ctr                    = -1;
   }
 
-  start( markText ) {
+  start( markText, isPartOfReport ) {
     if ( this.listObjMarkStart[ markText ] ) {
       console.error(`Error: JS Perf Visualizer / Mark: mark already exists: ${markText}`);
       return;
@@ -1844,6 +2011,7 @@ class Mark {
       duration:       undefined,
       text:           markText,
       indentLevel:    0,
+      isPartOfReport,
     };
 
     this.markLatest = this.listObjMarkStart[ markText ];
@@ -1866,6 +2034,11 @@ class Mark {
 
     delete this.listObjMarkStart[ markText ];
     delete this.markLatest;
+  }
+
+  here( markText ) {
+    this.start( markText );
+    this.stop( markText );
   }
 
   getLatest() {
@@ -1897,8 +2070,12 @@ class src_JsPerfVisualizer {
     this.isPaused         = false;
     this.timestampInit    = Date.now();
     this.timestampLast    = this.timestampInit;
-    this.listDiff         = [];
+    this.listFps          = [];
+    this.listFpsLow       = [];
     this.listLog          = [];
+    this.fpsLowest        = this.config.fpsTarget;
+    this.laggingLongest   = 0;
+    this.noLowFpsDrop     = 0;
 
     this.dataDefault = {
       isActiveLogUi: false,
@@ -1908,14 +2085,14 @@ class src_JsPerfVisualizer {
 
     this.mark = new src_Mark(this);
 
-    // Kick of tracking ASAP
-    this.timeoutTracker();
-
     if (document.body) {
       this.initGraph();
     } else {
       document.addEventListener('DOMContentLoaded', this.initGraph.bind( this ));
     }
+
+    // Kick of tracking
+    this.timeoutTracker();
   }
 
   saveData() {
@@ -1952,13 +2129,15 @@ class src_JsPerfVisualizer {
       // Filter off "unexpected" spikes - Looking at you IE
       fpsCurrent = this.config.fpsTarget < fpsCurrent ? this.config.fpsTarget : fpsCurrent;
 
-      this.listDiff.push( fpsCurrent );
+      this.listFps.push( fpsCurrent );
 
-      if (1000 / this.config.fpsTarget * 9 < this.listDiff.length) {
-        this.listDiff.shift();
+      if (1000 / this.config.fpsTarget * 9 < this.listFps.length) {
+        this.listFps.shift();
       }
 
       if (fpsCurrent < this.config.fpsWarningLevel ) {
+        this.listFpsLow.push( fpsCurrent );
+
         this.log({
           type: 'fpsWarnLevel',
           idEvtLoop: this.idEvtLoop,
@@ -1966,6 +2145,16 @@ class src_JsPerfVisualizer {
           fpsCurrent,
           duration: frameTimeDiff,
         });
+
+        this.noLowFpsDrop++;
+      }
+
+      if (fpsCurrent < this.fpsLowest) {
+        this.fpsLowest = fpsCurrent;
+      }
+
+      if (this.laggingLongest < frameTimeDiff) {
+        this.laggingLongest = frameTimeDiff;
       }
 
       // Update UI
@@ -1985,6 +2174,7 @@ class src_JsPerfVisualizer {
     // UI update
     if (!this.isActiveLogUi) return;
     if (!this.gui) return;
+
     const compLog = this.gui.getCompByType('CompLog')[0];
     compLog.setState({
       listLog: this.listLog,
@@ -1996,7 +2186,7 @@ class src_JsPerfVisualizer {
 
     // Update Graph
     const compGraph = this.gui.getCompByType('CompGraph')[0];
-    compGraph.graph.update(this.listDiff);
+    compGraph.graph.update(this.listFps);
 
     const compFps = this.gui.getCompByType('CompFps')[0];
     compFps.setState({
@@ -2018,6 +2208,26 @@ class src_JsPerfVisualizer {
     compLog.setState({
       listLog: this.listLog,
     });
+  }
+
+  genReport() {
+    const listMark = this.listLog.filter(item => item.isPartOfReport);
+
+    const dataReport = {
+      averageFps:         Math.round(this.listFps.reduce((sum, fps) => sum + fps, 0) / this.listFps.length),
+      laggingLongest:     this.laggingLongest.toFixed(2),
+      lowFps: {
+        average:  Math.round(this.listFpsLow.reduce((sum, fps) => sum + fps, 0) / this.listFpsLow.length),
+        lowest:   Math.round(this.fpsLowest),
+        noDrop:   Math.round(this.noLowFpsDrop),
+      },
+      listMark,
+
+    };
+    const CompReport = this.gui.getCompByType('CompReport')[0];
+    CompReport.setState({dataReport});
+
+    return dataReport;
   }
 }
 

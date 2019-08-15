@@ -1,5 +1,6 @@
 import {Component} from "game-gui";
 import './CompLog.scss';
+import dumbCompIndentation from "./dumbCompIndentation";
 
 const dumbCompFpsWarnLevel = (item, classBg) => {
   return `
@@ -11,18 +12,6 @@ const dumbCompFpsWarnLevel = (item, classBg) => {
       - Lagging 
     </div>
   `;
-};
-
-const dumbCompIndentation = indentLevel => {
-  if(indentLevel === 0) return '';
-
-  let html = '<span style="display: inline-block;">';
-  for (let i=0; i<indentLevel; i++) {
-    html+='<span  class="indentation">|</span>';
-  }
-  html += '</span>';
-
-  return html;
 };
 
 const dumbCompMark = (mark, classBg) => (`
