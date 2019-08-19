@@ -2189,7 +2189,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           value: function render() {
             var dataReport = this.getState().dataReport; // Skipp if Report is not generated yet
 
-            if (!dataReport.listMark.length) {
+            if (!dataReport.averageFps) {
               return "<span class=\"warn\">\n        Stop Tracking to generate report</span>";
             }
 
@@ -2282,12 +2282,20 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             }, {
               id: 'setting',
               label: 'SETTINGS'
-            }]
+            }],
+            idTabActiveDefault: 'report'
           };
+          _this8.dataDefault = {
+            idTabActiveDefault: _this8.config.idTabActiveDefault
+          };
+
+          var dataLoaded = _this8.loadData();
+
+          _this8.config = _objectSpread({}, _this8.config, {}, dataLoaded);
           _this8.noOfTab = Object.keys(_this8.config.listTab).length;
 
           _this8.setState({
-            idTabActive: 'log'
+            idTabActive: _this8.config.idTabActiveDefault
           });
 
           return _this8;
@@ -2308,6 +2316,25 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             this.setState({
               idTabActive: evt.target.dataset.id
             });
+            this.saveData();
+          }
+        }, {
+          key: "saveData",
+          value: function saveData() {
+            localStorage.compTab = JSON.stringify({
+              idTabActiveDefault: this.getState().idTabActive
+            });
+          }
+        }, {
+          key: "loadData",
+          value: function loadData() {
+            // Return Default Data if nothing saved;
+            if (!localStorage.compTab) {
+              // Return a copy of default data
+              return JSON.parse(JSON.stringify(this.dataDefault));
+            }
+
+            return JSON.parse(localStorage.compTab);
           }
         }]);
 
@@ -2431,7 +2458,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
           this.config = _objectSpread({
             fpsTarget: 60,
-            fpsWarningLevel: 30
+            fpsWarningLevel: 30,
+            isAutoStart: true
           }, configOverwrite);
           this.config.frameTimeTarget = 1000 / this.config.fpsTarget;
           this.idEvtLoop = 0;
@@ -2444,6 +2472,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           this.fpsLowest = this.config.fpsTarget;
           this.laggingLongest = 0;
           this.noLowFpsDrop = 0;
+          this.isRun = false;
           this.dataDefault = {
             isActiveLogUi: false
           };
@@ -2458,7 +2487,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           } // Kick of tracking
 
 
-          this.timeoutTracker();
+          if (this.config.isAutoStart) {
+            this.heartbeat();
+          }
         }
 
         _createClass(src_JsPerfVisualizer, [{
@@ -2489,8 +2520,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             });
           }
         }, {
-          key: "timeoutTracker",
-          value: function timeoutTracker() {
+          key: "heartbeat",
+          value: function heartbeat() {
             if (!this.isPaused) {
               var timestampNow = Date.now();
               var frameTimeCurrent = timestampNow - this.timestampLast;
@@ -2530,7 +2561,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
               this.idEvtLoop++;
             }
 
-            setTimeout(this.timeoutTracker.bind(this), this.config.frameTimeTarget);
+            setTimeout(this.heartbeat.bind(this), this.config.frameTimeTarget);
           }
         }, {
           key: "log",
@@ -2598,10 +2629,42 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             });
             return dataReport;
           }
+        }, {
+          key: "genReportAsString",
+          value: function genReportAsString() {
+            var report = this.genReport();
+            var lengthDurationLongest = report.listMark.reduce(function (lengthDurationLongest, mark) {
+              var length = (mark.duration + '').length;
+              return lengthDurationLongest < length ? length : lengthDurationLongest;
+            }, -1);
+            console.log('longestDecimal', lengthDurationLongest);
+            var reportAsText = "\n    * ************************* *\n    * JS PERF VISUALIZER REPORT *\n    * ************************* *\n    \n    GENERAL INFO\n    > Average FPS : ".concat(report.averageFps, "\n    > Longest Lagg: ").concat(report.laggingLongest, "\n    \n    FPS IN LOW RANGE\n    > Average FPS: ").concat(report.lowFps.average, "\n    > Lowest FPS : ").concat(report.lowFps.lowest, "\n    > No Drops   : ").concat(report.lowFps.noDrop, "\n    \n    MARKS\n    ").concat(report.listMark.map(function (mark) {
+              return '> Duration: ' + formatNumber(mark.duration, lengthDurationLongest) + 'ms "' + mark.text + '"';
+            }).join('\n'), "\n    ").replace(/\n    /g, '\n');
+            console.log(reportAsText);
+            console.log(report);
+          }
+        }, {
+          key: "start",
+          value: function start() {
+            // Skipp if already running
+            if (this.isRun) throw 'ERROR: Can\'t start JS Perf Runner, it\'t is already running.';
+            this.isRun = true;
+            this.timestampInit = Date.now();
+            this.timestampLast = this.timestampInit;
+            this.heartbeat();
+          }
         }]);
 
         return src_JsPerfVisualizer;
-      }();
+      }(); // Util
+
+
+      var formatNumber = function formatNumber(num, lengthMax) {
+        var spaceLength = lengthMax - (num + '').length;
+        var space = new Array(spaceLength + 1).join(' ');
+        return space + num;
+      };
       /* harmony default export */
 
 

@@ -6,8 +6,9 @@ import Mark from './Mark';
 class JsPerfVisualizer {
   constructor ( configOverwrite ) {
     this.config = {
-        fpsTarget: 60,
-        fpsWarningLevel: 30,
+        fpsTarget:        60,
+        fpsWarningLevel:  30,
+        isAutoStart:      true,
         ...configOverwrite
     };
     this.config.frameTimeTarget = 1000 / this.config.fpsTarget;
@@ -22,6 +23,7 @@ class JsPerfVisualizer {
     this.fpsLowest        = this.config.fpsTarget;
     this.laggingLongest   = 0;
     this.noLowFpsDrop     = 0;
+    this.isRun            = false;
 
     this.dataDefault = {
       isActiveLogUi: false,
@@ -38,7 +40,9 @@ class JsPerfVisualizer {
     }
 
     // Kick of tracking
-    this.timeoutTracker();
+    if (this.config.isAutoStart) {
+      this.heartbeat();
+    }
   }
 
   saveData() {
@@ -65,7 +69,7 @@ class JsPerfVisualizer {
     });
   }
 
-  timeoutTracker() {
+  heartbeat() {
     if (!this.isPaused) {
       const timestampNow = Date.now();
       const frameTimeCurrent = timestampNow - this.timestampLast;
@@ -111,7 +115,7 @@ class JsPerfVisualizer {
       this.idEvtLoop++;
     }
 
-    setTimeout(this.timeoutTracker.bind( this ), this.config.frameTimeTarget);
+    setTimeout(this.heartbeat.bind( this ), this.config.frameTimeTarget);
   }
 
   log ( item ) {
@@ -175,6 +179,57 @@ class JsPerfVisualizer {
 
     return dataReport;
   }
+
+  genReportAsString() {
+    const report = this.genReport();
+
+    const lengthDurationLongest = report.listMark.reduce((lengthDurationLongest, mark) => {
+      const length = (mark.duration+'').length;
+      return lengthDurationLongest < length ? length : lengthDurationLongest;
+    }, -1);
+
+    console.log('longestDecimal', lengthDurationLongest);
+
+    const reportAsText = `
+    * ************************* *
+    * JS PERF VISUALIZER REPORT *
+    * ************************* *
+    
+    GENERAL INFO
+    > Average FPS : ${report.averageFps}
+    > Longest Lagg: ${report.laggingLongest}
+    
+    FPS IN LOW RANGE
+    > Average FPS: ${report.lowFps.average}
+    > Lowest FPS : ${report.lowFps.lowest}
+    > No Drops   : ${report.lowFps.noDrop}
+    
+    MARKS
+    ${report.listMark.map(mark => '> Duration: '+formatNumber(mark.duration, lengthDurationLongest)+'ms "'+ mark.text+'"').join('\n')}
+    `.replace(/\n    /g, '\n');
+
+    console.log(reportAsText);
+    console.log(report);
+  }
+
+  start() {
+    // Skipp if already running
+    if (this.isRun) throw('ERROR: Can\'t start JS Perf Runner, it\'t is already running.');
+
+    this.isRun          = true;
+    this.timestampInit  = Date.now();
+    this.timestampLast  = this.timestampInit;
+
+    this.heartbeat();
+  }
 }
+
+// Util
+const formatNumber = function (num, lengthMax) {
+  const spaceLength = lengthMax - (num+'').length;
+  const space = (new Array(spaceLength+1)).join(' ');
+
+  return space+num;
+};
 
 export default JsPerfVisualizer;

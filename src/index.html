@@ -2,7 +2,13 @@
   <body>
   </body>
   <script>
-    window.jsPerfVisualizer = new JsPerfVisualizer.default();
+    window.jsPerfVisualizer = new JsPerfVisualizer.default({
+      isAutoStart: false,
+    });
+
+    setTimeout(() => {
+      window.jsPerfVisualizer.start();
+    }, 500);
 
     jsPerfVisualizer.mark.start('mark 1', true);
     jsPerfVisualizer.mark.stop('mark 1');

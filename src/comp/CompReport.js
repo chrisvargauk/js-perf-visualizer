@@ -26,7 +26,7 @@ class CompReport extends Component{
     const dataReport = this.getState().dataReport;
 
     // Skipp if Report is not generated yet
-    if (!dataReport.listMark.length) {
+    if (!dataReport.averageFps) {
       return `<span class="warn">
         Stop Tracking to generate report</span>`;
     }

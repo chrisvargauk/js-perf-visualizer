@@ -22,13 +22,24 @@ class CompTab extends Component {
           id: 'setting',
           label: 'SETTINGS'
         }
-      ]
+      ],
+      idTabActiveDefault: 'report'
+    };
+
+    this.dataDefault = {
+      idTabActiveDefault: this.config.idTabActiveDefault,
+    };
+
+    const dataLoaded = this.loadData();
+    this.config = {
+      ...this.config,
+      ...dataLoaded,
     };
 
     this.noOfTab = Object.keys(this.config.listTab).length;
 
     this.setState({
-      idTabActive: 'log'
+      idTabActive: this.config.idTabActiveDefault
     });
   }
 
@@ -55,7 +66,25 @@ class CompTab extends Component {
   handlerClickTab ( evt ) {
     this.setState({
       idTabActive: evt.target.dataset.id
-    })
+    });
+
+    this.saveData();
+  }
+
+  saveData() {
+    localStorage.compTab = JSON.stringify({
+      idTabActiveDefault: this.getState().idTabActive
+    });
+  }
+
+  loadData() {
+    // Return Default Data if nothing saved;
+    if (!localStorage.compTab) {
+      // Return a copy of default data
+      return JSON.parse(JSON.stringify(this.dataDefault));
+    }
+
+    return JSON.parse(localStorage.compTab);
   }
 }
 

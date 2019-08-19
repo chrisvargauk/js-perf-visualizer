@@ -1,11 +1,21 @@
-<html><body><script type=text/javascript src=JsPerfVisualizer.js></script></body><script>window.jsPerfVisualizer = new JsPerfVisualizer.default();
+<html>
+  <body>
+    <script type=text/javascript src=JsPerfVisualizer.js></script>
+    <script>
+    window.jsPerfVisualizer = new JsPerfVisualizer.default({
+      isAutoStart: false,
+    });
 
-    jsPerfVisualizer.mark.start('mark 1');
+    setTimeout(function() {
+      window.jsPerfVisualizer.start();
+    }, 500);
+
+    jsPerfVisualizer.mark.start('mark 1', true);
     jsPerfVisualizer.mark.stop('mark 1');
 
-    jsPerfVisualizer.mark.start('mark 2');
+    jsPerfVisualizer.mark.start('mark 2', true);
     setTimeout(function() {
-      jsPerfVisualizer.mark.start('mark 3');
+      jsPerfVisualizer.mark.start('mark 3', true);
       jsPerfVisualizer.mark.start('mark 4');
       const noOfIter = 1500;
       for (let i=0; i<noOfIter; i++) {
@@ -27,4 +37,6 @@
           }
         }
       }, 1000);
-    }, 3000);</script></html>
+    }, 3000);</script>
+  </body>
+</html>
