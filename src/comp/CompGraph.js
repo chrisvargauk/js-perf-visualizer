@@ -1,5 +1,7 @@
 import {Component} from "game-gui";
 import "./CompGraph.scss";
+import '@fortawesome/fontawesome-free/js/fontawesome'
+import '@fortawesome/fontawesome-free/js/solid'
 import Graph from "../lib/Graph";
 
 class CompGraph extends Component {
@@ -131,8 +133,8 @@ class CompBtnPausePlay extends Component {
   }
 
   render () {
-    const btnPlay = '&#x23f5;';
-    const btnPause = '&#10073;&#10073;';
+    const btnPlay = '<span class="fas fa-play-circle"/>';
+    const btnPause = '<span class="fas fa-pause-circle"/>';
 
     return `
       <div ui-click="handlerClick">

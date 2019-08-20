@@ -1,6 +1,6 @@
 {
   "name": "js-perf-visualizer",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "",
   "main": "build-es5/JsPerfVisualizer.js",
   "scripts": {
@@ -18,6 +18,7 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
     "@babel/plugin-transform-classes": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
+    "@fortawesome/fontawesome-free": "^5.10.1",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.2.0",
     "html-webpack-plugin": "^3.2.0",
