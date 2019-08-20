@@ -15,14 +15,15 @@ class CompRoot extends Component {
 
   render () {
     return `
-      ${this.include(CompBtnMaxMin)}
+      ${this.include(CompBtnMaximizeView)}
+      ${this.include(CompBtnMinimizeView)}
       ${this.include(CompGraph)}
       ${this.include(CompTab)}
     `;
   }
 }
 
-class CompBtnMaxMin extends Component {
+class CompBtnMaximizeView extends Component {
   constructor (option, config) {
     super(option, config);
 
@@ -31,7 +32,7 @@ class CompBtnMaxMin extends Component {
     });
   }
 
-  render (dataFromParent) {
+  render () {
     const btnMax = '<span class="fas fa-window-maximize"/>';
     const btnMin = '<span class="fas fa-window-restore"/>';
 
@@ -54,6 +55,56 @@ class CompBtnMaxMin extends Component {
     } else {
       this.option.compRoot.dom.parentElement.classList.remove('view-maximized');
     }
+  }
+}
+
+class CompBtnMinimizeView extends Component {
+  constructor (option, config) {
+    super(option, config);
+
+    this.listKeyDown = [];
+
+    if(this.option.jsPerfVisualizer.isMinimized) {
+      this.minimize();
+    }
+
+    this.trackKeyEvent();
+  }
+
+  trackKeyEvent() {
+    document.addEventListener('keydown', (evt) => {
+      this.listKeyDown.push( evt.key );
+      if (this.isTriggered()) this.restore();
+    }, false);
+
+    document.addEventListener('keyup', (evt) => {
+      this.listKeyDown = this.listKeyDown.filter(keyDown => keyDown !== evt.key);
+    }, false);
+  }
+
+  isTriggered() {
+    return this.listKeyDown.indexOf('Control') !== -1 &&
+           this.listKeyDown.indexOf('i') !== -1
+  }
+
+  render () {
+    return `
+      <div ui-click="minimize">
+        <span class="fas fa-window-minimize"/>
+      </div>
+    `;
+  }
+
+  minimize() {
+    this.option.compRoot.dom.parentElement.classList.add('view-minimized');
+    this.option.jsPerfVisualizer.isMinimized = true;
+    this.option.jsPerfVisualizer.saveData();
+  }
+
+  restore() {
+    this.option.compRoot.dom.parentElement.classList.remove('view-minimized');
+    this.option.jsPerfVisualizer.isMinimized = false;
+    this.option.jsPerfVisualizer.saveData();
   }
 }
 

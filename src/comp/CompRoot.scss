@@ -4,10 +4,14 @@
   top: 0;
 
   width: 500px;
-  &.view-maximized{
+  &.view-maximized {
     width: 100%;
     left: 0 !important;
     top: 0  !important;
+  }
+
+  &.view-minimized {
+    display: none;
   }
 
   * {
@@ -23,11 +27,23 @@
   }
   overflow: auto;
 
-  .comp-btn-max-min {
+  .comp-btn-maximize-view {
     font-size: 20px;
     position: absolute;
     top: 0px;
     right: 0px;
+    margin: 4px;
+    color: gray;
+    text-align: center;
+    vertical-align: middle;
+    z-index: 1;
+  }
+
+  .comp-btn-minimize-view {
+    font-size: 20px;
+    position: absolute;
+    top: 0px;
+    right: 30px;
     margin: 4px;
     color: gray;
     text-align: center;

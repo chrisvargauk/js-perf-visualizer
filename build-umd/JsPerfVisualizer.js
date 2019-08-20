@@ -4695,7 +4695,7 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(1)(false);
 // Module
-exports.push([module.i, "#js-perf-visualizer-root {\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 500px; }\n  #js-perf-visualizer-root.view-maximized {\n    width: 100%;\n    left: 0 !important;\n    top: 0  !important; }\n  #js-perf-visualizer-root * {\n    box-sizing: border-box; }\n\n.comp-root {\n  width: 100%;\n  overflow: auto; }\n  .comp-root > * {\n    float: left; }\n  .comp-root .comp-btn-max-min {\n    font-size: 20px;\n    position: absolute;\n    top: 0px;\n    right: 0px;\n    margin: 4px;\n    color: gray;\n    text-align: center;\n    vertical-align: middle;\n    z-index: 1; }\n", ""]);
+exports.push([module.i, "#js-perf-visualizer-root {\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 500px; }\n  #js-perf-visualizer-root.view-maximized {\n    width: 100%;\n    left: 0 !important;\n    top: 0  !important; }\n  #js-perf-visualizer-root.view-minimized {\n    display: none; }\n  #js-perf-visualizer-root * {\n    box-sizing: border-box; }\n\n.comp-root {\n  width: 100%;\n  overflow: auto; }\n  .comp-root > * {\n    float: left; }\n  .comp-root .comp-btn-maximize-view {\n    font-size: 20px;\n    position: absolute;\n    top: 0px;\n    right: 0px;\n    margin: 4px;\n    color: gray;\n    text-align: center;\n    vertical-align: middle;\n    z-index: 1; }\n  .comp-root .comp-btn-minimize-view {\n    font-size: 20px;\n    position: absolute;\n    top: 0px;\n    right: 30px;\n    margin: 4px;\n    color: gray;\n    text-align: center;\n    vertical-align: middle;\n    z-index: 1; }\n", ""]);
 
 
 /***/ }),
@@ -6046,14 +6046,15 @@ class CompRoot_CompRoot extends GameGUI["Component"] {
 
   render () {
     return `
-      ${this.include(CompRoot_CompBtnMaxMin)}
+      ${this.include(CompRoot_CompBtnMaximizeView)}
+      ${this.include(CompRoot_CompBtnMinimizeView)}
       ${this.include(src_comp_CompGraph)}
       ${this.include(src_comp_CompTab)}
     `;
   }
 }
 
-class CompRoot_CompBtnMaxMin extends GameGUI["Component"] {
+class CompRoot_CompBtnMaximizeView extends GameGUI["Component"] {
   constructor (option, config) {
     super(option, config);
 
@@ -6062,7 +6063,7 @@ class CompRoot_CompBtnMaxMin extends GameGUI["Component"] {
     });
   }
 
-  render (dataFromParent) {
+  render () {
     const btnMax = '<span class="fas fa-window-maximize"/>';
     const btnMin = '<span class="fas fa-window-restore"/>';
 
@@ -6085,6 +6086,56 @@ class CompRoot_CompBtnMaxMin extends GameGUI["Component"] {
     } else {
       this.option.compRoot.dom.parentElement.classList.remove('view-maximized');
     }
+  }
+}
+
+class CompRoot_CompBtnMinimizeView extends GameGUI["Component"] {
+  constructor (option, config) {
+    super(option, config);
+
+    this.listKeyDown = [];
+
+    if(this.option.jsPerfVisualizer.isMinimized) {
+      this.minimize();
+    }
+
+    this.trackKeyEvent();
+  }
+
+  trackKeyEvent() {
+    document.addEventListener('keydown', (evt) => {
+      this.listKeyDown.push( evt.key );
+      if (this.isTriggered()) this.restore();
+    }, false);
+
+    document.addEventListener('keyup', (evt) => {
+      this.listKeyDown = this.listKeyDown.filter(keyDown => keyDown !== evt.key);
+    }, false);
+  }
+
+  isTriggered() {
+    return this.listKeyDown.indexOf('Control') !== -1 &&
+           this.listKeyDown.indexOf('i') !== -1
+  }
+
+  render () {
+    return `
+      <div ui-click="minimize">
+        <span class="fas fa-window-minimize"/>
+      </div>
+    `;
+  }
+
+  minimize() {
+    this.option.compRoot.dom.parentElement.classList.add('view-minimized');
+    this.option.jsPerfVisualizer.isMinimized = true;
+    this.option.jsPerfVisualizer.saveData();
+  }
+
+  restore() {
+    this.option.compRoot.dom.parentElement.classList.remove('view-minimized');
+    this.option.jsPerfVisualizer.isMinimized = false;
+    this.option.jsPerfVisualizer.saveData();
   }
 }
 
@@ -6167,9 +6218,10 @@ class Mark {
 class src_JsPerfVisualizer {
   constructor ( configOverwrite ) {
     this.config = {
-        fpsTarget:        60,
-        fpsWarningLevel:  30,
-        isAutoStart:      true,
+        fpsTarget:            60,
+        fpsWarningLevel:      30,
+        isAutoStart:          true,
+        isMinimizedByDefault: false,
         ...configOverwrite
     };
     this.config.frameTimeTarget = 1000 / this.config.fpsTarget;
@@ -6187,10 +6239,12 @@ class src_JsPerfVisualizer {
     this.isRun            = false;
 
     this.dataDefault = {
-      isActiveLogUi: false,
+      isActiveLogUi:  false,
+      isMinimized:    this.config.isMinimizedByDefault,
     };
     const dataLoaded = this.loadData();
     this.isActiveLogUi  = dataLoaded.isActiveLogUi;
+    this.isMinimized    = dataLoaded.isMinimized;
 
     this.mark = new src_Mark(this);
 
@@ -6208,7 +6262,8 @@ class src_JsPerfVisualizer {
 
   saveData() {
     localStorage.jsPerfVisualizer = JSON.stringify({
-      isActiveLogUi: this.isActiveLogUi,
+      isActiveLogUi:  this.isActiveLogUi,
+      isMinimized:    this.isMinimized,
     });
   }
 

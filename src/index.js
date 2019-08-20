@@ -6,9 +6,10 @@ import Mark from './Mark';
 class JsPerfVisualizer {
   constructor ( configOverwrite ) {
     this.config = {
-        fpsTarget:        60,
-        fpsWarningLevel:  30,
-        isAutoStart:      true,
+        fpsTarget:            60,
+        fpsWarningLevel:      30,
+        isAutoStart:          true,
+        isMinimizedByDefault: false,
         ...configOverwrite
     };
     this.config.frameTimeTarget = 1000 / this.config.fpsTarget;
@@ -26,10 +27,12 @@ class JsPerfVisualizer {
     this.isRun            = false;
 
     this.dataDefault = {
-      isActiveLogUi: false,
+      isActiveLogUi:  false,
+      isMinimized:    this.config.isMinimizedByDefault,
     };
     const dataLoaded = this.loadData();
     this.isActiveLogUi  = dataLoaded.isActiveLogUi;
+    this.isMinimized    = dataLoaded.isMinimized;
 
     this.mark = new Mark(this);
 
@@ -47,7 +50,8 @@ class JsPerfVisualizer {
 
   saveData() {
     localStorage.jsPerfVisualizer = JSON.stringify({
-      isActiveLogUi: this.isActiveLogUi,
+      isActiveLogUi:  this.isActiveLogUi,
+      isMinimized:    this.isMinimized,
     });
   }
 
