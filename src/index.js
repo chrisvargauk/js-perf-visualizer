@@ -1,3 +1,5 @@
+// License: MIT | https://github.com/chrisvargauk/js-perf-visualizer/blob/master/LICENSE
+
 import './polyfill/functionName';
 import GameGUI from 'game-gui';
 import CompRoot from './comp/CompRoot';

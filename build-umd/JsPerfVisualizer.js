@@ -6210,6 +6210,8 @@ class Mark {
 
 /* harmony default export */ var src_Mark = (Mark);
 // CONCATENATED MODULE: ./src/index.js
+// License: MIT | https://github.com/chrisvargauk/js-perf-visualizer/blob/master/LICENSE
+
 
 
 
