@@ -38,8 +38,8 @@ Use `jsPerfVisualizer.mark.start('some mark text');` and `jsPerfVisualizer.mark.
 You can pass in options at instantiation. E.g.:
 ```javascript
 const jsPerfVisualizer = new JsPerfVisualizer({
-  fpsTarget:            60,     // Even if your app has a higher frame rate, JS P. V. won't measure it.
-  fpsWarningLevel:      30,     //
+  fpsTarget:            60,
+  fpsWarningLevel:      30,
   isAutoStart:          true,
   isMinimizedByDefault: false,
 });
