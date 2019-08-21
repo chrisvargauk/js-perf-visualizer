@@ -6406,8 +6406,6 @@ class src_JsPerfVisualizer {
       return lengthDurationLongest < length ? length : lengthDurationLongest;
     }, -1);
 
-    console.log('longestDecimal', lengthDurationLongest);
-
     const reportAsText = `
     * ************************* *
     * JS PERF VISUALIZER REPORT *
