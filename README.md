@@ -2,7 +2,7 @@
 Easy to understand JavaScrip Performance Visualization tool to understand when and 
 why your UI becomes unresponsive or your animation is lagging.
 
-![](image/js-perf-visualizer.jpg) 
+![](https://raw.githubusercontent.com/chrisvargauk/js-perf-visualizer/master/image/js-perf-visualizer.jpg)
 
 ### Install
 ```bash
@@ -32,7 +32,8 @@ Graph makes it obvious when exactly and how much your UI becomes unresponsive or
 ### Start/Stop Marks
 Use `jsPerfVisualizer.mark.start('some mark text');` and `jsPerfVisualizer.mark.stop('some mark text');` to fin the source of your lagging by starting to break it up and measure the parts. Indentation suggest that a mark was triggered why an other was still running.
  
-![](image/js-perf-visualizer-mark.jpg) 
+![](image/js-perf-visualizer-mark.jpg)
+
 
 ### Options
 You can pass in options at instantiation. E.g.:
