@@ -1,6 +1,6 @@
 {
   "name": "js-perf-visualizer",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "description": "",
   "main": "build-es5/JsPerfVisualizer.js",
   "scripts": {

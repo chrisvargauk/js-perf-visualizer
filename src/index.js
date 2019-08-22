@@ -87,7 +87,12 @@ class JsPerfVisualizer {
       // Filter off "unexpected" spikes - Looking at you IE
       fpsCurrent = this.config.fpsTarget < fpsCurrent ? this.config.fpsTarget : fpsCurrent;
 
+      this.listFps.push( fpsCurrent );
       this.listFpsAll.push( fpsCurrent );
+
+      if (1000 / this.config.fpsTarget * 9 < this.listFps.length) {
+        this.listFps.shift();
+      }
 
       const fpsObj = {
         type:       'fpsRecord',

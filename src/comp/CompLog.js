@@ -40,7 +40,7 @@ class CompLog extends Component {
 
     return `
       ${!this.option.jsPerfVisualizer.isActiveLogUi ? `<span class="warn">
-        WARNING: UI For Logging is Inactive, go to settings ot activate it.</span>` : ''}
+        WARNING: UI For Logging is Inactive, go to settings to activate it.</span>` : ''}
       
       ${this.getState().listLog.map(item => {
         const idEvtLoop = item.idEvtLoop || item.idEvtLoopStop;
