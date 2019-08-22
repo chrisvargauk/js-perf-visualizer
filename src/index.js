@@ -21,6 +21,8 @@ class JsPerfVisualizer {
     this.timestampInit    = Date.now();
     this.timestampLast    = this.timestampInit;
     this.listFps          = [];
+    this.listFpsAll       = [];
+    this.listFpsObj       = [];
     this.listFpsLow       = [];
     this.listLog          = [];
     this.fpsLowest        = this.config.fpsTarget;
@@ -85,36 +87,21 @@ class JsPerfVisualizer {
       // Filter off "unexpected" spikes - Looking at you IE
       fpsCurrent = this.config.fpsTarget < fpsCurrent ? this.config.fpsTarget : fpsCurrent;
 
-      this.listFps.push( fpsCurrent );
+      this.listFpsAll.push( fpsCurrent );
 
-      if (1000 / this.config.fpsTarget * 9 < this.listFps.length) {
-        this.listFps.shift();
+      const fpsObj = {
+        type:       'fpsRecord',
+        fps:        fpsCurrent,
+        timestamp:  timestampNow,
+        idEvtLoop:  this.idEvtLoop,
+        frameTimeDiff,
+      };
+      this.listFpsObj.push(fpsObj);
+
+      // this.processFps( fpsObj );
+      if (this.isProcessing) {
+        this.processBuffer( this.listFpsObj );
       }
-
-      if (fpsCurrent < this.config.fpsWarningLevel ) {
-        this.listFpsLow.push( fpsCurrent );
-
-        this.log({
-          type: 'fpsWarnLevel',
-          idEvtLoop: this.idEvtLoop,
-          timeFromInit: timestampNow - this.timestampInit,
-          fpsCurrent,
-          duration: frameTimeDiff,
-        });
-
-        this.noLowFpsDrop++;
-      }
-
-      if (fpsCurrent < this.fpsLowest) {
-        this.fpsLowest = fpsCurrent;
-      }
-
-      if (this.laggingLongest < frameTimeDiff) {
-        this.laggingLongest = frameTimeDiff;
-      }
-
-      // Update UI
-      this.uiUpdateGraphAndFps(fpsCurrent);
 
       this.timestampLast = timestampNow;
 
@@ -124,7 +111,54 @@ class JsPerfVisualizer {
     setTimeout(this.heartbeat.bind( this ), this.config.frameTimeTarget);
   }
 
-  log ( item ) {
+  processBuffer( listFpsObj ) {
+    let fpsObj;
+    while( listFpsObj.length ) {
+      fpsObj = listFpsObj.shift();
+      switch(fpsObj.type) {
+        case 'fpsRecord': this.processFps( fpsObj ); break;
+        case 'log':       this.processLog( fpsObj.item );
+      }
+    }
+
+    // Update UI
+    this.uiUpdateGraphAndFps(fpsObj.fps);
+  }
+
+  processFps( fpsObj ) {
+    this.listFps.push( fpsObj.fps );
+    if (1000 / this.config.fpsTarget * 9 < this.listFps.length) {
+      this.listFps.shift();
+    }
+
+    // Check for FPS in Low Range
+    if (fpsObj.fps < this.config.fpsWarningLevel ) {
+      this.listFpsLow.push( fpsObj.fps );
+
+      // Log FPS in Low Range
+      this.processLog({
+        type: 'fpsWarnLevel',
+        idEvtLoop: fpsObj.idEvtLoop,
+        timeFromInit: fpsObj.timestamp - this.timestampInit,
+        fpsCurrent: fpsObj.fps,
+        duration: fpsObj.frameTimeDiff,
+      });
+
+      this.noLowFpsDrop++;
+    }
+
+    // Record Lowest FPS
+    if (fpsObj.fps < this.fpsLowest) {
+      this.fpsLowest = fpsObj.fps;
+    }
+
+    // Record Longest Lagging
+    if (this.laggingLongest < fpsObj.frameTimeDiff) {
+      this.laggingLongest = fpsObj.frameTimeDiff;
+    }
+  }
+
+  processLog ( item ) {
     this.listLog.unshift(item);
 
     // UI update
@@ -135,6 +169,23 @@ class JsPerfVisualizer {
     compLog.setState({
       listLog: this.listLog,
     });
+  }
+
+  log ( item ) {
+    // Add to "this.listFpsObj" with Type "log"
+    this.listFpsObj.push({
+      type: 'log',
+      item
+    });
+
+    // // UI update
+    // if (!this.isActiveLogUi) return;
+    // if (!this.gui) return;
+    //
+    // const compLog = this.gui.getCompByType('CompLog')[0];
+    // compLog.setState({
+    //   listLog: this.listLog,
+    // });
   }
 
   uiUpdateGraphAndFps( fpsCurrent ) {
@@ -167,11 +218,17 @@ class JsPerfVisualizer {
   }
 
   genReport() {
+    if (this.gui) {
+      // Update Graph to show all the recorded FPS not only the last couple of seconds.
+      const compGraph = this.gui.getCompByType('CompGraph')[0];
+      compGraph.graph.update(this.listFpsAll);
+    }
+
     const listMark = this.listLog.filter(item => item.isPartOfReport);
 
     const dataReport = {
-      averageFps:         Math.round(this.listFps.reduce((sum, fps) => sum + fps, 0) / this.listFps.length),
-      laggingLongest:     this.laggingLongest.toFixed(2),
+      averageFps:         Math.round(this.listFpsAll.reduce((sum, fps) => sum + fps, 0) / this.listFpsAll.length),
+      laggingLongest:     Math.round(this.laggingLongest),
       lowFps: {
         average:  Math.round(this.listFpsLow.reduce((sum, fps) => sum + fps, 0) / this.listFpsLow.length),
         lowest:   Math.round(this.fpsLowest),
