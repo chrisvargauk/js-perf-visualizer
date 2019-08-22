@@ -27,12 +27,13 @@ const jsPerfVisualizer = new JsPerfVisualizer();
 ### Graph
 Graph makes it obvious when exactly and how much your UI becomes unresponsive or your animation starts lagging.
 
-![](image/js-perf-visualizer-graph.jpg)
+![](https://raw.githubusercontent.com/chrisvargauk/js-perf-visualizer/master/image/js-perf-visualizer-graph.jpg)
 
 ### Start/Stop Marks
-Use `jsPerfVisualizer.mark.start('some mark text');` and `jsPerfVisualizer.mark.stop('some mark text');` to fin the source of your lagging by starting to break it up and measure the parts. Indentation suggest that a mark was triggered why an other was still running.
+Use `jsPerfVisualizer.mark.start('some mark text');` and `jsPerfVisualizer.mark.stop('some mark text');` to fin the source of your lagging by starting to break it up and measure the parts. Indentation suggest that a mark was triggered why an other was still running.  
+Note: If you would like to see your mark in the report, pass in true as second argument, e.g.: `jsPerfVisualizer.mark.start('mark text in report', ture);`
  
-![](image/js-perf-visualizer-mark.jpg)
+![](https://raw.githubusercontent.com/chrisvargauk/js-perf-visualizer/master/image/js-perf-visualizer-mark.jpg)
 
 
 ### Options
@@ -53,13 +54,19 @@ const jsPerfVisualizer = new JsPerfVisualizer({
 | `isAutoStart` | Block JS P. V. from starting automatically by setting this option to `false`. When any page loads there a bunch of activity that is outside of your control - e.g. Chrome Extension loading, Engine parsing loaded scripts - that impacts performance but you might not want to include it in your perf report. Use `JsPerfVisualizer.start()` when you app start to kick it off manually.|
 | `isMinimizedByDefault` | Use JS P. V. only when you need it by pressing `Ctrl+i` and let it run in the background when you don't.|
 
+### Report
+Get a report on the most important performance characteristics, low FPS, and the marks you use to measure specific parts of your application, e.g: img hashing.
+Note: If you would like to see your mark in the report, pass in true as second argument, e.g.: `jsPerfVisualizer.mark.start('mark text in report', ture);`
+ 
+![](https://raw.githubusercontent.com/chrisvargauk/js-perf-visualizer/master/image/js-perf-visualizer-report.jpg)
+
 ### CLI Integration
 Run a performance test as part of your build/deploy and generate a report as JSON for further analysis by calling `jsPerfVisualizer.genReport()`
 ```json
-{ "averageFps": 57,
+{ "averageFps":     57,
   "laggingLongest": 1509.33,
   "lowFps": {
-    "average": 10,
+    "average":  10,
     "lowest":   1,
     "noDrop":   8
   },
@@ -76,8 +83,7 @@ Run a performance test as part of your build/deploy and generate a report as JSO
       "text":           "mark 2",
       "indentLevel":    0,
       "isPartOfReport": true
-    },
-    ...
+    }
   ]
 }
 ```

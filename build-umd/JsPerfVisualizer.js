@@ -5772,7 +5772,7 @@ class CompLog_CompLog extends GameGUI["Component"] {
 
     return `
       ${!this.option.jsPerfVisualizer.isActiveLogUi ? `<span class="warn">
-        WARNING: UI For Logging is Inactive, go to settings ot activate it.</span>` : ''}
+        WARNING: UI For Logging is Inactive, go to settings to activate it.</span>` : ''}
       
       ${this.getState().listLog.map(item => {
         const idEvtLoop = item.idEvtLoop || item.idEvtLoopStop;
@@ -6233,6 +6233,7 @@ class src_JsPerfVisualizer {
     this.timestampInit    = Date.now();
     this.timestampLast    = this.timestampInit;
     this.listFps          = [];
+    this.listFpsAll       = [];
     this.listFpsLow       = [];
     this.listLog          = [];
     this.fpsLowest        = this.config.fpsTarget;
@@ -6298,6 +6299,7 @@ class src_JsPerfVisualizer {
       fpsCurrent = this.config.fpsTarget < fpsCurrent ? this.config.fpsTarget : fpsCurrent;
 
       this.listFps.push( fpsCurrent );
+      this.listFpsAll.push( fpsCurrent );
 
       if (1000 / this.config.fpsTarget * 9 < this.listFps.length) {
         this.listFps.shift();
@@ -6379,11 +6381,17 @@ class src_JsPerfVisualizer {
   }
 
   genReport() {
+    if (this.gui) {
+      // Update Graph to show all the recorded FPS not only the last couple of seconds.
+      const compGraph = this.gui.getCompByType('CompGraph')[0];
+      compGraph.graph.update(this.listFpsAll);
+    }
+
     const listMark = this.listLog.filter(item => item.isPartOfReport);
 
     const dataReport = {
-      averageFps:         Math.round(this.listFps.reduce((sum, fps) => sum + fps, 0) / this.listFps.length),
-      laggingLongest:     this.laggingLongest.toFixed(2),
+      averageFps:         Math.round(this.listFpsAll.reduce((sum, fps) => sum + fps, 0) / this.listFpsAll.length),
+      laggingLongest:     Math.round(this.laggingLongest),
       lowFps: {
         average:  Math.round(this.listFpsLow.reduce((sum, fps) => sum + fps, 0) / this.listFpsLow.length),
         lowest:   Math.round(this.fpsLowest),
