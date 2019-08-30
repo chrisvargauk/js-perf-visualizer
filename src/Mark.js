@@ -1,8 +1,11 @@
 class Mark {
   constructor( jsPerfVisualizer ) {
     console.log('Mark ins initializing..');
-    this.jsPerfVisualizer       = jsPerfVisualizer;
-    this.timestampInit          = this.jsPerfVisualizer.timestampInit;
+    this.jsPerfVisualizer = jsPerfVisualizer;
+    this.setResetDefault();
+  }
+
+  setResetDefault() {
     this.listObjMarkStart       = {};
     this.markLatest             = undefined;
     this.ctr                    = -1;
@@ -21,7 +24,7 @@ class Mark {
       idEvtLoopStart: this.jsPerfVisualizer.idEvtLoop,
       idEvtLoopStop:  undefined,
       timestampStart: timestampNow,
-      timeFromInit:   timestampNow - this.timestampInit,
+      timeFromInit:   timestampNow - this.jsPerfVisualizer.timestampInit,
       timestampStop:  undefined,
       duration:       undefined,
       text:           markText,
@@ -40,7 +43,7 @@ class Mark {
 
     const mark = this.listObjMarkStart[ markText ];
     mark.timestampStop  = Date.now();
-    mark.timeFromInit   = mark.timestampStop - this.timestampInit;
+    mark.timeFromInit   = mark.timestampStop - this.jsPerfVisualizer.timestampInit;
     mark.duration       = mark.timestampStop - mark.timestampStart;
     mark.idEvtLoopStop  = this.jsPerfVisualizer.idEvtLoop;
     mark.indentLevel    = Object.keys(this.listObjMarkStart).length - 1;

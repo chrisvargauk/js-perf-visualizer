@@ -14,12 +14,19 @@ const dumbCompMark = mark => (`
 class CompReport extends Component{
   constructor (option, config) {
     super(option, config);
+    this.setResetDefault();
+  }
 
-    this.setState({
+  setResetDefault() {
+    this.setState( this.stateDefault() );
+  }
+
+  stateDefault() {
+    return JSON.parse(JSON.stringify({
       dataReport: {
         listMark: []
       }
-    });
+    }));
   }
 
   render () {

@@ -87,7 +87,7 @@ Run a performance test as part of your build/deploy and generate a report as JSO
   ]
 }
 ```
-or call `jsPerfVisualizer.genReportAsString()` for a human readably format.
+or call `jsPerfVisualizer.genReportAsString()` for a human readable format.
 ```text
 * ************************* *
 * JS PERF VISUALIZER REPORT *

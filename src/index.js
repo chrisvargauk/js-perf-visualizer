@@ -7,6 +7,7 @@ import Mark from './Mark';
 
 class JsPerfVisualizer {
   constructor ( configOverwrite ) {
+    // Config Default/Overwrites
     this.config = {
         fpsTarget:            60,
         fpsWarningLevel:      30,
@@ -16,6 +17,35 @@ class JsPerfVisualizer {
     };
     this.config.frameTimeTarget = 1000 / this.config.fpsTarget;
 
+    // Load Saved Data if any
+    this.dataDefault = {
+      isActiveLogUi:  false,
+      isMinimized:    this.config.isMinimizedByDefault,
+    };
+    const dataLoaded = this.loadData();
+    this.isActiveLogUi  = dataLoaded.isActiveLogUi;
+    this.isMinimized    = dataLoaded.isMinimized;
+
+    // Create Mark Helper
+    this.mark = new Mark(this);
+
+    // Declare/initiate default values
+    this.setResetDefault();
+
+    // Start GUI
+    if (document.body) {
+      this.initGui();
+    } else {
+      document.addEventListener('DOMContentLoaded', this.initGui.bind( this ));
+    }
+
+    // Kick of tracking
+    if (this.config.isAutoStart) {
+      this.heartbeat();
+    }
+  }
+
+  setResetDefault() {
     this.idEvtLoop        = 0;
     this.isPaused         = false;
     this.timestampInit    = Date.now();
@@ -28,27 +58,6 @@ class JsPerfVisualizer {
     this.laggingLongest   = 0;
     this.noLowFpsDrop     = 0;
     this.isRun            = false;
-
-    this.dataDefault = {
-      isActiveLogUi:  false,
-      isMinimized:    this.config.isMinimizedByDefault,
-    };
-    const dataLoaded = this.loadData();
-    this.isActiveLogUi  = dataLoaded.isActiveLogUi;
-    this.isMinimized    = dataLoaded.isMinimized;
-
-    this.mark = new Mark(this);
-
-    if (document.body) {
-      this.initGraph();
-    } else {
-      document.addEventListener('DOMContentLoaded', this.initGraph.bind( this ));
-    }
-
-    // Kick of tracking
-    if (this.config.isAutoStart) {
-      this.heartbeat();
-    }
   }
 
   saveData() {
@@ -68,8 +77,7 @@ class JsPerfVisualizer {
     return JSON.parse(localStorage.jsPerfVisualizer);
   }
 
-  initGraph () {
-    console.log('Graph is getting initialized..');
+  initGui () {
     document.body.insertAdjacentHTML('afterBegin', '<div id="js-perf-visualizer-root"></div>');
     this.gui = new GameGUI(CompRoot, '#js-perf-visualizer-root', {
       jsPerfVisualizer: this,
@@ -123,7 +131,7 @@ class JsPerfVisualizer {
       this.idEvtLoop++;
     }
 
-    setTimeout(this.heartbeat.bind( this ), this.config.frameTimeTarget);
+    this.tokenTimeout = setTimeout(this.heartbeat.bind( this ), this.config.frameTimeTarget);
   }
 
   log ( item ) {
@@ -181,15 +189,25 @@ class JsPerfVisualizer {
       averageFps:         Math.round(this.listFpsAll.reduce((sum, fps) => sum + fps, 0) / this.listFpsAll.length),
       laggingLongest:     Math.round(this.laggingLongest),
       lowFps: {
-        average:  Math.round(this.listFpsLow.reduce((sum, fps) => sum + fps, 0) / this.listFpsLow.length),
-        lowest:   Math.round(this.fpsLowest),
-        noDrop:   Math.round(this.noLowFpsDrop),
+        average:  -1,
+        lowest:   -1,
+        noDrop:   -1,
       },
       listMark,
-
     };
-    const CompReport = this.gui.getCompByType('CompReport')[0];
-    CompReport.setState({dataReport});
+
+    // If there was any FPS registered in the Low Range
+    if ( this.listFpsLow.length ) {
+      dataReport.lowFps.average = Math.round(this.listFpsLow.reduce((sum, fps) => sum + fps, 0) / this.listFpsLow.length);
+      dataReport.lowFps.lowest  = Math.round(this.fpsLowest);
+      dataReport.lowFps.noDrop  = Math.round(this.noLowFpsDrop);
+    }
+
+    // Update related UI if ready
+    const compReport = this.gui ? this.gui.getCompByType('CompReport')[0] : undefined;
+    if ( compReport ) {
+      compReport.setState({dataReport});
+    }
 
     return dataReport;
   }
@@ -221,18 +239,40 @@ class JsPerfVisualizer {
     `.replace(/\n    /g, '\n');
 
     console.log(reportAsText);
-    console.log(report);
   }
 
   start() {
     // Skipp if already running
-    if (this.isRun) throw('ERROR: Can\'t start JS Perf Runner, it\'t is already running.');
+    if (this.isRun) throw('ERROR: Can\'t start JS Perf Runner, it\'s is already running.');
 
-    this.isRun          = true;
-    this.timestampInit  = Date.now();
-    this.timestampLast  = this.timestampInit;
+    this.setResetDefault();
+    this.mark.setResetDefault();
+    this.isRun = true;
+
+    // Update related UI if ready
+    // Note:  when you call start the very first time, GUI is probably not ready yet,
+    //        but when you stop and start multiple times then GUI has to reset.
+    const compReport = this.gui ? this.gui.getCompByType('CompReport')[0] : undefined;
+    if (compReport) {
+      compReport.setResetDefault();
+    }
+
+    const compLog = this.gui ? this.gui.getCompByType('CompLog')[0] : undefined;
+    if (compLog) {
+      compLog.setResetDefault();
+    }
 
     this.heartbeat();
+  }
+
+  stop() {
+    // Skipp if not running yet
+    if (!this.isRun) throw('ERROR: Can\'t stop JS Perf Runner, it\'s is NOT running yet.');
+    clearTimeout(this.tokenTimeout);
+    this.isRun = false;
+
+    // Note:  dont reset anything here, you might need the data for the report,
+    //        do it instead at start.
   }
 }
 

@@ -27,10 +27,17 @@ const dumbCompMark = (mark, classBg) => (`
 class CompLog extends Component {
   constructor(option, config) {
     super(option, config);
+    this.setResetDefault();
+  }
 
-    this.setState({
+  setResetDefault() {
+    this.setState( this.stateDefault() );
+  }
+
+  stateDefault() {
+    return JSON.parse(JSON.stringify({
       listLog: [],
-    });
+    }));
   }
 
   render () {

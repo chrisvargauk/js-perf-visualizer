@@ -5759,10 +5759,17 @@ const dumbCompMark = (mark, classBg) => (`
 class CompLog_CompLog extends GameGUI["Component"] {
   constructor(option, config) {
     super(option, config);
+    this.setResetDefault();
+  }
 
-    this.setState({
+  setResetDefault() {
+    this.setState( this.stateDefault() );
+  }
+
+  stateDefault() {
+    return JSON.parse(JSON.stringify({
       listLog: [],
-    });
+    }));
   }
 
   render () {
@@ -5843,12 +5850,19 @@ const CompReport_dumbCompMark = mark => (`
 class CompReport_CompReport extends GameGUI["Component"]{
   constructor (option, config) {
     super(option, config);
+    this.setResetDefault();
+  }
 
-    this.setState({
+  setResetDefault() {
+    this.setState( this.stateDefault() );
+  }
+
+  stateDefault() {
+    return JSON.parse(JSON.stringify({
       dataReport: {
         listMark: []
       }
-    });
+    }));
   }
 
   render () {
@@ -6144,8 +6158,11 @@ class CompRoot_CompBtnMinimizeView extends GameGUI["Component"] {
 class Mark {
   constructor( jsPerfVisualizer ) {
     console.log('Mark ins initializing..');
-    this.jsPerfVisualizer       = jsPerfVisualizer;
-    this.timestampInit          = this.jsPerfVisualizer.timestampInit;
+    this.jsPerfVisualizer = jsPerfVisualizer;
+    this.setResetDefault();
+  }
+
+  setResetDefault() {
     this.listObjMarkStart       = {};
     this.markLatest             = undefined;
     this.ctr                    = -1;
@@ -6164,7 +6181,7 @@ class Mark {
       idEvtLoopStart: this.jsPerfVisualizer.idEvtLoop,
       idEvtLoopStop:  undefined,
       timestampStart: timestampNow,
-      timeFromInit:   timestampNow - this.timestampInit,
+      timeFromInit:   timestampNow - this.jsPerfVisualizer.timestampInit,
       timestampStop:  undefined,
       duration:       undefined,
       text:           markText,
@@ -6183,7 +6200,7 @@ class Mark {
 
     const mark = this.listObjMarkStart[ markText ];
     mark.timestampStop  = Date.now();
-    mark.timeFromInit   = mark.timestampStop - this.timestampInit;
+    mark.timeFromInit   = mark.timestampStop - this.jsPerfVisualizer.timestampInit;
     mark.duration       = mark.timestampStop - mark.timestampStart;
     mark.idEvtLoopStop  = this.jsPerfVisualizer.idEvtLoop;
     mark.indentLevel    = Object.keys(this.listObjMarkStart).length - 1;
@@ -6219,6 +6236,7 @@ class Mark {
 
 class src_JsPerfVisualizer {
   constructor ( configOverwrite ) {
+    // Config Default/Overwrites
     this.config = {
         fpsTarget:            60,
         fpsWarningLevel:      30,
@@ -6228,6 +6246,35 @@ class src_JsPerfVisualizer {
     };
     this.config.frameTimeTarget = 1000 / this.config.fpsTarget;
 
+    // Load Saved Data if any
+    this.dataDefault = {
+      isActiveLogUi:  false,
+      isMinimized:    this.config.isMinimizedByDefault,
+    };
+    const dataLoaded = this.loadData();
+    this.isActiveLogUi  = dataLoaded.isActiveLogUi;
+    this.isMinimized    = dataLoaded.isMinimized;
+
+    // Create Mark Helper
+    this.mark = new src_Mark(this);
+
+    // Declare/initiate default values
+    this.setResetDefault();
+
+    // Start GUI
+    if (document.body) {
+      this.initGui();
+    } else {
+      document.addEventListener('DOMContentLoaded', this.initGui.bind( this ));
+    }
+
+    // Kick of tracking
+    if (this.config.isAutoStart) {
+      this.heartbeat();
+    }
+  }
+
+  setResetDefault() {
     this.idEvtLoop        = 0;
     this.isPaused         = false;
     this.timestampInit    = Date.now();
@@ -6240,27 +6287,6 @@ class src_JsPerfVisualizer {
     this.laggingLongest   = 0;
     this.noLowFpsDrop     = 0;
     this.isRun            = false;
-
-    this.dataDefault = {
-      isActiveLogUi:  false,
-      isMinimized:    this.config.isMinimizedByDefault,
-    };
-    const dataLoaded = this.loadData();
-    this.isActiveLogUi  = dataLoaded.isActiveLogUi;
-    this.isMinimized    = dataLoaded.isMinimized;
-
-    this.mark = new src_Mark(this);
-
-    if (document.body) {
-      this.initGraph();
-    } else {
-      document.addEventListener('DOMContentLoaded', this.initGraph.bind( this ));
-    }
-
-    // Kick of tracking
-    if (this.config.isAutoStart) {
-      this.heartbeat();
-    }
   }
 
   saveData() {
@@ -6280,8 +6306,7 @@ class src_JsPerfVisualizer {
     return JSON.parse(localStorage.jsPerfVisualizer);
   }
 
-  initGraph () {
-    console.log('Graph is getting initialized..');
+  initGui () {
     document.body.insertAdjacentHTML('afterBegin', '<div id="js-perf-visualizer-root"></div>');
     this.gui = new GameGUI_default.a(src_comp_CompRoot, '#js-perf-visualizer-root', {
       jsPerfVisualizer: this,
@@ -6335,7 +6360,7 @@ class src_JsPerfVisualizer {
       this.idEvtLoop++;
     }
 
-    setTimeout(this.heartbeat.bind( this ), this.config.frameTimeTarget);
+    this.tokenTimeout = setTimeout(this.heartbeat.bind( this ), this.config.frameTimeTarget);
   }
 
   log ( item ) {
@@ -6393,15 +6418,25 @@ class src_JsPerfVisualizer {
       averageFps:         Math.round(this.listFpsAll.reduce((sum, fps) => sum + fps, 0) / this.listFpsAll.length),
       laggingLongest:     Math.round(this.laggingLongest),
       lowFps: {
-        average:  Math.round(this.listFpsLow.reduce((sum, fps) => sum + fps, 0) / this.listFpsLow.length),
-        lowest:   Math.round(this.fpsLowest),
-        noDrop:   Math.round(this.noLowFpsDrop),
+        average:  -1,
+        lowest:   -1,
+        noDrop:   -1,
       },
       listMark,
-
     };
-    const CompReport = this.gui.getCompByType('CompReport')[0];
-    CompReport.setState({dataReport});
+
+    // If there was any FPS registered in the Low Range
+    if ( this.listFpsLow.length ) {
+      dataReport.lowFps.average = Math.round(this.listFpsLow.reduce((sum, fps) => sum + fps, 0) / this.listFpsLow.length);
+      dataReport.lowFps.lowest  = Math.round(this.fpsLowest);
+      dataReport.lowFps.noDrop  = Math.round(this.noLowFpsDrop);
+    }
+
+    // Update related UI if ready
+    const compReport = this.gui ? this.gui.getCompByType('CompReport')[0] : undefined;
+    if ( compReport ) {
+      compReport.setState({dataReport});
+    }
 
     return dataReport;
   }
@@ -6433,18 +6468,40 @@ class src_JsPerfVisualizer {
     `.replace(/\n    /g, '\n');
 
     console.log(reportAsText);
-    console.log(report);
   }
 
   start() {
     // Skipp if already running
-    if (this.isRun) throw('ERROR: Can\'t start JS Perf Runner, it\'t is already running.');
+    if (this.isRun) throw('ERROR: Can\'t start JS Perf Runner, it\'s is already running.');
 
-    this.isRun          = true;
-    this.timestampInit  = Date.now();
-    this.timestampLast  = this.timestampInit;
+    this.setResetDefault();
+    this.mark.setResetDefault();
+    this.isRun = true;
+
+    // Update related UI if ready
+    // Note:  when you call start the very first time, GUI is probably not ready yet,
+    //        but when you stop and start multiple times then GUI has to reset.
+    const compReport = this.gui ? this.gui.getCompByType('CompReport')[0] : undefined;
+    if (compReport) {
+      compReport.setResetDefault();
+    }
+
+    const compLog = this.gui ? this.gui.getCompByType('CompLog')[0] : undefined;
+    if (compLog) {
+      compLog.setResetDefault();
+    }
 
     this.heartbeat();
+  }
+
+  stop() {
+    // Skipp if not running yet
+    if (!this.isRun) throw('ERROR: Can\'t stop JS Perf Runner, it\'s is NOT running yet.');
+    clearTimeout(this.tokenTimeout);
+    this.isRun = false;
+
+    // Note:  dont reset anything here, you might need the data for the report,
+    //        do it instead at start.
   }
 }
 
