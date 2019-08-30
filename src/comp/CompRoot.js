@@ -44,30 +44,18 @@ class CompBtnMaximizeView extends Component {
   }
 
   handlerClick () {
-    this.option.jsPerfVisualizer.isMaximized = !this.option.jsPerfVisualizer.isMaximized;
+    this.option.jsPerfVisualizer.toggleMaximizeRestore();
 
     this.setState({
-      isMaximized: this.option.jsPerfVisualizer.isMaximized
+      isMaximized: this.option.jsPerfVisualizer.statusUi === 'maximized'
     });
-
-    if (this.option.jsPerfVisualizer.isMaximized) {
-      this.option.compRoot.dom.parentElement.classList.add('view-maximized');
-    } else {
-      this.option.compRoot.dom.parentElement.classList.remove('view-maximized');
-    }
   }
 }
 
 class CompBtnMinimizeView extends Component {
   constructor (option, config) {
     super(option, config);
-
     this.listKeyDown = [];
-
-    if(this.option.jsPerfVisualizer.isMinimized) {
-      this.minimize();
-    }
-
     this.trackKeyEvent();
   }
 
@@ -96,15 +84,11 @@ class CompBtnMinimizeView extends Component {
   }
 
   minimize() {
-    this.option.compRoot.dom.parentElement.classList.add('view-minimized');
-    this.option.jsPerfVisualizer.isMinimized = true;
-    this.option.jsPerfVisualizer.saveData();
+    this.option.jsPerfVisualizer.minimize();
   }
 
   restore() {
-    this.option.compRoot.dom.parentElement.classList.remove('view-minimized');
-    this.option.jsPerfVisualizer.isMinimized = false;
-    this.option.jsPerfVisualizer.saveData();
+    this.option.jsPerfVisualizer.restore();
   }
 }
 

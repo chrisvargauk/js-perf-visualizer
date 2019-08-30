@@ -31,12 +31,13 @@ class JsPerfVisualizer {
     this.isRun            = false;
 
     this.dataDefault = {
-      isActiveLogUi:  false,
-      isMinimized:    this.config.isMinimizedByDefault,
+      isActiveLogUi:        false,
+      isMinimizedByDefault: this.config.isMinimizedByDefault,
     };
     const dataLoaded = this.loadData();
     this.isActiveLogUi  = dataLoaded.isActiveLogUi;
-    this.isMinimized    = dataLoaded.isMinimized;
+    this.statusUi       = dataLoaded.isMinimizedByDefault ?
+                            'minimized' : 'normal'; // options: 'minimized', 'normal', 'maximized'
 
     this.mark = new Mark(this);
 
@@ -50,12 +51,18 @@ class JsPerfVisualizer {
     if (this.config.isAutoStart) {
       this.heartbeat();
     }
+
+    if (this.statusUi === "minimized") {
+      this.minimize();
+    } else {
+      this.restore();
+    }
   }
 
   saveData() {
     localStorage.jsPerfVisualizer = JSON.stringify({
-      isActiveLogUi:  this.isActiveLogUi,
-      isMinimized:    this.isMinimized,
+      isActiveLogUi:        this.isActiveLogUi,
+      isMinimizedByDefault: this.statusUi === 'minimized',
     });
   }
 
@@ -79,36 +86,17 @@ class JsPerfVisualizer {
 
   heartbeat() {
     if (!this.isPaused) {
-      const timestampNow = Date.now();
-      const frameTimeCurrent = timestampNow - this.timestampLast;
-      const frameTimeDiff = frameTimeCurrent - this.config.frameTimeTarget;
-      let fpsCurrent = 1000 / frameTimeCurrent;
-
-      // Filter off "unexpected" spikes - Looking at you IE
-      fpsCurrent = this.config.fpsTarget < fpsCurrent ? this.config.fpsTarget : fpsCurrent;
-
-      this.listFps.push( fpsCurrent );
-      this.listFpsAll.push( fpsCurrent );
-
-      if (1000 / this.config.fpsTarget * 9 < this.listFps.length) {
-        this.listFps.shift();
-      }
-
+      // todo: rename fpsObj, it is no longer fps only
       const fpsObj = {
-        type:       'fpsRecord',
-        fps:        fpsCurrent,
-        timestamp:  timestampNow,
-        idEvtLoop:  this.idEvtLoop,
-        frameTimeDiff,
+        type:           'fpsRecord',
+        timestamp:      Date.now(),
+        idEvtLoop:      this.idEvtLoop,
       };
-      this.listFpsObj.push(fpsObj);
+      this.listFpsObj.push( fpsObj );
 
-      // this.processFps( fpsObj );
       if (this.isProcessing) {
         this.processBuffer( this.listFpsObj );
       }
-
-      this.timestampLast = timestampNow;
 
       this.idEvtLoop++;
     }
@@ -131,35 +119,44 @@ class JsPerfVisualizer {
   }
 
   processFps( fpsObj ) {
-    this.listFps.push( fpsObj.fps );
+    const frameTimeCurrent = fpsObj.timestamp - this.timestampLast;
+    this.timestampLast = fpsObj.timestamp;
+    const frameTimeDiff = frameTimeCurrent - this.config.frameTimeTarget;
+    let fpsCurrent = 1000 / frameTimeCurrent;
+
+    // Filter off "unexpected" spikes - Looking at you IE
+    fpsCurrent = this.config.fpsTarget < fpsCurrent ? this.config.fpsTarget : fpsCurrent;
+
+    this.listFps.push( fpsCurrent );
+    this.listFpsAll.push( fpsCurrent );
     if (1000 / this.config.fpsTarget * 9 < this.listFps.length) {
       this.listFps.shift();
     }
 
     // Check for FPS in Low Range
-    if (fpsObj.fps < this.config.fpsWarningLevel ) {
-      this.listFpsLow.push( fpsObj.fps );
+    if (fpsCurrent < this.config.fpsWarningLevel ) {
+      this.listFpsLow.push( fpsCurrent );
 
       // Log FPS in Low Range
       this.processLog({
         type: 'fpsWarnLevel',
         idEvtLoop: fpsObj.idEvtLoop,
         timeFromInit: fpsObj.timestamp - this.timestampInit,
-        fpsCurrent: fpsObj.fps,
-        duration: fpsObj.frameTimeDiff,
+        fpsCurrent: fpsCurrent,
+        duration: frameTimeDiff,
       });
 
       this.noLowFpsDrop++;
     }
 
     // Record Lowest FPS
-    if (fpsObj.fps < this.fpsLowest) {
-      this.fpsLowest = fpsObj.fps;
+    if (fpsCurrent < this.fpsLowest) {
+      this.fpsLowest = fpsCurrent;
     }
 
     // Record Longest Lagging
-    if (this.laggingLongest < fpsObj.frameTimeDiff) {
-      this.laggingLongest = fpsObj.frameTimeDiff;
+    if (this.laggingLongest < frameTimeDiff) {
+      this.laggingLongest = frameTimeDiff;
     }
   }
 
@@ -182,15 +179,6 @@ class JsPerfVisualizer {
       type: 'log',
       item
     });
-
-    // // UI update
-    // if (!this.isActiveLogUi) return;
-    // if (!this.gui) return;
-    //
-    // const compLog = this.gui.getCompByType('CompLog')[0];
-    // compLog.setState({
-    //   listLog: this.listLog,
-    // });
   }
 
   uiUpdateGraphAndFps( fpsCurrent ) {
@@ -287,6 +275,50 @@ class JsPerfVisualizer {
     this.timestampLast  = this.timestampInit;
 
     this.heartbeat();
+  }
+
+  startProcessing() {
+    this.isProcessing = true;
+  }
+
+  stopProcessing() {
+    this.isProcessing = false;
+  }
+
+  // # UI #
+  // ######
+  // Note:  we would like to control whether JS P. V. is processing the collected data or not by
+  //        hiding and restoring the UI Window. By doing so we link processing to UI,
+  //        which might not be ready when we need this info because UI is only ready when DOM is ready.
+  //        Therefore, we store this single info on index.js instead of the some UI Comp.
+  //        Inevitably, the related logic is migrated as well.
+
+  minimize() {
+    this.statusUi = 'minimized';
+    this.gui.domRoot.classList.add('view-minimized');
+    this.stopProcessing();
+    this.saveData();
+  }
+
+  restore() {
+    this.statusUi = 'normal';
+    this.gui.domRoot.classList.remove('view-minimized');
+    this.gui.domRoot.classList.remove('view-maximized');
+    this.startProcessing();
+    this.saveData();
+  }
+
+  maximize() {
+    this.statusUi = 'maximized';
+    this.gui.domRoot.classList.add('view-maximized');
+  }
+
+  toggleMaximizeRestore() {
+    if (this.statusUi === 'normal') {
+      this.maximize();
+    } else if (this.statusUi === 'maximized') {
+      this.restore();
+    }
   }
 }
 

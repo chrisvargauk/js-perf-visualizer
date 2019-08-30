@@ -30,7 +30,7 @@ Graph makes it obvious when exactly and how much your UI becomes unresponsive or
 ![](https://raw.githubusercontent.com/chrisvargauk/js-perf-visualizer/master/image/js-perf-visualizer-graph.jpg)
 
 ### Start/Stop Marks
-Use `jsPerfVisualizer.mark.start('some mark text');` and `jsPerfVisualizer.mark.stop('some mark text');` to fin the source of your lagging by starting to break it up and measure the parts. Indentation suggest that a mark was triggered why an other was still running.  
+Use `jsPerfVisualizer.mark.start('some mark text');` and `jsPerfVisualizer.mark.stop('some mark text');` to find the source of your lagging by starting to break it up and measure the parts. Indentation suggest that a mark was triggered why an other was still running.  
 Note: If you would like to see your mark in the report, pass in true as second argument, e.g.: `jsPerfVisualizer.mark.start('mark text in report', ture);`
  
 ![](https://raw.githubusercontent.com/chrisvargauk/js-perf-visualizer/master/image/js-perf-visualizer-mark.jpg)
@@ -87,7 +87,7 @@ Run a performance test as part of your build/deploy and generate a report as JSO
   ]
 }
 ```
-or call `jsPerfVisualizer.genReportAsString()` for a human readably format.
+or call `jsPerfVisualizer.genReportAsString()` for a human readable format. 
 ```text
 * ************************* *
 * JS PERF VISUALIZER REPORT *
