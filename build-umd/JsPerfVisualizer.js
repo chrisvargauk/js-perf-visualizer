@@ -6492,6 +6492,12 @@ class CompRoot_CompBtnMinimizeView extends GameGUI["Component"] {
     }
 
     this.trackKeyEvent();
+
+    window.addEventListener("hashchange", () => {
+      if( window.location.hash.indexOf('showJsPerfVisualizer') !== -1 ) {
+        this.restore();
+      }
+    });
   }
 
   trackKeyEvent() {

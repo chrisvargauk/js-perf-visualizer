@@ -69,6 +69,12 @@ class CompBtnMinimizeView extends Component {
     }
 
     this.trackKeyEvent();
+
+    window.addEventListener("hashchange", () => {
+      if( window.location.hash.indexOf('showJsPerfVisualizer') !== -1 ) {
+        this.restore();
+      }
+    });
   }
 
   trackKeyEvent() {

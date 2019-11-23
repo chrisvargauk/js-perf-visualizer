@@ -107,3 +107,6 @@ MARKS
 > Duration: 1523ms "mark 3"
 > Duration:    0ms "mark 1"
 ```
+### Tips and Tricks
+Use `#showJsPerfVisualizer` in the URL to bring up the UI if you cant press `Ctrl + I` on your keyboard from some reason.
+E.g.: `http://mySite.com/#showJsPerfVisualizer`
