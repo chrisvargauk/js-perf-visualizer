@@ -1084,7 +1084,6 @@ var functionName = __webpack_require__(4);
 // CONCATENATED MODULE: ./src/Mark.js
 class Mark {
   constructor( jsPerfVisualizer ) {
-    console.log('Mark ins initializing..');
     this.jsPerfVisualizer = jsPerfVisualizer;
     this.setResetDefault();
   }
@@ -1103,16 +1102,18 @@ class Mark {
 
     const timestampNow = Date.now();
     this.listObjMarkStart[ markText ] = {
-      type: 'mark',
-      ctr: ++this.ctr,
-      idEvtLoopStart: this.jsPerfVisualizer.idEvtLoop,
-      idEvtLoopStop:  undefined,
-      timestampStart: timestampNow,
-      timeFromInit:   timestampNow - this.jsPerfVisualizer.timestampInit,
-      timestampStop:  undefined,
-      duration:       undefined,
-      text:           markText,
-      indentLevel:    0,
+      type:               'mark',
+      ctr:                ++this.ctr,
+      idEvtLoopStart:     this.jsPerfVisualizer.idEvtLoop,
+      idEvtLoopStop:      undefined,
+      timestampStart:     timestampNow,
+      timestampStop:      undefined,
+      timeFromInit:       timestampNow - this.jsPerfVisualizer.timestampInit,
+      timeFromInitStart:  timestampNow - this.jsPerfVisualizer.timestampInit,
+      timeFromInitStop:   undefined,
+      duration:           undefined,
+      text:               markText,
+      indentLevel:        0,
       isPartOfReport,
     };
 
@@ -1126,11 +1127,12 @@ class Mark {
     }
 
     const mark = this.listObjMarkStart[ markText ];
-    mark.timestampStop  = Date.now();
-    mark.timeFromInit   = mark.timestampStop - this.jsPerfVisualizer.timestampInit;
-    mark.duration       = mark.timestampStop - mark.timestampStart;
-    mark.idEvtLoopStop  = this.jsPerfVisualizer.idEvtLoop;
-    mark.indentLevel    = Object.keys(this.listObjMarkStart).length - 1;
+    mark.timestampStop    = Date.now();
+    mark.timeFromInit     = mark.timestampStop - this.jsPerfVisualizer.timestampInit;
+    mark.timeFromInitStop = mark.timestampStop - this.jsPerfVisualizer.timestampInit;
+    mark.duration         = mark.timestampStop - mark.timestampStart;
+    mark.idEvtLoopStop    = this.jsPerfVisualizer.idEvtLoop;
+    mark.indentLevel      = Object.keys(this.listObjMarkStart).length - 1;
 
     this.jsPerfVisualizer.log( mark );
 
@@ -1138,8 +1140,8 @@ class Mark {
     delete this.markLatest;
   }
 
-  here( markText ) {
-    this.start( markText );
+  here( markText, isPartOfReport ) {
+    this.start( markText, isPartOfReport );
     this.stop( markText );
   }
 
@@ -1343,7 +1345,8 @@ class JsPerf_JsPerf {
       compGraph.graph.update(this.listFpsAll);
     }
 
-    const listMark = this.listLog.filter(item => item.isPartOfReport);
+    const listMark    = this.listLog.filter(item => item.isPartOfReport);
+    const listLowFps  = this.listLog.filter(item => item.type === 'fpsWarnLevel');
 
     const dataReport = {
       averageFps:         Math.round(this.listFpsAll.reduce((sum, fps) => sum + fps, 0) / this.listFpsAll.length),
@@ -1354,6 +1357,7 @@ class JsPerf_JsPerf {
         noDrop:   -1,
       },
       listMark,
+      listLowFps,
     };
 
     // If there was any FPS registered in the Low Range
@@ -5791,7 +5795,7 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(1)(false);
 // Module
-exports.push([module.i, ".comp-report{background:#efefef;color:#6d6d6d;font-family:Consolas, Verdana, monospace;width:100%;height:300px;overflow-y:auto;padding:20px}.comp-report .mark{font-size:14px;padding:2px 5px}.comp-report .dot{display:inline-block;background:#6d6d6d;width:8px;height:8px;border-radius:4px}.comp-report fieldset{margin-bottom:10px;border:1px solid #c5c5db}.comp-report fieldset legend{font-family:monospace;font-size:14px;font-weight:bold;color:#6d6d6d}.comp-report fieldset .column{float:left;width:50%;padding-right:0}.comp-report fieldset .column:nth-child(2){padding-right:12px}\n", ""]);
+exports.push([module.i, ".comp-report{background:#efefef;color:#6d6d6d;font-family:Consolas, Verdana, monospace;width:100%;height:400px;overflow-y:auto;padding:20px}.comp-report .mark{font-size:14px;padding:2px 5px}.comp-report .timeline-item{font-family:monospace;font-size:0.8em}.comp-report .timeline-item .bar{background:#bfc4ff}.comp-report .timeline-item .bar .duration{height:10px;background:#777aaf}.comp-report .dot{display:inline-block;background:#6d6d6d;width:8px;height:8px;border-radius:4px}.comp-report fieldset{margin-bottom:10px;border:1px solid #c5c5db}.comp-report fieldset legend{font-family:monospace;font-size:14px;font-weight:bold;color:#6d6d6d}.comp-report fieldset .column{float:left;width:50%;padding-right:0}.comp-report fieldset .column:nth-child(2){padding-right:12px}.comp-report .wrapper{width:100%;overflow-x:scroll;position:relative}.comp-report .wrapper .low-fps-overlay{position:absolute;top:0;right:0;bottom:0;left:0}.comp-report .wrapper .low-fps-overlay .item{position:absolute;top:0;right:0;bottom:0;background:#ff000042}\n", ""]);
 
 
 /***/ }),
@@ -6219,10 +6223,23 @@ var comp_CompReport = __webpack_require__(22);
 const CompReport_dumbCompMark = mark => (`
   <div class="mark">
     <span class="dot"></span>
-    ${!CompReport_isUndef(mark.timeFromInit) ? 'Time: '    +src_comp_CompLog.formatTime(mark.timeFromInit)             : ''} 
+    ${!CompReport_isUndef(mark.timeFromInitStart) && !CompReport_isUndef(mark.timeFromInitStop) ? src_comp_CompLog.formatTime(mark.timeFromInitStart)+'-'+src_comp_CompLog.formatTime(mark.timeFromInitStop) : ''} 
     ${!CompReport_isUndef(mark.duration)     ? 'Duration: '+src_comp_CompLog.formatTime(Math.round(mark.duration))  : ''}
     - "${mark.text}"
   </div>
+`);
+
+const dumbCompTimelineItem = mark => (`
+  <div class="timeline-item">
+    <div style="margin-left: ${mark.timeFromInitStart}px">"${mark.text}"</div>
+    <div class="bar">
+      <div class="duration" style="margin-left: ${mark.timeFromInitStart}px; width: ${(2 <= mark.duration ? mark.duration : 2)}px"></div>
+    </div>
+  </div>
+`);
+
+const dumbCompLowFpsOverlayItem = mark => (`
+  <div class="item" style="left: ${(mark.timeFromInit-mark.duration)}px; width: ${(2 <= mark.duration ? mark.duration : 2)}px"></div>
 `);
 
 class CompReport_CompReport extends GameGUI["Component"]{
@@ -6238,7 +6255,8 @@ class CompReport_CompReport extends GameGUI["Component"]{
   stateDefault() {
     return JSON.parse(JSON.stringify({
       dataReport: {
-        listMark: []
+        listMark:   [],
+        listLowFps: [],
       }
     }));
   }
@@ -6255,6 +6273,7 @@ class CompReport_CompReport extends GameGUI["Component"]{
     return `
       <fieldset>
         <legend>STATISTICS</legend>
+        
         <div class="column">
           <fieldset>
             <legend>Low FPS</legend>
@@ -6278,6 +6297,24 @@ class CompReport_CompReport extends GameGUI["Component"]{
         ${dataReport.listMark.map(item => {
           return item.isPartOfReport ? CompReport_dumbCompMark(item) : '';  
         }).join('')}
+      </fieldset>
+      
+      <fieldset>  
+        <legend>TIMELINE</legend>
+        <div class="wrapper">
+          ${dataReport.listMark.sort((a, b) => {
+            return a.ctr - b.ctr;
+          }).map(item => {
+            return item.isPartOfReport ? dumbCompTimelineItem(item) : '';
+          }).join('')}
+          
+          <div class="low-fps-overlay">
+            ${dataReport.listLowFps.map(item => {
+              return dumbCompLowFpsOverlayItem(item);
+            }).join('')}
+          </div>
+          
+        </div>
       </fieldset>
     `;
   }

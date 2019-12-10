@@ -296,7 +296,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         function Mark(jsPerfVisualizer) {
           _classCallCheck(this, Mark);
 
-          console.log('Mark ins initializing..');
           this.jsPerfVisualizer = jsPerfVisualizer;
           this.setResetDefault();
         }
@@ -323,8 +322,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
               idEvtLoopStart: this.jsPerfVisualizer.idEvtLoop,
               idEvtLoopStop: undefined,
               timestampStart: timestampNow,
-              timeFromInit: timestampNow - this.jsPerfVisualizer.timestampInit,
               timestampStop: undefined,
+              timeFromInit: timestampNow - this.jsPerfVisualizer.timestampInit,
+              timeFromInitStart: timestampNow - this.jsPerfVisualizer.timestampInit,
+              timeFromInitStop: undefined,
               duration: undefined,
               text: markText,
               indentLevel: 0,
@@ -343,6 +344,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             var mark = this.listObjMarkStart[markText];
             mark.timestampStop = Date.now();
             mark.timeFromInit = mark.timestampStop - this.jsPerfVisualizer.timestampInit;
+            mark.timeFromInitStop = mark.timestampStop - this.jsPerfVisualizer.timestampInit;
             mark.duration = mark.timestampStop - mark.timestampStart;
             mark.idEvtLoopStop = this.jsPerfVisualizer.idEvtLoop;
             mark.indentLevel = Object.keys(this.listObjMarkStart).length - 1;
@@ -352,8 +354,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           }
         }, {
           key: "here",
-          value: function here(markText) {
-            this.start(markText);
+          value: function here(markText, isPartOfReport) {
+            this.start(markText, isPartOfReport);
             this.stop(markText);
           }
         }, {
@@ -565,6 +567,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             var listMark = this.listLog.filter(function (item) {
               return item.isPartOfReport;
             });
+            var listLowFps = this.listLog.filter(function (item) {
+              return item.type === 'fpsWarnLevel';
+            });
             var dataReport = {
               averageFps: Math.round(this.listFpsAll.reduce(function (sum, fps) {
                 return sum + fps;
@@ -575,7 +580,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
                 lowest: -1,
                 noDrop: -1
               },
-              listMark: listMark
+              listMark: listMark,
+              listLowFps: listLowFps
             }; // If there was any FPS registered in the Low Range
 
             if (this.listFpsLow.length) {

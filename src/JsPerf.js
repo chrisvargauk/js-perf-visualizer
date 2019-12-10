@@ -186,7 +186,8 @@ export class JsPerf {
       compGraph.graph.update(this.listFpsAll);
     }
 
-    const listMark = this.listLog.filter(item => item.isPartOfReport);
+    const listMark    = this.listLog.filter(item => item.isPartOfReport);
+    const listLowFps  = this.listLog.filter(item => item.type === 'fpsWarnLevel');
 
     const dataReport = {
       averageFps:         Math.round(this.listFpsAll.reduce((sum, fps) => sum + fps, 0) / this.listFpsAll.length),
@@ -197,6 +198,7 @@ export class JsPerf {
         noDrop:   -1,
       },
       listMark,
+      listLowFps,
     };
 
     // If there was any FPS registered in the Low Range

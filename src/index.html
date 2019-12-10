@@ -9,35 +9,39 @@
     setTimeout(() => {
       window.jsPerfVisualizer.start();
 
-      jsPerfVisualizer.mark.start('mark 1', true);
-      jsPerfVisualizer.mark.stop('mark 1');
+      jsPerfVisualizer.mark.here('Init', true);
 
-      jsPerfVisualizer.mark.start('mark 2', true);
       setTimeout(() => {
-        jsPerfVisualizer.mark.start('mark 3', true);
-        jsPerfVisualizer.mark.start('mark 4');
-        const noOfIter = 55000;
-        for (let i=0; i<noOfIter; i++) {
-          for (let j = 0; j < noOfIter; j++) {
-            Math.sqrt(999999999999999999);
-          }
-        }
-        jsPerfVisualizer.mark.stop('mark 4');
-        jsPerfVisualizer.mark.start('mark A');
-        jsPerfVisualizer.mark.stop('mark A');
-        jsPerfVisualizer.mark.stop('mark 3');
-        jsPerfVisualizer.mark.stop('mark 2');
+        jsPerfVisualizer.mark.here('Later 1', true);
 
-        setInterval(() => {
-          const noOfIter = 15000;
+        jsPerfVisualizer.mark.start('Later 2', true);
+        setTimeout(() => {
+          jsPerfVisualizer.mark.stop('Later 2');
+
+          jsPerfVisualizer.mark.start('mark 3', true);
+          jsPerfVisualizer.mark.start('mark 4');
+          const noOfIter = 25000;
           for (let i=0; i<noOfIter; i++) {
             for (let j = 0; j < noOfIter; j++) {
               Math.sqrt(999999999999999999);
             }
           }
-        }, 1000);
-      }, 3000);
-    }, 500);
+          jsPerfVisualizer.mark.stop('mark 4');
+          jsPerfVisualizer.mark.start('mark A');
+          jsPerfVisualizer.mark.stop('mark A');
+          jsPerfVisualizer.mark.stop('mark 3');
+
+          setInterval(() => {
+            const noOfIter = 15000;
+            for (let i=0; i<noOfIter; i++) {
+              for (let j = 0; j < noOfIter; j++) {
+                Math.sqrt(999999999999999999);
+              }
+            }
+          }, 1000);
+        }, 100);
+      }, 100);
+    }, 100);
 
     window.runTest = function () {
       jsPerfVisualizer.mark.start('mark test', true);

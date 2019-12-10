@@ -5,10 +5,23 @@ import CompLog from "./CompLog";
 const dumbCompMark = mark => (`
   <div class="mark">
     <span class="dot"></span>
-    ${!isUndef(mark.timeFromInit) ? 'Time: '    +CompLog.formatTime(mark.timeFromInit)             : ''} 
+    ${!isUndef(mark.timeFromInitStart) && !isUndef(mark.timeFromInitStop) ? CompLog.formatTime(mark.timeFromInitStart)+'-'+CompLog.formatTime(mark.timeFromInitStop) : ''} 
     ${!isUndef(mark.duration)     ? 'Duration: '+CompLog.formatTime(Math.round(mark.duration))  : ''}
     - "${mark.text}"
   </div>
+`);
+
+const dumbCompTimelineItem = mark => (`
+  <div class="timeline-item">
+    <div style="margin-left: ${mark.timeFromInitStart}px">"${mark.text}"</div>
+    <div class="bar">
+      <div class="duration" style="margin-left: ${mark.timeFromInitStart}px; width: ${(2 <= mark.duration ? mark.duration : 2)}px"></div>
+    </div>
+  </div>
+`);
+
+const dumbCompLowFpsOverlayItem = mark => (`
+  <div class="item" style="left: ${(mark.timeFromInit-mark.duration)}px; width: ${(2 <= mark.duration ? mark.duration : 2)}px"></div>
 `);
 
 class CompReport extends Component{
@@ -24,7 +37,8 @@ class CompReport extends Component{
   stateDefault() {
     return JSON.parse(JSON.stringify({
       dataReport: {
-        listMark: []
+        listMark:   [],
+        listLowFps: [],
       }
     }));
   }
@@ -41,6 +55,7 @@ class CompReport extends Component{
     return `
       <fieldset>
         <legend>STATISTICS</legend>
+        
         <div class="column">
           <fieldset>
             <legend>Low FPS</legend>
@@ -64,6 +79,24 @@ class CompReport extends Component{
         ${dataReport.listMark.map(item => {
           return item.isPartOfReport ? dumbCompMark(item) : '';  
         }).join('')}
+      </fieldset>
+      
+      <fieldset>  
+        <legend>TIMELINE</legend>
+        <div class="wrapper">
+          ${dataReport.listMark.sort((a, b) => {
+            return a.ctr - b.ctr;
+          }).map(item => {
+            return item.isPartOfReport ? dumbCompTimelineItem(item) : '';
+          }).join('')}
+          
+          <div class="low-fps-overlay">
+            ${dataReport.listLowFps.map(item => {
+              return dumbCompLowFpsOverlayItem(item);
+            }).join('')}
+          </div>
+          
+        </div>
       </fieldset>
     `;
   }

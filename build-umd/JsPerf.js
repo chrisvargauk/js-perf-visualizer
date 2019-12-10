@@ -110,7 +110,6 @@ var functionName = __webpack_require__(4);
 // CONCATENATED MODULE: ./src/Mark.js
 class Mark {
   constructor( jsPerfVisualizer ) {
-    console.log('Mark ins initializing..');
     this.jsPerfVisualizer = jsPerfVisualizer;
     this.setResetDefault();
   }
@@ -129,16 +128,18 @@ class Mark {
 
     const timestampNow = Date.now();
     this.listObjMarkStart[ markText ] = {
-      type: 'mark',
-      ctr: ++this.ctr,
-      idEvtLoopStart: this.jsPerfVisualizer.idEvtLoop,
-      idEvtLoopStop:  undefined,
-      timestampStart: timestampNow,
-      timeFromInit:   timestampNow - this.jsPerfVisualizer.timestampInit,
-      timestampStop:  undefined,
-      duration:       undefined,
-      text:           markText,
-      indentLevel:    0,
+      type:               'mark',
+      ctr:                ++this.ctr,
+      idEvtLoopStart:     this.jsPerfVisualizer.idEvtLoop,
+      idEvtLoopStop:      undefined,
+      timestampStart:     timestampNow,
+      timestampStop:      undefined,
+      timeFromInit:       timestampNow - this.jsPerfVisualizer.timestampInit,
+      timeFromInitStart:  timestampNow - this.jsPerfVisualizer.timestampInit,
+      timeFromInitStop:   undefined,
+      duration:           undefined,
+      text:               markText,
+      indentLevel:        0,
       isPartOfReport,
     };
 
@@ -152,11 +153,12 @@ class Mark {
     }
 
     const mark = this.listObjMarkStart[ markText ];
-    mark.timestampStop  = Date.now();
-    mark.timeFromInit   = mark.timestampStop - this.jsPerfVisualizer.timestampInit;
-    mark.duration       = mark.timestampStop - mark.timestampStart;
-    mark.idEvtLoopStop  = this.jsPerfVisualizer.idEvtLoop;
-    mark.indentLevel    = Object.keys(this.listObjMarkStart).length - 1;
+    mark.timestampStop    = Date.now();
+    mark.timeFromInit     = mark.timestampStop - this.jsPerfVisualizer.timestampInit;
+    mark.timeFromInitStop = mark.timestampStop - this.jsPerfVisualizer.timestampInit;
+    mark.duration         = mark.timestampStop - mark.timestampStart;
+    mark.idEvtLoopStop    = this.jsPerfVisualizer.idEvtLoop;
+    mark.indentLevel      = Object.keys(this.listObjMarkStart).length - 1;
 
     this.jsPerfVisualizer.log( mark );
 
@@ -164,8 +166,8 @@ class Mark {
     delete this.markLatest;
   }
 
-  here( markText ) {
-    this.start( markText );
+  here( markText, isPartOfReport ) {
+    this.start( markText, isPartOfReport );
     this.stop( markText );
   }
 
@@ -369,7 +371,8 @@ class JsPerf_JsPerf {
       compGraph.graph.update(this.listFpsAll);
     }
 
-    const listMark = this.listLog.filter(item => item.isPartOfReport);
+    const listMark    = this.listLog.filter(item => item.isPartOfReport);
+    const listLowFps  = this.listLog.filter(item => item.type === 'fpsWarnLevel');
 
     const dataReport = {
       averageFps:         Math.round(this.listFpsAll.reduce((sum, fps) => sum + fps, 0) / this.listFpsAll.length),
@@ -380,6 +383,7 @@ class JsPerf_JsPerf {
         noDrop:   -1,
       },
       listMark,
+      listLowFps,
     };
 
     // If there was any FPS registered in the Low Range
